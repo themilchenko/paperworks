@@ -1,0 +1,1531 @@
+\section{Правила DH допускают атаки с полиномиальным произведением показателей}
+
+В этом разделе мы показываем, что задача \textsc{Insecure} NP-полна для нарушителя DH (см.~Теорему 5.23). В силу Теоремы 3.1, Предложения 4.7 и Предложения 4.8 остаётся показать, что правила DH действительно допускают атаки
+с полиномиально ограниченным произведением показателей.
+Для этого мы свяжем с минимальной атакой $(\pi,\sigma)$
+подстановку $\sigma^{2}$ и линейную систему уравнений,
+обладающую двумя свойствами:
+
+\begin{enumerate}\itemsep0pt
+\item[(i)] $\sigma^{Z}$ совпадает с $\sigma$, за исключением того,
+      что все показатели произведения в $\sigma$
+      заменены новыми целочисленными переменными;
+\item[(ii)] $(\pi,\sigma')$ остаётся атакой для каждой подстановки $\sigma'$,  
+      получаемой из $\sigma^{Z}$ подстановкой значений переменных,
+      удовлетворяющих линейной системе.
+\end{enumerate}
+Размер этой системы можно ограничить полиномом от размера протокола,
+а значит и размер её решений тоже ограничивается полиномиально
+(см.\ \cite{Bockmayr2001}).
+Тем самым мы получаем атаку с полиномиально
+ограниченными произведениями показателей
+(см.\ Предложение~5.22).
+
+В следующем подразделе мы формально определим сообщения,
+в которых показатели могут быть линейными выражениями.
+Перед тем как перейти к подробному изложению,
+в §\,5.2 мы дадим интуитивное объяснение доказательства
+Предложения~5.22.
+Полное доказательство приведено в 5.3–5.7.
+
+\subsection{Открытые сообщения и системы уравнений}
+
+В этом разделе мы вводим открытые сообщения и продукты, отображения
+оценки, системы уравнений, а также различные меры их размера.
+
+\begin{definition}
+Пусть $Z$ — множество переменных.
+Обозначим через $\mathcal M=\mathcal M(Z)$
+множество \emph{открытых сообщений} над $Z$,
+через $\mathcal P=\mathcal P(Z)$ —
+множество \emph{открытых продуктов} над $Z$,
+а через $\mathcal L_{\text{exp}} = \mathcal L_{\text{exp}}(Z)$ —
+множество \emph{линейных выражений} над $Z$.
+Эти множества задаются следующей грамматикой:
+
+\[
+\begin{aligned}
+  \mathcal M\ ::=&\ A \;\bigl|\;
+                   \langle \mathcal M,\,\mathcal M\rangle \;\bigl|\;
+                   \{\,\mathcal M\}^{s}_{\mathcal M}\;\bigl|\;
+                   \{\,\mathcal M\}^{p}_{K}\;\bigl|\;
+                   Exp(\mathcal M,\mathcal P),\\[2pt]
+  \mathcal P\ ::=&\ \mathcal M^{\mathcal L_{\text{exp}}}\;\bigl|\;
+                   \mathcal M^{\mathcal L_{\text{exp}}}\!\cdot\mathcal P,\\[2pt]
+  \mathcal L_{\text{exp}}\ ::=&\ \mathbb Z \;\bigl|\;
+                       Z \;\bigl|\;
+                       \mathcal L_{\text{exp}}+\mathcal L_{\text{exp}} \;\bigl|\;
+                       \mathbb Z\!\cdot\!\mathcal L_{\text{exp}}.
+\end{aligned}
+\]
+\end{definition}
+
+\noindent
+Размер~$|e|$ линейного выражения~$e$ — это число символов,
+необходимых для записи~$e$ (целые кодируются двоично).
+Говорим, что $e$ и $e'$ \emph{равны},
+если они эквивалентны по ассоциативности и коммутативности сложения
+(сокращённо \text{AC\textsubscript{+}}).
+Для множества линейных выражений $S$ и выражения $e$
+обозначим через $\text{AC\textsubscript{+}}(e)$ класс эквивалентности $e$
+по этой relation; тогда $e\in S$ означает,
+что $\text{AC\textsubscript{+}}(e)$ совпадает с одним из классов, индуцированных~$S$.
+Отношение включения между наборами линейных выражений определяется аналогично.
+
+\smallskip
+Для открытого сообщения или продукта~$t$
+обозначим через $\mathcal L_{\text{exp}}(t)$
+множество линейных выражений, встречающихся в~$t$.
+Пусть $\mathcal S(t)$ — множество подтерминов~$t$,
+а $|t|=\operatorname{Card}(\mathcal S(t))$ — их количество.
+Следуя принятой ранее нотации, положим
+\[
+  S_{\text{ext}}(t)=\mathcal S(t)\cup\{\,M\mid \operatorname{Exp}(u,M)\in \mathcal S(t)\},
+  \qquad
+  |t|_{\text{ext}}=\operatorname{Card}(\mathcal S_{\text{ext}}(t)).
+\]
+Также определим
+$|t|_{\text{exp}}=0$, если $t$ не является произведением,
+и $|t|_{\text{exp}}=|e_{1}|+\dots+|e_{n}|$, если
+$t = e_{1}^{\,1}\!\dots e_{n}^{\,n}$.
+Для конечного множества открытых сообщений или продуктов $E$
+обозначим $|E|_{\text{exp}}=\sum_{s\in E}|s|_{\text{exp}}$.
+Наконец,
+\[
+  \Vert t\Vert_{\text{exp}} = |S(t)|_{\text{exp}},\qquad
+  \Vert t\Vert = |t| + \Vert t\Vert_{\text{exp}},\qquad
+  \Vert t\Vert_{\text{ext}} = |t|_{\text{ext}} + \Vert t\Vert_{\text{exp}}.
+\]
+
+\medskip
+\textsc{Лемма 5.2.}
+Для любого открытого сообщения или продукта~$t$ выполняется
+\[
+  |t|_{\text{ext}}\ \le\ 2\cdot |t|,
+  \qquad\text{и, следовательно,}\qquad
+  \Vert t\Vert_{\text{ext}}\ \le\ 2\cdot\Vert t\Vert.
+\]
+
+Заметим, что определения $|\cdot|$, $\Vert\cdot\Vert_{\text{exp}}$ и $\Vert\cdot\Vert$
+для открытых сообщений и продуктов совпадают с соответствующими
+определениями для (закрытых) сообщений.
+
+Приведённые выше определения и меры для открытых сообщений и продуктов
+естественным образом переносятся на множества открытых сообщений,
+открытых продуктов и т.\,д.
+
+Назовём отображение $\beta : Z \to \mathbb Z$ \emph{отображением оценки}.
+Значение $\beta(e)\in\mathbb Z$ линейного выражения $e$
+определяется обычным образом.
+Очевидно, $\beta$ естественным образом распространяется
+на открытые сообщения, открытые продукты,
+а также на их множества.
+
+В дальнейшем в этом подразделе
+$\beta$ всегда фиксируется как отображение оценки из $Z$ в $\mathbb Z$.
+
+\medskip
+\emph{Линейной системой уравнений} $\mathcal E$ (над $Z$) называется
+конечное множество равенств вида $e = e'$, где
+$e$ и $e'$ — линейные выражения над $Z$.
+Её \emph{размер}
+\(
+  \lvert\mathcal E\rvert
+  = \sum_{\,e=e'\in\mathcal E}\bigl(\lvert e\rvert+\lvert e'\rvert\bigr).
+\)
+Отображение оценки $\beta$ является \emph{решением} системы
+(обозначаем $\beta\models\mathcal E$),
+если $\beta(e)=\beta(e')$ для каждого уравнения $e=e'\in\mathcal E$.
+\(
+  L_{\text{exp}}(\mathcal E)=
+  \bigl\{\,e \mid e=e'\ \text{или}\ e'=e\in\mathcal E\bigr\}.
+\)
+Положим
+\(
+  R_{\mathcal E} =
+  \bigl\{\, (e,e') \mid e=e' \in \mathcal E \bigr\}
+  \subseteq \mathcal L_{\text{exp}}(\mathcal E)\times \mathcal L_{\text{exp}}(\mathcal E),
+  \qquad
+  R_{\mathcal E}^{*}\text{ — рефлексивно-транзитивное замыкание }R_{\mathcal E}.
+\)
+Пишем $\mathcal E \cong \mathcal E'$, если
+$R_{\mathcal E}^{*}=R_{\mathcal E'}^{*}$,
+и $\mathcal E\subseteq\mathcal E'$, если
+$R_{\mathcal E}^{*}\subseteq R_{\mathcal E'}^{*}$.
+Таким образом, линейные уравнения рассматриваются
+с точностью до рефлексивности и транзитивности равенства.
+Напомним также, что линейные выражения эквивалентны по правилу AC\textsubscript{+}.
+
+\subsection{Обзор доказательства Предложения 5.22}
+
+Ниже приведён неформальный «вид сверху» на доказательство
+Предложения 5.22, позволяющего полиномиально ограничить величины
+показателей произведения в атаках.
+
+\medskip
+Ключевым элементом является \textsc{Лемма 5.21}, в которой говорится
+следующее.  
+Пусть $t,t_{1},\dots,t_{n}$ — открытые сообщения и
+$\beta$ — отображение оценки, такое что
+\(
+  \ulcorner\beta(t)\urcorner\;\in\;
+  \operatorname{forge}
+  \bigl(\ulcorner\beta(t_{1})\urcorner,\dots,
+        \ulcorner\beta(t_{n})\urcorner\bigr).
+\)
+Тогда существует расширение $\beta$
+(обозначаем его тем же символом) и система линейных уравнений
+$\mathcal E$, удовлетворяющие
+
+\begin{enumerate}\itemsep0pt
+\item[(1)] $\beta\models\mathcal E$;
+\item[(2)] для всякого $\beta'\models\mathcal E$
+\[
+  \ulcorner\beta'(t)\urcorner\in
+  \operatorname{forge}
+  \bigl(\ulcorner\beta'(t_{1})\urcorner,\dots,
+        \ulcorner\beta'(t_{n})\urcorner\bigr);
+\]
+\item[(3)] размер $\mathcal E$ ограничен полиномом
+      от $\Vert t_{1},\dots,t_{n},t\Vert_{\text{ext}}$.
+\end{enumerate}
+
+Доказательство этой леммы довольно громоздко. Основная идея состоит в том, чтобы заменить сообщения в выводе
+\(D\) от \(\ulcorner\beta(t_{1})\urcorner,\dots,\ulcorner\beta(t_{n})\urcorner\) к \(\ulcorner\beta(t)\urcorner\)
+на \emph{открытые} сообщения, совпадающие с исходными, за исключением показателей степеней произведения.
+Более точно, каждое \(t_{i}\) заменяется на открытое сообщение \(t'_{i}\),
+которое мы называем \(\beta\)-нормальной формой (или \(\beta\)-термом) и для которого
+\(\beta(t'_{i})=\ulcorner \beta(t_{i})\urcorner\).
+Иными словами, \(t'_{i}\) служит символическим представлением нормальной формы \(\beta(t_{i})\).
+После этого можно имитировать вывод \(D\) в (символическом) выводе \(D'\),
+начинающемся с \(\beta\)-нормальных форм \(t'_{1},\dots,t'_{n}\).
+Промежуточные термины, возникающие в \(D'\), также являются \(\beta\)-нормальными формами
+соответствующих терминов из \(D\).
+Система линейных уравнений \(\mathcal E\) постепенно эволюционирует
+по мере замены \(t_{i}\) на их \(\beta\)-нормальные формы и симуляции вывода \(D\).
+
+Более формально, преобразуя $t_i$ в $\beta$-нормальную форму,
+мы одновременно «прикрепляем» к этой нормальной форме систему уравнений.
+То есть вводим то, что будем называть \emph{$\beta$-кортежем}
+\((t_i',\mathcal E_i)\),
+где $t_i'$ — $\beta$-нормальная форма термина $t_i$,
+а $\mathcal E_i$ — такая система линейных уравнений, что
+\(\beta\models\mathcal E_i\)
+и для любой оценки $\beta'$,
+удовлетворяющей $\mathcal E_i$, выполняется
+\(
+  \ulcorner\beta'(t_i)\urcorner = \ulcorner\beta'(t_i')\urcorner.
+\)
+
+Иными словами,
+$t_i'$ служит символическим представлением нормальной формы не только
+для $\beta(t_i)$, но и для $\beta'(t_i)$ при всех $\beta'\models\mathcal E_i$
+(в последнем случае $t_i'$ возможно требуется дополнительно нормализовать,
+чтобы совпасть с $\ulcorner\beta'(t_i)\urcorner$).
+Итоговая система уравнений $\mathcal E$
+получается как объединение систем
+из $\beta$-кортежей для $t_1,\dots,t_n,t$
+и уравнений, возникающих в процессе симуляции вывода $D$.
+
+Очевидно, чтобы доказать лемму, необходимо ограничить размер
+$\beta$-кортежей, то есть $\beta$-нормальных форм
+($\beta$-термов) вместе с присоединившимися к ним системами
+уравнений, а также размер уравнений, возникающих при симуляции
+вывода~$D$ (подробности см.\ в последующих подразделах).
+
+Опираясь на сформулированную выше лемму, нетрудно доказать
+Предложение 5.22, утверждающее, что для каждой минимальной атаки
+$(\pi,\sigma)$ существует атака $(\pi,\sigma')$ той же структуры
+(то есть $\sigma$ и $\sigma'$ совпадают с точностью до показателей
+степеней произведений), причём полный размер $\sigma'$
+и её показатели можно ограничить полиномом от размера протокола.
+
+Суть доказательства Предложения 5.22 такова.
+К подстановке $\sigma$ приписывается символическая версия
+$\sigma^{Z}$, в которой все показатели заменены новыми целыми
+переменными. Далее вышеупомянутая лемма применяется к случаю
+$t=R_{i}\sigma^{Z}$ и $t_{j}=S_{j}\sigma^{Z}$ для всех
+$j\in\{0,\dots,i-1\}$.
+Для каждого $i$ лемма даёт систему уравнений $\mathcal E_{i}$, и
+любое решение $\beta'$ объединённой системы
+$\bigcup_{i}\mathcal E_{i}$ порождает новую атаку
+\((\pi,\beta'(\sigma^{Z}))\) на протокол.
+Поскольку объединённая система уравнений «небольшая», а линейные
+системы имеют «небольшие» решения $\beta'$
+(см.\ \cite{Bockmayr2001}), получаем атаку
+$(\pi,\sigma')$, где $\sigma'=\beta'(\sigma^{Z})$, с
+полиномиально ограниченными показателями.
+
+В следующем подразделе мы вводим $\beta$-кортежи. Затем
+показываем, что такие кортежи существуют (раздел 5.4).
+В 5.5–5.6 оцениваем размеры $\beta$-термов и соответствующих им
+систем уравнений, а следовательно, и размер $\beta$-кортежей в целом.
+Наконец, в § 5.7 доказываем упомянутые Лемму 5.21 и
+Предложение 5.22 и, опираясь на них, выводим, что задача
+\textsc{Insecure} NP-полна для нарушителя DH.
+
+\subsection{$\beta$-эквивалентность, $\beta$-кортежи и $\approx_{\beta}$-системы уравнений}
+
+\textbf{Определение 5.3.}
+Пусть заданы отображение оценки $\beta$ и два открытых сообщения
+(или открытых продукта) $t$ и $t'$.
+Говорим, что $t$ и $t'$ \emph{$\beta$-равны}
+(обозначаем $t =_{\beta} t'$), если $\beta(t)=\beta(t')$.\footnote{%
+  Равенство понимается по модулю ассоциативности и коммутативности
+  умножения в продуктах.}
+Называем $t$ и $t'$ \emph{$\beta$-эквивалентными}
+(пишем $t \approx_{\beta} t'$), если
+\(
+  \ulcorner\beta(t)\urcorner = \ulcorner\beta(t')\urcorner .
+\)
+
+\medskip
+\textbf{Определение 5.4.}
+Пусть $t =_{\beta} t'$.
+Система линейных уравнений $\mathcal E$
+называется \emph{$=_{\beta}$-системой уравнений} для $t$ и~$t'$,
+если выполняются оба условия
+
+\begin{enumerate}\itemsep0pt
+\item[(1)] $\beta \models \mathcal E$;
+\item[(2)] $t \approx_{\beta'} t'$ для всякого $\beta' \models \mathcal E$.
+\end{enumerate}
+
+Мы теперь показываем, что «небольшие» $\;=_{\beta}$-системы
+уравнений действительно существуют.
+Напомним, что, например, запись
+$\Vert t,t'\Vert_{\text{ext}}$
+означает $\Vert\!\{t,t'\}\!\Vert_{\text{ext}}$.
+
+\textsc{Лемма 5.5.}
+Пусть заданы отображение оценки $\beta$ и открытые сообщения
+(или открытые продукты) $t$ и $t'$, причём $t =_{\beta} t'$.
+Тогда существует $=_{\beta}$-система уравнений
+$\mathcal E^{=_{\beta}}_{t,t'}$
+размера не более $2\lVert t,t'\rVert_{\text{ext}}^{3}$,
+соответствующая $t$ и $t'$.
+
+\textit{Доказательство.}
+Определим
+\[
+  R \;\subseteq\;
+  S_{\text{ext}}(t,t')\times S_{\text{ext}}(t,t')
+\]
+так, чтобы для каждой пары $(s,s')\in R$ выполнялось $s =_{\beta} s'$.
+Точнее, $R$ — наименьшее бинарное отношение на
+$S_{\text{ext}}(t,t')$, удовлетворяющее условиям
+
+— $(t,t')\in R$;  
+
+— Если $(s,s')\in R$ и, по построению, $s =_{\beta} s'$, причём
+  $s=\langle t_{1},t_{2}\rangle$, то найдутся открытые сообщения
+  $t_{1}',t_{2}'$ такие, что $s'=\langle t_{1}',t_{2}'\rangle$.
+  Тогда $\langle t_{1},t_{1}'\rangle\in R$ и
+  $\langle t_{2},t_{2}'\rangle\in R$. Для случаев шифрования вводятся аналогичные условия на~$R$.
+
+— Если $(s,s')\in R$ и $s$ — произведение
+  $t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}},\; n\ge1,$
+  то $s'$ также является произведением
+  $t_{1}'^{\,e'_{1}}\!\cdots t_{n}'^{\,e'_{n}},\; n\ge1.$
+  Если для некоторых $i,j$ выполнено $t_{i}=_{\beta}t_{j}'$,
+  то пара $\langle t_{i},t_{j}'\rangle$ принадлежит $R$.
+  Заметим, что из равенства $s =_{\beta} s'$ следует:
+  для каждого $t_{i}$ существует хотя бы один
+  $=_{\beta}$-равный ему термин $t_{j}'$.
+
+— Если $t=Exp(u,M)$ для некоторого открытого сообщения $u$
+  и открытого продукта $M$, то $t'=Exp(u',M')$
+  для некоторого открытого сообщения $u'$ и открытого продукта $M'$.
+  Тогда $(u,u')\in R$ и $(M,M')\in R$.
+
+Для каждой пары $(s,s')\in R$ определим систему уравнений
+$\mathcal E_{(s,s')}$ следующим образом.
+Если $s$ (а значит и $s'$) не является произведением,
+то $\mathcal E_{(s,s')}$ — пустое множество.
+Иначе $s$ имеет вид
+$t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}},\;n\ge 1,$
+а $s'$ — вид
+$t_{1}'^{\,e_{1}}\!\cdots t_{n}'^{\,e_{n}}$.
+Положим
+\(
+  \mathcal E_{(s,s')}=\bigl\{\,e_{i}=e_{j}' \;\bigm|\;
+        (t_{i},t_{j}')\in R\bigr\}.
+\)
+
+Структурной индукцией нетрудно показать, что
+\(
+  \mathcal E_{R}= \bigcup_{(s,s')\in R}\mathcal E_{(s,s')}
+\)
+является $=_{\beta}$-системой уравнений для $t$ и $t'$.
+Очевидно, её размер не превосходит
+$2\lVert t,t'\rVert_{\text{ext}}^{\,3}$. \qed
+
+В дальнейшем мы будем обозначать
+$\mathcal E^{=_{\beta}}_{t,t'}$, построенную в доказательстве,
+как \emph{$=_{\beta}$-систему уравнений, индуцированную парой $t$ и $t'$}.
+
+\textbf{Замечание 5.6}
+Система $\mathcal E^{=_{\beta}}_{t,t'}$, сконструированная в Лемме 5.5,
+определена однозначно.
+
+Нам также потребуется приписывать
+$\approx_{\beta}$-эквивалентным терминам
+систему уравнений, которую мы называем
+\emph{$\approx_{\beta}$-системой уравнений}.
+
+\textbf{Определение 5.7}
+Пусть заданы $\beta$ и открытые сообщения (или продукты) $t$ и $t'$
+такие, что $t \approx_{\beta} t'$.
+Говорим, что $\mathcal E$ является
+\emph{$\approx_{\beta}$-системой уравнений} для $t$ и $t'$, если
+
+\begin{enumerate}
+  \item $\beta\models\mathcal E$, и
+  \item $t \approx_{\beta'} t'$ для всякой $\beta'\models\mathcal E$.
+\end{enumerate}
+
+Чтобы построить такую систему уравнений для пары $t$ и $t'$,
+введём понятие $\beta$-кортежа.
+
+\textbf{Определение 5.8.}
+Пусть задано отображение оценки $\beta$ и открытое сообщение
+(или открытый продукт) $t$.
+Пара $(t',\mathcal E)$, где $t'$ — открытое сообщение (или продукт),
+а $\mathcal E$ — система линейных уравнений,
+называется \emph{$\beta$-кортежем} для $t$, если выполняются условия
+
+\begin{enumerate}\itemsep0pt
+\item[(1)] $\beta(t')=\ulcorner\beta(t)\urcorner$;
+\item[(2)] $\beta\models\mathcal E$;
+\item[(3)] $t\approx_{\beta'} t'$ для всякой $\beta'\models\mathcal E$.
+\end{enumerate}
+
+Термин $t'$ называют \emph{$\beta$-термом}
+(или \emph{$\beta$-нормальной формой}) термина $t$,
+а $\mathcal E$ — \emph{$\beta$-системой уравнений} для $t$.
+
+\medskip
+Следующая лемма показывает, как
+$\approx_{\beta}$-систему уравнений можно получить из $\beta$-кортежей.
+
+\textsc{Лемма 5.9.}
+Пусть $t$ и $t'$ — открытые сообщения или продукты такие, что
+$t\approx_{\beta} t'$.
+Предположим, что для $t$ задан $\beta$-кортеж $(s,\mathcal E)$,
+а для $t'$ — $\beta$-кортеж $(s',\mathcal E')$.
+Пусть $\mathcal E_{s,s'}^{=_{\beta}}$ — какая-нибудь
+$=_{\beta}$-система уравнений для $s$ и $s'$ 
+(такая система всегда существует).
+Тогда
+\[
+  \mathcal E^{\approx_{\beta}}_{t,t'}
+      \;=\;
+      \mathcal E\;\cup\;\mathcal E'\;\cup\;\mathcal E_{s,s'}^{=_{\beta}}
+\]
+является $\approx_{\beta}$-системой уравнений для $t$ и $t'$.
+
+\begin{proof}
+Сначала покажем, что для $s$ и $s'$ всегда существует
+$=_{\beta}$-система уравнений.
+Поскольку
+\(
+  \beta(s)=\ulcorner\beta(t)\urcorner
+          =\ulcorner\beta(t')\urcorner
+          =\beta(s'),
+\)
+имеем $s =_{\beta} s'$, а по лемме 5.5 существует
+$=_{\beta}$-система, которую обозначим
+$\mathcal E^{=_{\beta}}_{s,s'}$.
+
+Теперь докажем, что
+$\mathcal E^{\approx_{\beta}}_{t,t'}
+      =\mathcal E\cup\mathcal E'\cup\mathcal E^{=_{\beta}}_{s,s'}$
+является $\approx_{\beta}$-системой для $t$ и $t'$.
+Очевидно, $\beta\models\mathcal E^{\approx_{\beta}}_{t,t'}$.
+Пусть $\beta'\models\mathcal E^{\approx_{\beta}}_{t,t'}$;
+нужно показать, что
+$\ulcorner\beta'(t)\urcorner=\ulcorner\beta'(t')\urcorner$.
+
+Из $\beta'\models\mathcal E,\,\mathcal E'$ получаем
+$\beta'(s)=\beta'(t)$ и $\beta'(s')=\beta'(t')$,
+а из $\beta'\models\mathcal E^{=_{\beta}}_{s,s'}$ следует
+$\beta'(s)=\beta'(s')$.
+Следовательно,
+\(
+  \ulcorner\beta'(t)\urcorner
+  =\ulcorner\beta'(s)\urcorner
+  =\ulcorner\beta'(s')\urcorner
+  =\ulcorner\beta'(t')\urcorner,
+\)
+что и требовалось.
+\end{proof}
+
+\subsection{Существование $\beta$-кортежей}
+
+Покажем, что для любого открытого сообщения или продукта
+существует $\beta$-кортеж.
+
+\textsc{Лемма 5.10.}\;
+Пусть $t$ — открытое сообщение или открытый продукт,
+а $\beta$ — отображение оценки.
+Тогда для $t$ существует $\beta$-кортеж.
+
+\textit{Доказательство.}
+Построим пару \((t^{\beta},\mathcal E^{\beta}_{t})\) индукцией по~$t$.
+
+\medskip
+— Если $t \in \mathcal A$, то полагаем $t^{\beta}=t$,
+\(\mathcal E^{\beta}_{t}=\varnothing\).
+Очевидно, \((t^{\beta},\mathcal E^{\beta}_{t})\) —
+$\beta$-кортеж для~$t$.
+
+— Пусть $t=\langle t_{1},t_{2}\rangle$.
+По индукционному предположению имеем
+\((t_{1}^{\beta},\mathcal E_{1}^{\beta})\)
+и \((t_{2}^{\beta},\mathcal E_{2}^{\beta})\)
+— $\beta$-кортежи для $t_{1}$ и $t_{2}$.
+Определяем
+\(
+  t^{\beta}=\langle t_{1}^{\beta},t_{2}^{\beta}\rangle,
+  \qquad
+  \mathcal E^{\beta}_{t}= \mathcal E_{1}^{\beta}\cup\mathcal E_{2}^{\beta}.
+\)
+Аналогично строятся $\beta$-кортежи для случая шифрования.
+Индукцией легко проверить, что $(t^{\beta},\mathcal E^{\beta}_{t})$
+действительно является $\beta$-кортежем для~$t$.
+
+— Пусть $t = t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}$. Для каждого $i$ возьмём $\beta$-кортеж $(t_{i}^{\beta},\mathcal E_{t_{i}}^{\beta})$. Разобьём $\{t_{1},\dots,t_{n}\}$ на классы эквивалентности $C_{1},\dots,C_{l}$ по $\approx_{\beta}$; положим $e_{C_{j}}=\sum_{t_{i}\in C_{j}}e_{i}$ и выберем представителя $s_{C_{j}}\in C_{j}$, причём без ограничения общности считаем, что для всех $s\in C_{1}$ выполняется $s\approx_{\beta}1$ (класс $C_{1}$ может быть пустым). Индукционное предположение даёт $s^{\beta}=1$ для каждого $s\in C_{1}$, так как $\beta(s^{\beta})=\ulcorner\beta(s)\urcorner=1$. Обозначим $J=\{\,j\in\{2,\dots,l\}\mid\beta(e_{C_{j}})=0\}$; если $C=\{s_{1},\dots,s_{k}\}$ — класс, элементы которого попарно $\approx_{\beta}$-эквивалентны, а $s_{j}^{\beta}$ — $\beta$-терм для $s_{j}$, то кладём $\mathcal E_{C}^{\beta}=\bigcup_{i\ne j}\mathcal E^{=_{\beta}}_{s_{i}^{\beta},s_{j}^{\beta}}$.
+Если \(C=\{s_{1},\dots,s_{k}\}\) —
+класс, элементы которого попарно
+\(\approx_{\beta}\)-эквивалентны,
+и \(s_{j}^{\beta}\) — $\beta$-терм для $s_{j}$,
+положим
+\[
+  \mathcal E_{C}^{\beta}=
+    \bigcup_{\,i\neq j}
+      \mathcal E_{s_{i}^{\beta},s_{j}^{\beta}}^{=_{\beta}}.
+\]
+
+Заметим, что
+$\beta(s_i^{\beta})=\ulcorner\beta(s_i)\urcorner
+                    =\ulcorner\beta(s_j)\urcorner
+                    =\beta(s_j^{\beta})$,
+следовательно $s_i^{\beta}=_{\beta}s_j^{\beta}$,
+и по лемме 5.5 существует $=_{\beta}$-система
+$\mathcal E_{s_i^{\beta},s_j^{\beta}}^{=_{\beta}}$.
+Положим
+\[
+  t^{\beta}=
+  \begin{cases}
+    1, & \text{если }J=\{2,\dots,l\},\\[4pt]
+    \displaystyle\prod_{j\notin J\cup\{1\}}
+       (s_{C_j}^{\beta})^{e_{C_j}}, & \text{иначе}.
+  \end{cases}
+\]
+Далее положим
+\[
+  \mathcal E^{\beta}=
+      \bigcup_{i=1}^{n}\mathcal E_{t_i}^{\beta}\;\cup
+      \bigcup_{j=2}^{l}\mathcal E_{C_j}^{\beta}\;\cup
+      \bigcup_{j\in J}\{\,e_{C_j}=0\}.
+\]
+
+Индукцией легко показать, что $(t^{\beta},\mathcal E^{\beta})$ —
+$\beta$-кортеж для $t$: действительно,
+из индукционного предположения следует $\beta\models\mathcal E^{\beta}$.
+По определению функции нормализации нетрудно проверить, что,
+если $J=\{2,\dots,l\}$, то $\ulcorner\beta(t)\urcorner=1$,
+а значит $t^{\beta}= \ulcorner\beta(t)\urcorner$.
+В противном случае
+\[
+  \mathcal E_{t}^{\beta}
+  =\bigcup_{i=1}^{n}\mathcal E_{t_i}^{\beta}\;
+   \cup\!
+   \bigcup_{j=2}^{l}\mathcal E_{C_j}^{\beta}\;
+   \cup\!
+   \bigcup_{j\in J}\{\,e_{C_j}=0\}.
+\]
+Индукционное предположение даёт, что $(t^{\beta},\mathcal E_{t}^{\beta})$ является $\beta$-кортежем для $t$: действительно, индукция обеспечивает $\beta\models\mathcal E_{t}^{\beta}$; по определению функции нормализации нетрудно проверить, что при $J=\{2,\dots,l\}$ имеем $\ulcorner\beta(t)\urcorner=1$, а значит $t^{\beta}=\ulcorner\beta(t)\urcorner$, тогда как при $J\ne\{2,\dots,l\}$ выполняется $\ulcorner\beta(t)\urcorner=\prod_{j\notin J\cup\{1\}}\ulcorner\beta(s_{C_{j}})\urcorner^{\,\beta(e_{C_{j}})}$, и, поскольку по индукции $\beta(s_{C_{j}}^{\beta})=\ulcorner\beta(s_{C_{j}})\urcorner$, получаем $\beta(t^{\beta})=\ulcorner\beta(t)\urcorner$; следовательно, $\beta(t^{\beta})=\ulcorner\beta(t)\urcorner$. Пусть теперь $\beta'\models\mathcal E_{t}^{\beta}$; если $s,s'\in C_{j}$ и $s\ne s'$.По определению $\mathcal E_{t}^{\beta}$ имеем
+\(
+  \beta'\;\models\;
+  \mathcal E_{t}^{\beta}\cup
+  \mathcal E_{s}^{\beta}\cup
+  \mathcal E_{s_i^{\beta},s_j^{\beta}}^{=_{\beta}}
+  \;(=\mathcal E_{s_i^{\beta},s_j^{\beta}}^{\approx_{\beta}}).
+\)
+Следовательно, по лемме 5.9
+$\ulcorner\beta'(s)\urcorner=\ulcorner\beta'(s')\urcorner$.
+Поскольку $s^{\beta}=1$, получаем $\beta'(s^{\beta})=1$
+для каждого $s\in C_{1}$; кроме того, для $j\in J$ имеем
+$\beta'(e_{C_j})=0$.
+Отсюда непосредственно следует
+$\ulcorner\beta'(t)\urcorner=\ulcorner\beta'(t^{\beta})\urcorner$.
+
+\medskip\noindent
+— Если $t=\operatorname{Exp}(u,M)$ и при этом
+$\beta(u)\neq\operatorname{Exp}(\,\cdot,\cdot\,)$,
+то по индукционному предположению существуют $\beta$-кортежи
+$(u^{\beta},\mathcal E_{u}^{\beta})$ для $u$
+и $(M^{\beta},\mathcal E_{M}^{\beta})$ для $M$.
+Положим
+\[
+  t^{\beta}=
+  \begin{cases}
+    u^{\beta}, & \text{если } \beta(M)=1,\\[4pt]
+    \operatorname{Exp}\!\bigl(u^{\beta},M^{\beta}\bigr), & \text{иначе},
+  \end{cases}
+  \qquad
+\]
+
+В обоих случаях мы присваиваем:
+\[
+\mathcal E_{t}^{\beta}= \mathcal E_{u}^{\beta}\cup\mathcal E_{M}^{\beta}.
+\]
+
+Окончим доказательство, показав, что $(t^{\beta},\mathcal E_{t}^{\beta})$
+действительно является $\beta$-кортежем для $t$.
+Очевидно, $\beta\models\mathcal E_{t}^{\beta}$, поэтому осталось
+убедиться, что
+\[
+  \ulcorner\beta(t^{\beta})\urcorner=\ulcorner\beta(t)\urcorner
+  \quad\text{и}\quad
+  \ulcorner\beta'(t^{\beta})\urcorner=\ulcorner\beta'(t)\urcorner
+  \;\; \text{для всякого } \beta'\models\mathcal E_{t}^{\beta}.
+\]
+Возникают два случая.
+
+\medskip
+(1) $\ulcorner\beta(M)\urcorner=1$.
+Тогда $\ulcorner\beta(t)\urcorner=\ulcorner\beta(u)\urcorner$.
+По индукции
+\(
+  \ulcorner\beta(t)\urcorner
+  =\ulcorner\beta(u)\urcorner
+  =\ulcorner\beta(u^{\beta})\urcorner
+  =\ulcorner\beta(t^{\beta})\urcorner.
+\)
+Кроме того,
+$\beta(M^{\beta})=\ulcorner\beta(M)\urcorner=1$, откуда $M^{\beta}=1$
+и, по индукции,
+$\ulcorner\beta'(M^{\beta})\urcorner=\ulcorner\beta'(M)\urcorner=1$.
+Следовательно,
+\[
+  \ulcorner\beta'(t)\urcorner
+  \;\overset{(*)}{=}\;
+  \ulcorner\beta'(u)\urcorner
+  \;\overset{(**)}{=}\;
+  \ulcorner\beta'(u^{\beta})\urcorner
+  =\ulcorner\beta'(t^{\beta})\urcorner,
+\]
+где $(*)$ следует из индукционного предположения и определения
+$\mathcal E_{t}^{\beta}$, а $(**)$ — из определения $t^{\beta}$.
+
+\medskip
+(2)\;Или $\ulcorner\beta(M)\urcorner\neq1$. Тогда
+\[
+  \ulcorner\beta(t)\urcorner
+    \;=\;
+  \operatorname{Exp}\!\bigl(
+      \ulcorner\beta(u)\urcorner,\,
+      \ulcorner\beta(M)\urcorner
+    \bigr)
+  \;\overset{(*)}{=}\;
+  \operatorname{Exp}\!\bigl(
+      \ulcorner\beta(u^{\beta})\urcorner,\,
+      \beta(M^{\beta})
+    \bigr)
+  \;\overset{(**)}{=}\;
+  \ulcorner\beta(t^{\beta})\urcorner,
+\]
+где $(*)$ получено по индукции и определению $\mathcal E_{t}^{\beta}$,
+а $(**)$ — по определению $t^{\beta}$.
+
+Пусть теперь $\beta' \models \mathcal E_{t}^{\beta}$.
+Тогда
+\[
+  \ulcorner\beta'(t)\urcorner
+    \;=\;
+  \operatorname{Exp}\!\bigl(
+      \ulcorner\beta'(u)\urcorner,\,
+      \ulcorner\beta'(M)\urcorner
+    \bigr)
+  \;\overset{(*)}{=}\;
+  \operatorname{Exp}\!\bigl(
+      \ulcorner\beta'(u^{\beta})\urcorner,\,
+      \ulcorner\beta'(M^{\beta})\urcorner
+    \bigr)
+  \;\overset{(**)}{=}\;
+  \ulcorner\beta'(t^{\beta})\urcorner,
+\]
+где $(*)$ снова следует из индукции и определения $\mathcal E_{t}^{\beta}$,
+а $(**)$ — из определения $t^{\beta}$.
+
+— Если $t=\operatorname{Exp}(u,M)$ и
+  $\ulcorner\beta(u)\urcorner=\operatorname{Exp}(u',M')$,
+  то по индукции существует $\beta$-кортеж
+  $\bigl(u^{\beta},\mathcal E_{u}^{\beta}\bigr)$ для $u$.
+  В частности, $\beta(u^{\beta})=\ulcorner\beta(u)\urcorner$,
+  так что $u^{\beta}$ имеет вид
+  $\operatorname{Exp}(u'',M'')$, где
+  $\beta(u'')=u'$ и $\beta(M'')=M'$.
+  Кроме того, по индукции существует $\beta$-кортеж
+  $\bigl((M''\!\cdot M)^{\beta},\mathcal E_{(M''\cdot M)}^{\beta}\bigr)$
+  для $(M''\!\cdot M)$.
+  Положим
+  \[
+      t^{\beta}=
+      \begin{cases}
+        u'', & \text{если }\ulcorner\beta(M''\!\cdot M)\urcorner=1,
+               \ \text{т.\,е. } \ulcorner M'\!\cdot\beta(M)\urcorner=1,\\[4pt]
+        \operatorname{Exp}\!\bigl(u'',(M''\!\cdot M)^{\beta}\bigr), & \text{иначе},
+      \end{cases}
+  \]
+
+В обоих случаях устанавливаем, что:
+\[
+\qquad
+\mathcal E_{t}^{\beta}= \mathcal E_{u}^{\beta}\cup
+                        \mathcal E_{(M''\cdot M)}^{\beta}.
+\]
+
+Индукцией теперь можно показать, что $(t^{\beta},\mathcal E_{t}^{\beta})$
+действительно является $\beta$-кортежем для $t$.
+Очевидно, $\beta\models\mathcal E_{t}^{\beta}$.
+Следовательно, остаётся доказать равенства
+$\beta(t^{\beta})=\ulcorner\beta(t)\urcorner$ и
+$\ulcorner\beta'(t)\urcorner=\ulcorner\beta'(t^{\beta})\urcorner$ для всякого
+$\beta'\models\mathcal E_{t}^{\beta}$.
+Сначала положим
+\(
+  (u^{\beta},\mathcal E_{u}^{\beta})
+  =\operatorname{Exp}(u'',M'')
+\)
+, как было выше.
+Мы знаем, что
+\(
+  \ulcorner\beta(t)\urcorner=\ulcorner\operatorname{Exp}\!\bigl(\beta(u),\beta(M)\bigr)\urcorner
+          =\ulcorner\operatorname{Exp}\!\bigl(u',\ulcorner\,M'\!\cdot\!\beta(M)\urcorner\bigr)\urcorner.
+\)
+Если $\ulcorner M'\!\cdot\!\beta(M)\urcorner=1$, то
+\(
+  \ulcorner\beta(t)\urcorner=u'=\beta(u'')=\beta(t^{\beta}).
+\)
+Иначе
+
+\[
+\begin{aligned}
+  \ulcorner\beta(t)\urcorner
+      &= Exp\!\bigl(u',\ulcorner\,M'\!\cdot\!\beta(M)\urcorner\bigr)
+      &= \operatorname{Exp}\!\bigl(\beta(u''),
+                                   \ulcorner\beta(M'')\!\cdot\!\beta(M)\urcorner\bigr)\\
+      &= \operatorname{Exp}\!\bigl(\beta(u''),\,
+                                   \ulcorner\beta\bigl(M''\!\cdot\!M\bigr)\urcorner\bigr)
+      &\overset{(*)}{=} \operatorname{Exp}\!\bigl(\beta(u''),\,
+                                   \beta\bigl((M''\!\cdot\!M)^{\beta}\bigr)\bigr)
+         \;{(**)}
+      &\overset{(**)}{=} \beta(t^{\beta}),
+\end{aligned}
+\]
+
+\noindentгде равенство $(*)$ получено по индукции,
+а $(**)$ — по определению $t^{\beta}$.
+Пусть теперь $\beta'(t) \models \mathcal E_{t}^{\beta}$.
+Тогда
+\(
+  \ulcorner\beta'(t)\urcorner=\ulcorner Exp\bigl(\beta'(u),\beta'(M)\bigr)\urcorner.
+\)
+Поскольку $\beta'\models \mathcal E_{u}^{\beta}$,
+из индукционного предположения следует
+\(
+  \ulcorner\beta'(u)\urcorner=\ulcorner\beta'(u^{\beta})\urcorner
+           =\ulcorner\beta'\!\bigl(\operatorname{Exp}(u'',M'')\bigr)\urcorner.
+\)
+Отсюда
+\(
+  \ulcorner\beta'(t)\urcorner=\ulcorner\operatorname{Exp}\!\bigl(
+               \beta'(u^{\beta}),\,
+               \beta'(M)
+            \bigr)\urcorner
+           =\ulcorner\operatorname{Exp}\!\bigl(
+               \beta'(u''),\,
+               \beta'(M'')\!\cdot\!\beta'(M)
+            \bigr)\urcorner
+           =\ulcorner\operatorname{Exp}\!\bigl(
+               \beta'(u''),\,
+               \beta'(M''\!\cdot\!M)
+            \bigr)\urcorner.
+\)
+Так как $\beta'\models \mathcal E_{(M''\!\cdot M)}^{\beta}$,
+по индукции имеем
+\(
+  \ulcorner\beta'\!\bigl((M''\!\cdot M)^{\beta}\bigr)\urcorner
+  =\ulcorner\beta'(M''\!\cdot M)\urcorner.
+\)
+Следовательно,
+\(
+  \ulcorner\beta'(t)\urcorner
+  =\ulcorner\operatorname{Exp}\!\bigl(
+       \beta'(u''),\,
+       \beta'\!\bigl((M''\!\cdot M)^{\beta}\bigr)
+    \bigr)\urcorner.
+\)
+Если $t^{\beta}=\operatorname{Exp}\!\bigl(u'',(M''\!\cdot M)^{\beta}\bigr)$,
+то $\ulcorner\beta'(t)\urcorner=\ulcorner\beta'(t^{\beta})\urcorner$.
+В противном случае $t^{\beta}=u''$ и
+$\ulcorner\beta(m''\!\cdot M)\urcorner=1$, а значит $(M''\!\cdot M)^{\beta}=1$,
+и снова $\beta'(t)=\beta'(t^{\beta})$.
+Таким образом, $\ulcorner\beta'(t)\urcorner=\ulcorner\beta'(t^{\beta})\urcorner$.
+\qed
+
+\subsection{Ограничение размера $\beta$-термов}
+
+Начиная с этого места, через $t^{\beta}$ мы будем обозначать
+$\beta$-терм сообщения (или продукта) $t$, построенный в доказательстве
+леммы 5.10.
+Наша цель — показать, что всегда существует $\beta$-кортеж для $t$,
+размер которого ограничен полиномом от $\lVert t\rVert$.
+Доказательство разбивается на два шага:
+в настоящем подразделе мы получаем оценку размера $t^{\beta}$,
+а в следующем — оцениваем размер системы уравнений,
+ассоциированной с $t^{\beta}$.
+
+Для начала установим, что $\beta$-терм определяется однозначно.
+
+\textsc{Лемма 5.11.}
+Для любого открытого сообщения или продукта $t$,
+такого что $\beta(t)=\ulcorner\beta(t)\urcorner$, выполнено $t^{\beta}=t$.
+
+\textit{Доказательство.} См. Приложение В.\hfill$\square$
+
+\noindentДля множества $E$ открытых сообщений или продуктов положим
+\[
+  E^{\beta}=\{\,t^{\beta}\mid t\in E\}.
+\]
+В следующей лемме мы получим верхнюю границу для
+$\lvert t^{\beta}\rvert_{\text{ext}}$,
+а в Лемме 5.14 — для $\Vert t^{\beta}\Vert_{\text{exp}}$.
+Объединив эти результаты, Лемма 5.15 даёт оценку
+для $\Vert t^{\beta}\Vert_{\text{ext}}$.
+
+\textsc{Лемма 5.12.}
+Пусть $t,t_{1},\dots,t_{n}$ — открытые сообщения или продукты,
+а $\beta$ — отображение оценки.
+Тогда выполняются следующие утверждения:
+
+\begin{enumerate}\itemsep0pt
+\item $\mathcal S(t^{\beta}) \subseteq \mathcal S(t)^{\beta}$;
+\item $\lvert\ulcorner\beta(t)\urcorner\rvert \le \lvert t\rvert$
+      и
+      $\lvert\ulcorner\beta(t_{1})\urcorner\rvert,\dots,
+       \lvert\ulcorner\beta(t_{n})\urcorner\rvert
+       \le \lvert t_{1},\dots,t_{n}\rvert$;
+\item $\lvert t^{\beta}\rvert_{\text{ext}} \le 2\cdot\lvert t\rvert$.
+\end{enumerate}
+
+\begin{proof}
+Докажем пункты по отдельности:
+
+(1) Доказательство ведём по структурной индукции по~$t$.
+
+— Если $t\in\mathcal A$, то $\mathcal S(t^{\beta})=\{t\}=\mathcal S(t)^{\beta}$. Пусть $t=\langle t_{1},t_{2}\rangle$. По индукционному предположению
+  \(
+      S(t^{\beta})
+      =\{t^{\beta}\}\cup S(t_{1}^{\beta})\cup S(t_{2}^{\beta})
+      \subseteq \{t^{\beta}\}\cup S(t_{1})^{\beta}\cup S(t_{2})^{\beta}
+      = S(t)^{\beta},
+  \)
+  и тот же довод проводится для случая шифрования.
+
+— Пусть $t=t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}$.
+  Рассмотрим два подслучая. Если $t^{\beta}=1$, то очевидно $S(t^{\beta})\subseteq S(t)^{\beta}$.
+  Иначе по доказательству леммы 5.10 имеем
+  \(
+      t^{\beta}=\prod_{j\notin J\cup\{1\}}
+                (s_{C_{j}}^{\beta})^{e_{C_{j}}},
+  \)
+  причём для каждого $C_{j}$ найдётся $t_{i}$,
+  такое что $t_{i}^{\beta}=s_{C_{j}}^{\beta}$.
+  Индукция даёт
+  \[
+    S(t^{\beta})
+      \subseteq
+      \{t^{\beta}\}\cup
+      \bigcup_{j\notin J\cup\{1\}}S\!\bigl(s_{C_{j}}^{\beta}\bigr)
+      \subseteq
+      \{t^{\beta}\}\cup
+      \bigcup_{i=1}^{n}S(t_{i})^{\beta}
+      = S(t)^{\beta}.
+  \]
+
+— Если $t=\operatorname{Exp}(u,M)$ и $t^{\beta}=u^{\beta}$,
+  то индукционное предположение немедленно даёт
+  $S(t^{\beta})\subseteq S(t)^{\beta}$.
+
+— Если $t=\operatorname{Exp}(u,M)$, $t^{\beta}=\operatorname{Exp}(u^{\beta},M^{\beta})$
+и $M=t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}$, то $M^{\beta}\ne1$ и, по индукции,
+\[
+  S(t^{\beta})
+    \subseteq \{t^{\beta}\}\cup S(u^{\beta})\cup\bigcup_{i}S(t_{i}^{\beta})
+    \subseteq \{t^{\beta}\}\cup S(u)^{\beta}\cup\bigcup_{i}S(t_{i})^{\beta}
+    = S(t)^{\beta}.
+\]
+
+— Если $t=\operatorname{Exp}(u,M)$, $u^{\beta}=\operatorname{Exp}(u',M')$ и
+  $t^{\beta}=u^{\beta}$, то
+  \[
+      S(t^{\beta})\subseteq S(u^{\beta})\subseteq S(u)^{\beta} \subseteq S(t)^{\beta}.
+  \]
+
+— Наконец, предположим, что
+   \(t=\operatorname{Exp}(u,M)\),
+   \(u^{\beta}=\operatorname{Exp}(u'',M'')\),
+   а
+   \(t^{\beta}=\operatorname{Exp}\!\bigl(u'',(M''\!\cdot M)^{\beta}\bigr)\),
+   причём \((M''\!\cdot M)^{\beta}\neq1\).
+   Тогда \((M''\!\cdot M)^{\beta}\) имеет вид
+   \(\prod_{j\notin J\cup\{1\}}\bigl(s_{C_{j}}^{\beta}\bigr)^{e'_{j}}\)
+   для некоторых показателей \(e'_{j}\); при этом
+   \(M''=t''_{1}{}^{e_{1}}\!\cdots t''_{n}{}^{e_{n}}\),
+   \(M=t_{1}{}^{e_{1}}\!\cdots t_{n}{}^{e_{n}}\),
+   и каждый \(s_{C_{j}}^{\beta}\) совпадает с некоторым
+   \(t''_{i}\) или \(t_{i}^{\beta}\)
+   (заметим, что \(t''_{i}=t_{i}^{\beta}\) по лемме 5.11).
+   По индукционному предположению
+   \(t''_{i}\in S(u^{\beta})\subseteq S(u)^{\beta}\), откуда
+\[
+\begin{aligned}
+S(t^{\beta})
+  &= \{t^{\beta}\}\,\cup\,S(u'')\,
+     \cup\,\bigcup_{j\notin J\cup\{1\}} S\!\bigl(s_{C_j}^{\beta}\bigr)\\
+  &\subseteq \{t^{\beta}\}\,\cup\,S(u'')\,
+     \cup\,\bigcup_{i=1}^{n} S\!\bigl(t_{i}^{\beta}\bigr)\,
+     \cup\,\bigcup_{i=1}^{n''} S\!\bigl(t''_{i}\bigr)\\
+  &\subseteq \{t^{\beta}\}\,\cup\,\bigcup_{i=1}^{n} S\!\bigl(t_{i}\bigr)^{\beta}\,
+     \cup\,S(u^{\beta})\\
+  &\subseteq \{t^{\beta}\}\,\cup\,\bigcup_{i=1}^{n} S\!\bigl(t_{i}\bigr)^{\beta}\,
+     \cup\,S(u)^{\beta}
+  \;=\; S(t)^{\beta}.
+\end{aligned}
+\]
+
+(2)\; Сначала заметим, что $\ulcorner\beta(t)\urcorner=\beta(t^{\beta})$.
+Легко видеть, что для любого открытого сообщения или продукта $s$
+выполняется $|\beta(s)|\le |s|$.
+Следовательно,
+\[
+  |\ulcorner\beta(t)\urcorner|
+     =|\beta(t^{\beta})|
+     \le |t^{\beta}|
+     \;\overset{(*)}{\le}\;
+     \operatorname{Card}\bigl(S(t)^{\beta}\bigr)
+     \le \operatorname{Card}\bigl(S(t)\bigr)
+     =|t|,
+\]
+где в~$(*)$ используется пункт~1. 
+Тот же довод даёт
+$|\ulcorner\beta(t_{1})\urcorner|,\dots,
+ |\ulcorner\beta(t_{n})\urcorner|
+ \le |t_{1},\dots,t_{n}|$.
+
+\smallskip
+(3)\; Это непосредственное следствие пункта~1 и леммы 5.2:
+\[
+  |t^{\beta}|_{\text{ext}}
+     \le 2\cdot|t^{\beta}|
+     \le 2\cdot\operatorname{Card}\bigl(S(t^{\beta})\bigr)
+     \le 2\cdot|t|.
+\quad\square
+\]
+\end{proof}
+
+Теперь нам нужно получить верхнюю оценку для
+$\lVert t^{\beta}\rVert_{\text{exp}}$.
+Для этого понадобится следующая лемма.
+
+\textsc{Лемма 5.13.}
+Пусть $E$ — конечное множество открытых сообщений или продуктов,
+такое что $S_{\text{ext}}(E)=E$, а $t$ — максимальный
+(относительно упорядочения «строгий подтермин»)
+элемент множества $E$.
+Тогда
+\[
+  \bigl\lvert\,
+        \bigcup_{s\in E} S_{\text{ext}}\!\bigl(s^{\beta}\bigr)
+        \Bigr{\rvert}_{\text{exp}}
+  \;\le\;
+  \bigl\lvert\,
+        \bigcup_{s\in E\setminus\{t\}}
+            S_{\text{ext}}\!\bigl(s^{\beta}\bigr)
+            \Bigr{\rvert}_{\text{exp}}
+  +\lVert t\rVert_{\text{ext}}^{\,2}.
+\]
+
+\textit{Доказательство.} См. Приложение В.\hfill$\square$
+
+Используя предыдущую лемму, получаем:
+
+\textsc{Лемма 5.14.}\;
+Для всякого открытого сообщения или продукта $t$ выполняется
+\(
+   \bigl\lVert t^{\beta}\bigr\rVert_{\text{exp}}
+   \;\le\;
+   \lVert t\rVert_{\text{ext}}^{\,3}.
+\)
+
+\textit{Доказательство.}
+Положим $E = S_{\text{ext}}(t)$.
+По Лемме 5.13 имеем
+\[
+   \bigl\lVert t^{\beta}\bigr\rVert_{\text{exp}}
+   \;=\;
+   \lvert S_{\text{ext}}(t^{\beta})\rvert_{\text{exp}}
+   \;\le\;
+   \Bigl\lvert\;
+       \bigcup_{s\in E} S_{\text{ext}}\!\bigl(s^{\beta}\bigr)
+   \Bigr\rvert_{\text{exp}} .
+\]
+Последовательно удаляя из $E$ (максимальный) элемент
+и применяя Лемму 5.13 на каждом шаге,
+получаем
+\(
+   \Bigl\lvert\;
+       \bigcup_{s\in E} S_{\text{ext}}\!\bigl(s^{\beta}\bigr)
+   \Bigr\rvert_{\text{exp}}
+   \;\le\;
+   \lvert t\rvert_{\text{ext}}\;\cdot\;\lVert t\rVert_{\text{ext}}^2 ,
+\)
+а так как $\operatorname{Card}(E)=\lvert t\rvert_{\text{ext}}$,
+получаем требуемое неравенство
+\(
+   \lVert t^{\beta}\rVert_{\text{exp}}
+   \le
+   \lVert t\rVert_{\text{ext}}^{\,3}.
+\quad\square
+\)
+
+Мы уже ограничили как количество расширенных подтерминов терма $t^{\beta}$,
+так и величину его целых коэффициентов (см.~Леммы 5.12 и 5.14).
+Объединив эти оценки, мы, наконец, получаем полиномиальную верхнюю
+границу на размер $\beta$-термов.
+
+\textbf{Лемма 5.15.}\;
+Для любого открытого сообщения или продукта $t$ выполняется
+\[
+      \bigl\lVert t^{\beta}\bigr\rVert_{\text{ext}}
+      \;\le\;
+      3\cdot\lVert t\rVert_{\text{ext}}^{\,3}.
+\]
+
+\subsection{Ограничение размера $\beta$-систем уравнений}
+
+В предыдущем подразделе мы получили полиномиальную оценку
+для размера $\beta$-термов.
+Теперь ограничим размер $\beta$-систем уравнений,
+связанных с этими термами, а тем самым и общий размер
+$\beta$-кортежей.
+Для этого сначала зададим конкретную $\beta$-систему уравнений
+$\mathcal E_{t}^{\beta}$ для терма $t$,
+размер которой полиномиально ограничен величиной $\lVert t\rVert_{\text{ext}}$.
+
+Пусть далее $\beta$ — отображение оценки, а $t$ — открытое сообщение
+или продукт. Опишем систему уравнений
+$\mathcal E_{t}^{\prime\,\beta}$, которая добавляется
+при переходе от системы, построенной для подтерминов $t$,
+к системе уравнений самого $t$:
+
+\medskip
+— Если $t$ — атом, пара или шифрование, то $\mathcal E_{t}^{'\beta}=\varnothing$.
+
+— Если $t=t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}$, то, используя обозначения
+из доказательства Леммы 5.10, положим
+\[
+      \mathcal E_{t}^{'\beta}
+      =\bigcup_{j\ge2}\mathcal E_{C_{j}}^{\beta}
+       \;\cup\;
+       \bigcup_{j\in J}\{\,e_{C_{j}}=0\}.
+\]
+
+— Если $t=\operatorname{Exp}(u,M)$ и
+  $\ulcorner\beta(u)\urcorner\neq\operatorname{Exp}(\,\cdot,\cdot\,)$,
+  то $\mathcal E_{t}^{'\beta}=\varnothing$.
+  В противном случае $u^{\beta}=\operatorname{Exp}(u'',M')$ и
+  полагаем $\mathcal E_{t}^{'\beta}=\mathcal E_{(M''\!\cdot M)}^{'\beta}$.
+
+\textit{Замечание 5.16.}
+Система уравнений $\mathcal E_{t}^{\prime\,\beta}$ однозначно определяется
+(по модулю AC\textsubscript{+}).
+
+Система $\mathcal E_{t}^{\prime\,\beta}$ фиксирует ограничения
+на показатели степеней \emph{на одном уровне} терма $t$.
+Полная $\beta$-система уравнений для $t$ задаётся как объединение
+систем, построенных для всех его подтерминов:
+\[
+  \mathcal E_{t}^{\beta}
+  \;=\;
+  \bigcup_{s\in S_{\text{ext}}(t)} \mathcal E_{s}^{\prime\,\beta}.
+\]
+
+Далее мы докажем, что пара $(t^{\beta},\mathcal E_{t}^{\beta})$
+является $\beta$-кортежем для $t$, а также то, что размер
+$\mathcal E_{t}^{\beta}$ полиномиально ограничен размером $t$.
+Однако прежде потребуется следующая лемма о $\beta$-кортежах
+для произведений:
+
+\textsc{Лемма 5.17.}
+Пусть 
+\(M = t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}\)
+и
+\(M' = t_{1}'^{\,e_{1}'}\!\cdots t_{n'}'^{\,e_{n'}'}\) —
+два открытых продукта такие, что 
+\(\beta(t_{i}) = \ulcorner\beta(t_{i}')\urcorner\)
+для всех соответствующих множителей.
+Пусть для каждого \(i\) задан $\beta$-кортеж 
+\((t_{i}^{\beta},\mathcal E_{i})\) терма \(t_{i}\).
+Тогда пара
+\[
+\Bigl((M'\!\cdot M)^{\beta},\;
+      \mathcal E_{(M'\!\cdot M)}^{\prime\,\beta}
+      \,\cup\!
+      \bigcup_{i}\mathcal E_{i}\Bigr)
+\]
+является $\beta$-кортежем для продукта \(M'\!\cdot M\).
+
+\begin{proof}Смотреть приложение В.\end{proof}
+
+\textbf{Лемма 5.18.}\;
+Для любого открытого сообщения или продукта $t$ и всякого отображения оценки $\beta$ выполняются следующие утверждения:
+\begin{enumerate}\itemsep0pt
+\item[(1)] Пара $\bigl(t^{\beta},\mathcal E_{t}^{\beta}\bigr)$ является $\beta$-кортежем для $t$.
+\item[(2)] Размер $\mathcal E_{t}^{\beta}$ ограничен полиномом от $\lVert t\rVert_{\text{ext}}$.
+\item[(3)] Общий размер $\bigl(t^{\beta},\mathcal E_{t}^{\beta}\bigr)$, равный сумме размеров $t^{\beta}$ и $\mathcal E_{t}^{\beta}$, также ограничен полиномом от $\lVert t\rVert_{\text{ext}}$.
+\end{enumerate}
+
+\textit{Доказательство.}
+Докажем пункты по отдельности.
+
+\noindent(1)\; Проводим структурную индукцию по $t$ в соответствии с построением из леммы 5.10. \qedhere
+
+— Если $t\in\mathcal A$, случай тривиален. Предположим, что  
+  $t=\langle t_{1},t_{2}\rangle$. Тогда  
+  \(
+      \mathcal E_{t}^{\beta}
+      =\mathcal E_{t}^{\prime\,\beta}
+       \;\cup\!
+       \bigcup_{s\in S_{\text{ext}}(t_{1})}\mathcal E_{s}^{\prime\,\beta}
+       \;\cup\!
+       \bigcup_{s\in S_{\text{ext}}(t_{2})}\mathcal E_{s}^{\prime\,\beta}.
+  \)
+  По определению имеем  
+  \(
+      \mathcal E_{t}^{\beta}
+      =\mathcal E_{t_{1}}^{\beta}\cup\mathcal E_{t_{2}}^{\beta}
+  \)
+  (здесь используется Замечание 5.16).  
+  Точно так же, как в доказательстве леммы 5.10, отсюда следует, что  
+  $\bigl(t^{\beta},\mathcal E_{t}^{\beta}\bigr)$ является $\beta$-кортежем для $t$.  
+  Рассуждение для случая шифрования проводится аналогично.
+
+— Если \(t = t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}\), то, пользуясь
+  обозначениями, введёнными в доказательстве леммы 5.10,
+  а также определением \(\mathcal E_{t}^{\prime\,\beta}\) и
+  Замечанием 5.16, получаем
+\(
+   \mathcal E_{t}^{\beta}
+     = \bigcup_{i=1}^{n}\mathcal E_{t_{i}}^{\beta}
+       \;\cup\!
+       \bigcup_{j=2}^{\ell}\mathcal E_{C_{j}}^{\beta}
+       \;\cup\!
+       \bigcup_{j\in J}\{\,e_{C_{j}} = 0\}.
+\)
+Точно так же, как в доказательстве леммы 5.10,
+из этого следует, что пара \(\bigl(t^{\beta},\mathcal E_{t}^{\beta}\bigr)\)
+является \(\beta\)-кортежем для \(t\).
+
+— Если $t=\operatorname{Exp}(u,M)$ и
+  $\beta(u)\neq\operatorname{Exp}(\,\cdot,\cdot\,)$, то по определению
+  $\mathcal E_{t}^{\beta}$ и в силу Замечания 5.16 имеем
+  $\mathcal E_{t}^{\beta}= \mathcal E_{u}^{\beta}\cup\mathcal E_{M}^{\beta}$;
+  как и в лемме 5.10, отсюда следует, что
+  $(t^{\beta},\mathcal E_{t}^{\beta})$ является $\beta$-кортежем для $t$.
+
+— Наконец, пусть $t=\operatorname{Exp}(u,M)$, причём
+$\ulcorner\beta(u)\urcorner\neq\operatorname{Exp}(\,\cdot,\cdot\,)$ и
+$u^{\beta}= \operatorname{Exp}(u'',M'')$.
+Предположим, что $M=t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}$.
+По лемме 5.17 пара
+\(
+  \Bigl((M''\!\cdot M)^{\beta},\;
+        \mathcal E_{(M''\cdot M)}^{\prime\,\beta}\cup
+        \bigcup_{i}\mathcal E_{t_{i}}^{\beta}\Bigr)
+\)
+является $\beta$-кортежем для продукта $M''\!\cdot M$.
+По определению $\mathcal E_{t}^{\beta}$ и в силу Замечания 5.16 имеем
+\(
+  \mathcal E_{u}^{\beta}\;\cup\;
+  \bigcup_{i}\mathcal E_{t_{i}}^{\beta}\;\cup\;
+  \mathcal E_{(M''\cdot M)}^{\prime\,\beta}
+  \;\subseteq\; \mathcal E_{t}^{\beta}.
+\)
+Следовательно, точно так же, как в доказательстве леммы 5.10,
+получаем, что $\bigl(t^{\beta},\mathcal E_{t}^{\beta}\bigr)$
+является $\beta$-кортежем для $t$.
+
+\medskip
+\noindent(2)\; Если $t$ — атом, пара либо шифрование, то дополнительных
+оценок не требуется. Если же $t$ является \emph{произведением}, то из
+лемм 5.5 и 5.15 немедленно следует, что размер
+$\mathcal E_{t}^{\prime\,\beta}$ ограничен полиномом от
+$\lVert t\rVert_{\text{ext}}$.  
+Для случая $t=\operatorname{Exp}(\,\cdot,\cdot\,)$ ту же полиномиальную
+оценку получают, применяя лемму 5.15 совместно с уже рассмотренным
+случаем произведения.
+
+\medskip
+\noindent(3)\; Пусть $p$ — полином, ограничивающий размер
+$\mathcal E_{t}^{\prime\,\beta}$. Тогда величина
+\(p\!\bigl(\lVert t\rVert_{\text{ext}}\bigr)\cdot\lVert t\rVert_{\text{ext}}\)
+ограничивает размер $\mathcal E_{t}^{\beta}$.
+Кроме того, по лемме 5.15 размер $t^{\beta}$ также
+полиномиально ограничен величиной $\lVert t\rVert_{\text{ext}}$.
+\qed
+
+Наконец, леммы 5.5, 5.9 и 5.18 обеспечивают существование
+конкретных $\approx_{\beta}$-систем уравнений, чьи размеры
+полиномиально ограничены.
+
+\textsc{Предложение 5.19.}
+Пусть $t$ и $t'$ — открытые сообщения или продукты, а
+$\beta$ — отображение оценки, такое что $t \approx_{\beta} t'$.
+Тогда существует $\approx_{\beta}$-система уравнений для
+$t$ и $t'$, чей размер полиномиально ограничен величиной
+$\lVert t,t'\rVert_{\text{ext}}$.
+
+Такую систему уравнений будем обозначать
+\(
+   \mathcal E^{\,\approx_{\beta}}_{t,t'}.
+\)
+
+\subsection{Ограничение величины показателей степеней в атаках}
+
+Теперь мы готовы доказать ключевую лемму этого раздела — Лемму 5.21.
+Как отмечалось выше, из этой леммы следует, что правила Диффи–Хеллмана
+позволяют осуществлять атаки, в которых показатели степеней произведений
+ограничены полиномом (Предложение 5.22).
+Немедленным следствием является то, что задача
+\textsc{Insecure} NP-полна для нарушителя DH (Теорема 5.23).
+
+Доказательство Леммы 5.21 проводится в два этапа.
+Сначала рассматривается ограниченный вариант, когда
+применяется лишь одно правило нарушителя (Лемма 5.20);
+затем этот результат распространяется на полное построение вывода.
+
+В дальнейших доказательствах нам понадобятся расширения отображений
+оценки. Будем говорить, что отображение
+\(\beta' : Z' \to Z\) является \emph{расширением}
+отображения оценки \(\beta : Z \to Z\), если \(Z\subseteq Z'\) и \(\beta'(z)=\beta(z)\) для всех \(z\in Z\).
+Так как на множестве \(Z\) отображения \(\beta\) и \(\beta'\) совпадают,
+то, не перегружая обозначения, расширение \(\beta\) будем
+часто обозначать тем же символом \(\beta\).
+
+\textsc{Лемма 5.20.}
+Пусть $t_{1},\dots,t_{n}$ — открытые сообщения,
+$s$ — нормализованное сообщение,
+$\beta$ — отображение оценки,
+а $L\in\mathcal L$ — правило нарушителя такое, что
+$\beta(t_{i})=\ulcorner\beta(t_{i})\urcorner$ для всех~$i$
+и
+$\ulcorner\beta(t_{1})\urcorner,\dots,
+ \ulcorner\beta(t_{n})\urcorner \;\rightarrow\; s\in L$.
+Тогда существует открытое сообщение $t$,
+система линейных уравнений~$\mathcal E$
+и расширение $\beta$ отображения $\beta$ такие, что
+\begin{enumerate}\itemsep0pt
+  \item[\textup{(1)}] $\beta(t)=s$;
+  \item[\textup{(2)}] $\beta \models \mathcal E$;
+  \item[\textup{(3)}] $\ulcorner\beta'(t_{1})\urcorner,\dots,
+        \ulcorner\beta'(t_{n})\urcorner
+        \;\rightarrow\;
+        \ulcorner\beta'(t)\urcorner$
+        для всякого $\beta'\models\mathcal E$;
+  \item[\textup{(4)}] $\displaystyle
+        \max\bigl\{|e|\;\bigm|\;e\in \mathcal L_{\text{exp}}(t)\bigr\}
+        \;\le\;
+        \max\bigl\{|e|\;\bigm|\;e\in \mathcal L_{\text{exp}}(t_{1},\dots,t_{n})\bigr\}
+        + n$;
+  \item[\textup{(5)}] размер $\mathcal E$ полиномиально ограничен
+        величиной $\lVert t_{1},\dots,t_{n}\rVert_{\text{ext}}$.
+\end{enumerate}
+
+\textit{Доказательство.} См.\ Приложение В.\hfill$\square$
+
+\textsc{Лемма 5.21.}
+Пусть $t,t_{1},\dots,t_{n}$ — открытые сообщения такие, что
+существует вывод, показывающий
+\(
+   \ulcorner\beta(t)\urcorner \in \mathrm{forge}
+   \bigl(\ulcorner\beta(t_{1})\urcorner,\dots,
+         \ulcorner\beta(t_{n})\urcorner\bigr)
+\).
+Тогда существует расширение отображения оценки $\beta$
+и система линейных уравнений $\mathcal E$ такие, что
+
+\begin{enumerate}\itemsep0pt
+\item[\textup{(1)}] \(\beta\models\mathcal E\);
+\item[\textup{(2)}] для всякого \(\beta'\models\mathcal E\)
+      выполняется
+      \(
+        \ulcorner\beta'(t)\urcorner \in
+        \mathrm{forge}\bigl(\ulcorner\beta'(t_{1})\urcorner,\dots,
+                            \ulcorner\beta'(t_{n})\urcorner\bigr);
+      \)
+\item[\textup{(3)}] размер $\mathcal E$ полиномиально ограничен
+      величиной \(\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}}\).
+\end{enumerate}
+
+\begin{proof}
+Пусть \(E=\{\ulcorner\beta(t_{1})\urcorner,\dots,\ulcorner\beta(t_{n})\urcorner\}\), а \(D\) — корректный вывод,
+свидетельствующий тому, что
+\(\ulcorner\beta'(t)\urcorner\in\mathrm{forge}(E)\).
+Известно, что длина \(l\) вывода \(D\) полиномиально ограничена величиной
+\(\lvert\ulcorner\beta(t_{1})\urcorner,\dots,\ulcorner\beta(t_{n})\urcorner,\ulcorner\beta(t)\urcorner\rvert\).
+По пункту 2 леммы 5.12
+\(\lvert\ulcorner\beta(t_{1})\urcorner,\dots,\ulcorner\beta(t_{n})\urcorner,\ulcorner\beta(t)\urcorner\rvert\)
+ограничено полиномом от
+\(\lvert t_{1},\dots,t_{n},t\rvert\),
+а значит и от
+\(\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}}\).
+Пусть \(i\)-й шаг вывода \(D\) имеет вид
+\(
+  E,s_{1},\dots,s_{i-1}
+  \;\rightarrow_{\,L_{i}\,}\;
+  E,s_{1},\dots,s_{i},
+  \qquad 1\le i\le l,
+\)
+где каждое сообщение \(s_{i}\) нормализовано и
+\(s_{l}=\ulcorner\beta(t)\urcorner\).
+Поскольку вывод \(D\) корректен, для всех \(i\) выполняется
+\(s_{i}\in S\!\bigl(\ulcorner\beta(t_{1})\urcorner,\dots,\ulcorner\beta(t_{n})\urcorner,\ulcorner\beta(t)\urcorner\bigr)\).
+
+Пусть \((t^{\beta},\mathcal E_{t}^{\beta})\) — $\beta$-кортеж терма \(t\),
+а для каждого \(i\) задан $\beta$-кортеж \(t_{i}^{\beta}\) терма \(t_{i}\).
+Тогда \(\beta(t_{i}^{\beta})=\ulcorner\beta(t_{i})\urcorner\), и, следовательно,  
+\(E=\{\beta(t_{1}^{\beta}),\dots,\beta(t_{n}^{\beta})\}\).
+К первому шагу вывода \(D\) можно применить лемму 5.20, получив
+открытое сообщение \(s_{1}'\), систему уравнений \(\mathcal E_{1}\)
+и расширение отображения оценки \(\beta\) такие, что  
+\(\beta(s_{1}') = s_{1}\), \(\beta\models\mathcal E_{1}\) и
+\(
+  \ulcorner\beta'(t_{1}^{\beta})\urcorner,\dots,
+  \ulcorner\beta'(t_{n}^{\beta})\urcorner
+  \;\xrightarrow{\,L_{1}\,}\;
+  \ulcorner\beta'(t_{1}^{\beta})\urcorner,\dots,
+  \ulcorner\beta'(t_{n}^{\beta})\urcorner,\,
+  \ulcorner\beta'(s_{1}')\urcorner
+  \qquad\text{для всякого } \beta'\models\mathcal E_{1}.
+\)
+
+Заметим, что для каждого $i$ выполняется
+$\beta(t_{i}^{\beta})=\ulcorner\beta(t_{i}^{\beta})\urcorner$, 
+а также $\beta(s_{1}')=\ulcorner\beta(s_{1}')\urcorner=s_{1}$.
+Следовательно, лемму 5.20 можно применять индуктивно.
+Для каждого шага $j$ ($1\le j\le l$) получаем открытое сообщение $s_{j}'$,
+систему уравнений $\mathcal E_{j}$
+и расширение отображения оценки $\beta$ такие, что
+
+\(
+  \beta(s_{j}') = s_{j}, 
+  \beta \models \mathcal E_{j},
+  \ulcorner\beta'(t_{1}^{\beta})\urcorner,\dots,
+  \ulcorner\beta'(t_{n}^{\beta})\urcorner,
+  \ulcorner\beta'(s_{1}')\urcorner,\dots,
+  \ulcorner\beta'(s_{j-1}')\urcorner
+  \;\rightarrow_{\,L_{j}\,}\;
+  \ulcorner\beta'(t_{1}^{\beta})\urcorner,\dots,
+  \ulcorner\beta'(t_{n}^{\beta})\urcorner,
+  \ulcorner\beta'(s_{1}')\urcorner,\dots,
+  \ulcorner\beta'(s_{j}')\urcorner
+\)
+для всякого $\beta' \models \mathcal E_{j}$.
+Следовательно,
+\(
+   \beta \models \bigcup_{j=1}^{l}\mathcal E_{j}
+   \text{и}
+   \ulcorner\beta'(s_{l}')\urcorner
+      \in
+   \mathrm{forge}\bigl(
+      \ulcorner\beta'(t_{1}^{\beta})\urcorner,\dots,
+      \ulcorner\beta'(t_{n}^{\beta})\urcorner
+   \bigr)
+   \text{для всякого } \beta' \models \bigcup_{j=1}^{l}\mathcal E_{j}.
+\)
+
+Если \(\beta' \models \bigcup_{i=1}^{n}\mathcal E_{t_i}^{\beta}\),
+то \(\ulcorner\beta'(t_i)\urcorner=\ulcorner\beta'(t_i^{\beta})\urcorner\)
+для всех \(i\).
+Поскольку \(\beta(t^{\beta})=\ulcorner\beta(t)\urcorner=s_{l}=\beta(s_{l}')\),
+получаем \(t^{\beta}=_{\beta} s_{l}'\).
+Следовательно, по лемме 5.5 существует
+\(=_{\beta}\)-система уравнений
+\(\mathcal E_{t^{\beta},\,s_{l}'}^{=_{\beta}}\) для \(t^{\beta}\) и \(s_{l}'\).
+
+\smallskip
+Теперь, если
+\(\beta' \models \mathcal E_{t}^{\beta}\cup\mathcal E_{t^{\beta},\,s_{l}'}^{=_{\beta}}\),
+имеем
+\(
+  \ulcorner\beta'(t)\urcorner
+  =\ulcorner\beta'(t^{\beta})\urcorner
+  =\ulcorner\beta'(s_{l}')\urcorner.
+\). Положим
+
+\[
+  \mathcal E \;=\;
+  \bigcup_{i=1}^{n} \mathcal E_{t_i}^{\beta}
+  \;\cup\;
+  \mathcal E_{t}^{\beta}
+  \;\cup\;
+  \bigcup_{j=1}^{l} \mathcal E_{j}
+  \;\cup\;
+  \mathcal E_{t^{\beta},\,s_{l}'}^{=_{\beta}} .
+\]
+Отсюда имеем $\beta\models\mathcal E$ и 
+\(
+  \ulcorner\beta'(t)\urcorner \in
+  \mathrm{forge}\bigl(\ulcorner\beta'(t_{1})\urcorner,\dots,
+                     \ulcorner\beta'(t_{n})\urcorner\bigr)
+\)
+для любого $\beta'\models\mathcal E$.
+
+Остаётся показать, что размер $\mathcal E$ полиномиально ограничен
+величиной $\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}}$.
+По лемме 5.20 каждый
+\(\mathcal E_{j}\)
+полиномиально ограничен
+в \(\lVert t_{1},\dots,t_{n},s_{1}',\dots,s_{j-1}'\rVert_{\text{ext}}\).
+Заметим, что
+\(
+  \beta(s_{j}') = s_{j}\in
+  S\!\bigl(\ulcorner\beta(t_{1})\urcorner,\dots,\ulcorner\beta(t_{n})\urcorner,\ulcorner\beta(t)\urcorner\bigr)
+\).
+Следовательно, по лемме 5.12
+\(|s_{j}'|\) полиномиально ограничено
+в \(|t_{1},\dots,t_{n},t|\),
+а по лемме 5.2 то же верно и для
+\(|s_{j}'|_{\text{ext}}\).
+
+Из леммы 5.20 получаем
+\[
+   \max\{|e| \mid e\in \mathcal L_{\text{exp}}(s_{j}')\}
+   \;\le\;
+   \max\{|e| \mid e\in \mathcal L_{\text{exp}}(t_{1}^{\beta},\dots,t_{n}^{\beta})\}
+   + n\,(j-1).
+\]
+Поскольку \(j\le l\), а длина $l$ вывода полиномиально ограничена
+значением \(\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}}\),
+и, кроме того,
+\(
+   \max\{|e| \mid e\in \mathcal L_{\text{exp}}(t_{1}^{\beta},\dots,t_{n}^{\beta})\}
+   \le \lVert t_{i}\rVert_{\text{ext}}^{\,3}
+\)
+для некоторого~$i$ (лемма 5.14), существует полином $p$
+такой, что \(\lVert s_{j}'\rVert_{\text{ext}}\le
+p\bigl(\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}}\bigr)\).
+Отсюда
+\[
+  \lVert t_{1},\dots,t_{n},t,s_{1}',\dots,s_{j}'\rVert_{\text{ext}}
+  \;\le\;
+  \bigl(p'(\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}})+1\bigr)\,
+  p\bigl(\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}}\bigr),
+\]
+где $p'$ — полином, ограничивающий $l$.
+По лемме 5.20 это означает, что каждый
+\(\mathcal E_{j}\)
+полиномиально ограничен
+в \(\lVert t_{1},\dots,t_{n},t\rVert_{\text{ext}}\).
+Леммы 5.18 и 5.5 теперь дают, что и
+\(\mathcal E\)
+в целом полиномиально ограничена той же величиной.
+
+\end{proof}
+
+Теперь мы можем показать, что правила Диффи–Хеллмана допускают атаки,
+в которых показатели степеней произведений остаются полиномиально
+ограниченными.
+
+\textit{Предложение 5.22}
+Правила DH допускают атаки с полиномиально ограниченными
+показателями степеней произведений.
+
+\begin{proof}
+Пусть \((\pi,\sigma)\) — минимальная атака на протокол \(P\).
+Обозначим через \(\sigma^{Z}\) подстановку, полученную из~\(\sigma\)
+заменой \emph{всех} показателей степеней на новые переменные.
+Положим, что отображение оценки \(\beta\) сопоставляет каждой из этих
+переменных соответствующий показатель произведения, то есть
+\(\sigma(x)=\beta\bigl(\sigma^{Z}(x)\bigr)\) для любого
+\(x\in\mathcal V(P)\).
+По следствию 3.16 длина \(|\sigma^{Z}|\) полиномиально
+ограничена величиной \(|P|\).
+Так как в \(\sigma^{Z}\) показатели степеней являются
+переменными, получаем \(\lVert\sigma^{Z}\rVert_{\text{exp}}\le|\sigma^{Z}|^{2}\).
+Следовательно,
+\(
+  \lVert\sigma^{Z}\rVert_{\text{ext}}
+    \text{ полиномиально ограничена величиной }
+    \lVert P\rVert_{\text{ext}}.\qedhere
+\)
+
+Пусть $k,R_{1},\dots,R_{k},S_{0},\dots,S_{k}$ определены, как и раньше.  
+Без ограничения общности будем считать, что $S_{0}$ состоит из одного
+сообщения, а не из множества сообщений
+(иначе запишем $S_{0}=\{a_{1},\dots,a_{n}\}$ в виде
+\(\langle a_{1},\,(a_{2}\,\dots\,(a_{n-1},a_{n})\dots )\rangle\)).
+Положим \(R_{k+1}=\mathit{secret}\).
+Известно, что
+\[
+   \beta\bigl(\ulcorner R_{i}\sigma^{Z}\urcorner\bigr)
+   \;\in\;
+   \mathrm{forge}\!\bigl(
+       \ulcorner\beta(S_{0}\sigma^{Z})\urcorner,\dots,
+       \ulcorner\beta(S_{i-1}\sigma^{Z})\urcorner
+   \bigr),
+   \qquad 1\le i\le k+1.
+\]
+
+По лемме 5.21 для каждого $i$ существует расширение отображения оценки
+$\beta$ (причём все такие расширения независимы друг от друга)
+и система линейных уравнений~\(\mathcal E_{i}\) такие, что
+\begin{itemize}\itemsep0pt
+\item \(\beta\models\mathcal E_{i}\);
+\item для любого \(\beta'\models\mathcal E_{i}\) выполняется
+      \[
+         \ulcorner\beta'(R_{i}\sigma^{Z})\urcorner \;\in\;
+         \mathrm{forge}\!\bigl(
+            \ulcorner\beta'(S_{0}\sigma^{Z})\urcorner,\dots,
+            \ulcorner\beta'(S_{i-1}\sigma^{Z})\urcorner
+         \bigr);
+      \]
+\item размер \(\mathcal E_{i}\) полиномиально ограничен значением
+      \(\lVert S_{0}\sigma^{Z},\dots,S_{k}\sigma^{Z},
+              R_{1}\sigma^{Z},\dots,R_{k+1}\sigma^{Z}\rVert_{\text{ext}}\),
+      которое, в свою очередь, полиномиально ограничено
+      величиной \(\lVert P\rVert_{\text{ext}}\).
+\end{itemize}
+
+Следовательно, \(\beta \models \bigcup_{i=1}^{k}\mathcal E_{i}=:\mathcal E\);
+отсюда система \(\mathcal E\) разрешима, и для всякого
+\(\beta'\models\mathcal E\) пара
+\(\bigl(\pi,\beta'(\sigma^{Z})\bigr)\) представляет собой атаку на~\(P\).
+По результату \cite{Bockmayr2001} существует решение
+\(\beta'\) системы \(\mathcal E\), для которого двоичная запись всех
+целых коэффициентов полиномиально ограничена размером \(\mathcal E\);
+следовательно, благодаря лемме 5.21 эта запись
+полиномиально ограничена величиной \(\lVert P\rVert_{\text{ext}}\).
+Определим \(\sigma' := \beta'(\sigma^{Z})\);
+тогда \((\pi,\sigma')\) является атакой на~\(P\). Так же \(\sigma \approx \sigma'\), то есть подстановки \(\sigma\) и
+\(\sigma'\) различаются лишь показателями степеней,
+а величина \(\lVert\sigma'\rVert_{\text{exp}}\) полиномиально ограничена
+\(\lVert P\rVert_{\text{ext}}\) и, по лемме 5.2, \(\lVert P \rVert\).\qed
+\end{proof}
+
+\textsc{Теорема 5.23.}\; Задача \textsc{Insecure} NP-полна для нарушителя DH. 

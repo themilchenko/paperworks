@@ -1,0 +1,955 @@
+\appendixsection{Характеризация сомножителей минимальных атак}
+
+\textsc{Лемма 3.4}
+Пусть $u$ — нормализованный терм, а $M$ и $M'$ — два произведения такие,
+что для любого $t\in\mathcal F(M)$ ($t\in\mathcal F(M')$, терм $t$ нормализован.
+Пусть $s$ — стандартный нормализованный терм и
+$\delta$ — замена $[s \leftarrow 1]$. Тогда
+\begin{enumerate}
+\item $\ulcorner(M\!\cdot\!M')\delta\urcorner= \,\ulcorner\ulcorner M\cdot M'\urcorner\delta\urcorner$; в частности
+      $\ulcorner M\delta\urcorner = \ulcorner\ulcorner M\urcorner\delta\urcorner$;
+\item $\ulcorner Exp(u,M)\delta\urcorner=
+      \ulcorner\ulcorner Exp(u,M)\urcorner\delta\urcorner$
+      если $s\neq\ulcorner Exp(u,M)\urcorner$, и, кроме того,
+      если $s$ имеет вид $ Exp(\,\cdot\,,\cdot\,)$,
+      то также $s\neq u$.
+\end{enumerate}
+
+\begin{proof}
+Пункт~1 очевиден.  
+Докажем пункт~2 при указанных ограничениях на~$s$.
+
+Рассмотрим сначала случай, когда $u$ \emph{не} имеет формы
+$ Exp(\,\cdot\,,\cdot\,)$.  
+Тогда i) $ \ulcorner Exp(u,M) \urcorner=u$, и, следовательно, $\ulcorner M\urcorner =1$, или ii) $\ulcorner Exp(u,M)\urcorner =  Exp(u,\ulcorner M \urcorner)$
+      и при этом $\ulcorner M\urcorner\neq 1$. Рассмотрим оба подслучая.
+
+В случае~i) получаем $\ulcorner M'\urcorner^{\delta}=1$.
+По пункту~1 уже известно, что
+$\ulcorner M\urcorner^{\delta}= \ulcorner M'\urcorner^{\delta}(=1)$.
+Следовательно
+\begin{align*}
+  \ulcorner Exp(u,M)\delta\urcorner
+    &= \ulcorner Exp(u\delta,M\delta)\urcorner\tag{*} \\
+    &= \ulcorner Exp\bigl(u\delta,\ulcorner M\delta\urcorner\bigr)\urcorner \\[2pt]
+    &= \ulcorner u\delta\urcorner \\[2pt]
+    &= \ulcorner\ulcorner Exp(u,M)\urcorner\delta\urcorner .
+\end{align*}
+Здесь в~($\ast$) использовано, что $Exp(u,M)\neq s$
+(иначе $\ulcorner Exp(u,M)\urcorner = s$, поскольку $s$ нормализован).
+
+
+\medskip
+В Случае~ii) положим
+\begin{align*}
+\ulcorner\ulcorner Exp(u,M)\urcorner\delta\urcorner
+   &= \ulcorner Exp\!\bigl(u,\ulcorner M\urcorner\bigr)\delta\urcorner\\
+   &= \ulcorner Exp\!\bigl(u \delta,\ulcorner M\urcorner\delta\bigr)\urcorner
+      \tag{*}\\
+   &= \ulcorner Exp\!\bigl(u \delta,\ulcorner M\urcorner\delta\bigr)\urcorner\\
+   &= \ulcorner Exp\!\bigl(u\delta,\ulcorner M\delta\urcorner\bigr)\urcorner
+      \tag{**}\\
+   &= \ulcorner Exp(u\delta,M\delta)\urcorner\\
+   &= \ulcorner Exp(u,M)\delta\urcorner
+      \tag{***}
+\end{align*}
+где в~$(\ast)$ мы используем соотношение $Exp(u,\ulcorner M \urcorner)\neq s$
+(иначе получилось бы $\ulcorner Exp(u,M)\urcorner=\ulcorner Exp(u,\ulcorner M \urcorner)\urcorner=s$);
+в~$(\ast\ast)$ ссылаемся на пункт~1 леммы;
+а в~$(\ast\ast\ast)$ вновь задействуем условие $Exp(u,M)\neq s$.
+Заметим, что и в случаях~(i), и в~(ii) дополнительное требование
+$u\neq s$ (если $s$ имеет форму $Exp(\,\cdot\,,\cdot\,)$) не требуется.
+
+Теперь предположим, что $u=Exp(v,M')$ для некоторых $v$ и $M'$. Тогда
+\[
+\begin{aligned}
+  \ulcorner\ulcorner Exp(u,M)\urcorner\delta\urcorner
+      &= \ulcorner\ulcorner Exp(v,\,M'\!\cdot\!M)\urcorner\delta\urcorner\\
+      &= \ulcorner Exp\!\bigl(v,\,M'\!\cdot\!M\bigr)\delta\urcorner
+         &&(\ast)\\
+      &= \ulcorner Exp\!\bigl(v\delta,(M'\delta\cdot M\delta\bigr)\urcorner
+         &&(\ast\ast)\\
+      &= \ulcorner Exp\!\bigl(Exp(v\delta,M'\delta),\,M\delta\bigr)\urcorner\\
+      &= \ulcorner Exp(u\delta,M\delta)\urcorner
+         &&(\ast\ast\ast)\\
+      &= \ulcorner Exp(u,M)\delta\urcorner.
+         &&(\ast\ast\ast\ast)
+\end{aligned}
+\]
+
+где $(\ast)$ выводится точно так же, как и в первом случае:
+используется то, что $v$ не имеет формы $Exp(\,\cdot\,,\cdot\,)$ и
+$Exp(v,M'\!\cdot\!M)\neq s$
+(иначе $\ulcorner Exp(v,M'\!\cdot\!M)\urcorner=\ulcorner Exp(u,M)\urcorner=s$).
+Напомним, что для первого случая предположение $v\neq s$ не требовалось.
+В $(\ast\ast)$ вновь задействуется условие $Exp(v,M'\!\cdot\!M)\neq s$.
+В $(\ast\ast\ast)$ используется факт $u\neq s$
+(иначе $u=s$, причём $s$ имеет вид $Exp(\,\cdot\,,\cdot\,)$).
+Наконец, $(\ast\ast\ast\ast)$ опирается на неравенство $Exp(u,M)\neq s$.
+
+\end{proof}
+
+\textsc{Лемма 3.5.} 
+Пусть $\sigma$ — нормализованная замкнутая подстановка,
+$E$ — множество нормализованных терминов,
+$s$ — нормализованный стандартный неатомарный термин,
+а $\delta$ — замена $[s \leftarrow 1]$.
+Обозначим $\sigma'=\ulcorner\sigma\delta\urcorner$.
+Если не существует стандартного подтермина $t\in E$ такого, что  
+$t\sqsubseteq_{\sigma}s$, то $\ulcorner E\sigma'\urcorner = \ulcorner\ulcorner E\sigma\urcorner\delta\urcorner$.
+
+\begin{proof}
+Предположим, что не существует стандартного подтерма $t$ множества $E$
+такого, что $t\sqsubseteq_{\sigma}s$.  
+Рассмотрим множество
+\(
+  \Omega_{s}=\bigl\{\,t\in S(E)\mid \ulcorner t\sigma'\urcorner\neq \ulcorner\ulcorner t\sigma\urcorner\delta\bigr\}.
+\)
+
+\noindent
+Допустим противное, то есть $\Omega_{s}\neq\varnothing$.
+Выберем $u\in\Omega_{s}$ минимальным по отношению
+\emph{подтерм}~$\sqsubseteq$.
+По определению $\sigma'$ терм $u$ не может быть переменной,
+а так как $s$ не атом, то $u$ не является и константой.
+
+\medskip\noindent
+Если $u=\{u_{1}\}_{u_{2}}^{s}$, $\{u_{1}\}_{u_{2}}^{a}$
+или $\langle u_{1},u_{2}\rangle$, то $\ulcorner u\sigma\urcorner=s$, то $u\sqsubseteq_{\sigma}s$, противоречие.
+Из минимальности $u$ получаем
+$\ulcorner u_{1}\sigma'\urcorner=\ulcorner\ulcorner u_{1}\sigma\urcorner\delta\urcorner$ и $\ulcorner u_{2}\sigma'\urcorner=\ulcorner\ulcorner u_{2}\sigma\urcorner\delta\urcorner$,
+откуда $\ulcorner u\sigma'\urcorner=\ulcorner\ulcorner u\sigma\urcorner\delta\urcorner$ — противоречие с $u\in\Omega_{s}$.
+
+\medskip\noindent
+Следовательно, остаётся единственная форма  
+\(
+  u=Exp(u_{1},M).
+\)
+Минимальность $u$ даёт
+$\ulcorner v\sigma'\urcorner=\ulcorner\ulcorner v\sigma\urcorner\delta\urcorner$ для всех $v\in\mathcal F(u)$, и, значит,
+\[
+  Exp(\ulcorner u_{1}\sigma'\urcorner,\ulcorner\,M\sigma'\urcorner)
+    =Exp(\ulcorner\ulcorner u\sigma\urcorner\delta\urcorner,\ulcorner\ulcorner\,M\sigma\urcorner\delta\urcorner).
+\]
+
+Поскольку $u\sigma\neq s$ и $u_{1}\sigma\neq s$,  
+из пункта 2 леммы 3.4 получаем требуемое равенство.
+\end{proof}
+
+\textsc{Лемма 3.6.} 
+Пусть $t',\,t_1,\dots,t_n,\,t,\,u$ — нормализованные стандартные термины,
+$z_1,\dots,z_n\in\mathbb Z$, а $\delta$ — замена $[u\leftarrow1]$ такая, что
+$u\neq t$ и $t=\ulcorner Exp\bigl(t',\,t_1^{\,z_1}\!\cdots t_n^{\,z_n}\bigr)\urcorner$.
+Если $t'=Exp(\,\cdot,\cdot\,)$, то дополнительно предполагаем
+$u\neq t'$. Тогда
+\[
+  \ulcorner t\delta\urcorner
+  =\ulcorner Exp\bigl(\ulcorner t'\delta\urcorner,
+        \ulcorner t'\delta\urcorner^{z_1}\!\cdots \ulcorner t_n\delta\urcorner^{z_n}\bigr)\urcorner.
+\]
+
+\begin{proof}
+Теперь предположим, что $u=Exp(v,M')$ для некоторых нормализованных
+$v$ и $M'$.  Заметим, что $v\neq Exp(\,\cdot\,,\cdot\,)$, поскольку $t'$ нормализован. Тогда
+\[
+\begin{aligned}
+\ulcorner Exp\!\bigl(t'\delta,\,
+          \ulcorner t_1\delta\urcorner^{z_1}\!\cdots \ulcorner t_n\delta\urcorner^{z_n}\bigr)\urcorner
+   &=\ulcorner Exp\!\bigl(\ulcorner v\delta\urcorner,\,
+ \ulcorner M\delta\urcorner\!\cdot \ulcorner t_1\delta\urcorner^{z_1}\!\cdots \ulcorner t_n\delta\urcorner^{z_n}\bigr)\urcorner
+     &&(\ast)\\
+   &=\ulcorner Exp\!\bigl(v\delta,\,
+          M\delta\!\cdot (t_1\delta)^{z_1}\!\cdots (t_n\delta)^{z_n}\bigr)\urcorner\\[4pt]
+   &=\ulcorner Exp\!\bigl(v,\,
+          M\!\cdot t_1^{z_1}\!\cdots t_n^{z_n}\bigr)\delta\urcorner
+     &&(\ast\ast)\\
+   &=\ulcorner\ulcorner Exp\!\bigl(v,\,
+          M\!\cdot t_1^{z_1}\!\cdots t_n^{z_n}\bigr)\urcorner\delta\urcorner
+     &&(\ast\ast\ast)\\
+   &=\ulcorner t\delta\urcorner.
+\end{aligned}
+\]
+где в~$(\ast)$ используем, что $u\neq t'$, а значит
+$\ulcorner t'\delta\urcorner=\ulcorner v^{\delta}\urcorner$ (при этом $\ulcorner M\delta\urcorner=1$) \;или\;
+$\ulcorner t'\delta\urcorner= Exp\!\bigl(\ulcorner v\delta\urcorner,\ulcorner M\delta\urcorner\bigr)$.
+В~$(\ast\ast)$ задействуется условие $u\neq t$:
+если бы $u= Exp\!\bigl(v,\,M\!\cdot t_1^{z_1}\!\cdots t_n^{z_n}\bigr)$,
+то, поскольку $u$ нормализован, нормализован и
+$ Exp\!\bigl(v,\,M\!\cdot t_1^{z_1}\!\cdots t_n^{z_n}\bigr)$,
+а значит
+\(
+  u=Exp\!\bigl(v,\,M\!\cdot t_1^{z_1}\!\cdots t_n^{z_n}\bigr)=t,
+\)
+что противоречит $u\neq t$.
+В~$(\ast\ast\ast)$ используем, что $v\neq Exp(\,\cdot\,,\cdot\,)$,
+$u\neq t$, а также пункт~2 леммы~3.4.
+
+\smallskip
+Предположим теперь, что $t'\neq Exp(\,\cdot\,,\cdot\,)$.
+Для обеих ситуаций $u\neq t'$ и $u=t'$ рассуждения
+аналогичны приведённым выше:
+достаточно заменить $v$ на $t'$ и опустить
+$\ulcorner M\delta\urcorner$, $M\delta$ и $M$ во всех формулах.
+\end{proof}
+
+\textsc{Лемма 3.12.}
+Пусть $t\in forge(E)$ и $\gamma\in forge(E)$.
+Предположим, что имеется вывод $D_{\gamma}$ из $E$,
+последним шагом которого является применение правила из $\mathcal L_{c}$.
+Тогда существует вывод $D'$ из $E$ с целью $t$, удовлетворяющий
+\(
+  L_{d}(\gamma)\notin D'.
+\)
+
+\begin{proof}
+Сначала введём некоторое обозначение.  
+Пусть $D_{1}=E_{1}\to\cdots\to F_{1}$ и
+$D_{2}=E_{2}\to\cdots\to F_{2}$ — две
+дедукции, причём $E_{2}\subseteq F_{1}$.
+Обозначим через $D=D_{1}\!\cdot D_{2}$ конкатенацию шагов $D_{1}$ и $D_{2}$
+(в указанном порядке); при этом из $D_{2}$ удаляются те шаги,
+которые выводят сообщения, уже содержащиеся в $F_{1}$,
+чтобы результат оставался дедукцией.
+
+По определению дедукции правило $L_{d}(\gamma)$ отсутствует в $D_{\gamma}$.
+Пусть $D$ — это $D_{\gamma}$ без последнего шага, то есть
+$D_{\gamma}$ состоит из $D$, за которым следует некоторое
+$L\in\mathcal L_{c}$.
+Положим
+\(
+  D'' \;=\;
+  D \;.\;
+  Deriv_{t}(E)
+  \;=\;
+  D\;.\;D'''
+\)
+где $D'''$ получается из $Deriv_{t}(E)$ удалением избыточных шагов.
+Тогда $D''$ — дедукция с целью $t$.
+Рассмотрим два случая.
+
+\medskip\noindent
+—\;Пусть $L=L_{c}(\gamma)$.
+Тогда $L_{d}(\gamma)\notin D''$, поскольку оба непосредственных
+подтерма $\gamma$ были выведены уже в $D$.
+Следовательно, $D' = D''$ — искомая дедукция.
+
+\smallskip\noindent
+—\;Пусть $L=L_{oc}(\gamma)$.
+Если $L_{d}(\gamma)\notin D''$, делать больше нечего.
+В противном случае обозначим через $F_{1}$ конечное множество сообщений
+дедукции $D$.
+Из пункта~(2) определения~2.11 следует, что каждый шаг из $D'''$
+вида
+\(
+  F_{1},F_{2},\gamma
+    \;\longrightarrow^{\,L_{d}(\gamma)}\;
+  F_{1},F_{2},\gamma,\beta
+\)
+можно заменить дедукцией из $F_{1},F_{2}$ c целью $\beta$,
+в которой правило $L_{d}(\gamma)$ не встречается.
+После такой замены и последующего устранения избыточных
+шагов получаем требуемую дедукцию~$D'$.
+\end{proof}
+
+\appendixsection{Расширение нарушителя Долева–Яо
+                     возведением в степень Диффи–Хеллмана}
+
+\textsc{Лемма 4.3.}
+Пусть \(E\) — конечное множество нормализованных стандартных сообщений,
+\(t\) — стандартное сообщение такое, что \(t\) выводится из \(E\) (относительно \(L\)).
+Пусть \(D\) — вывод из \(E\) с целью \(t\).
+Тогда существует вывод \(D'\) из \(E\) с той же целью \(t\), удовлетворяющий:
+
+\begin{enumerate}
+  \item \(D'\) имеет ту же длину, что и \(D\);
+  \item для любого DH-правила \(L\in D'\cap L_{o}\) с головным термом \(t'\)
+        выполнено: \(t'\in E\) \;или\;  
+        существует \(t'\)-правило \(L'\in D'\cap(L_{d}\cup L_{c})\).
+        Более того, если \(L\) — \emph{декомпозиционное} DH-правило,
+        то \(t'\in E\) \;или\;
+        существует \(t'\)-правило \(L'\in D'\cap L_{d}\).
+\end{enumerate}
+
+\begin{proof}
+Пусть $D$ — вывод из $E$ с целью $t$.  
+Построим по нему вывод $D'$ следующим образом.  
+Пусть $L\in D\cap L_{o}$ имеет вершину $t'$ и при этом
+\(
+  t'\in E,
+  D'\cap (L_{d}\cup L_{c})\ \text{не содержит $t'$-правил.}
+\)
+Тогда в $D$ найдётся правило $L'\in D\cup L_{o}(t')$.
+Пусть
+\(
+  L:\;
+  t',t_{1},\dots,t_{n}\;\longrightarrow\;t,
+  \qquad
+  z_{1},\dots,z_{n},
+\)
+а
+\(
+  L':\;
+  t'',t'_{1},\dots,t'_{n}\;\longrightarrow\;t',
+  \qquad
+  z'_{1},\dots,z'_{n}.
+\)
+Очевидно,
+\(
+  t
+  =\ulcorner Exp\!\bigl(
+       t'',\,
+       t_{1}^{z_{1}}\!\cdots t_{n}^{z_{n}}
+       \,t'_{1}{}^{z'_{1}}\!\cdots t'_{n}{}^{z'_{n}}
+     \bigr)\urcorner,
+\)
+и потому $t$ может быть получен правилом
+\(
+  \widehat{L}:\;
+  t'',t_{1},\dots,t_{n},t'_{1},\dots,t'_{n}\;\longrightarrow\;t,
+\)
+относящимся к множеству $DH$ и имеющим вершину $t''$.
+Следовательно, в выводе $D$ правило $L$ можно заменить
+на~$\widehat{L}$.  Итеративно выполняя такую замену,
+получаем вывод $D'$, удовлетворяющий условию~1,
+и при этом для любого $L\in D'\cap L_{o}$ с вершиной $t'$
+не существует предшествующего ему в $D'$ правила
+$L'\in D'\cap L_{o}(t')$,
+что и даёт условие~2.
+Заметим, что если $L$ является декомпозиционным
+правилом $DH$, то $t'$ имеет форму $Exp(\,\cdot\,,\cdot\,)$
+и, следовательно, не может быть порождён ни одним правилом из~$L_{c}$.
+\end{proof}
+
+\textsc{Лемма 4.4.}
+Пусть
+\(D = E_0 \rightarrow_{\,L_1\,} \dots
+      E_{n-1} \rightarrow_{\,L_n\,} E_n\)
+— вывод с целью \(g\).
+
+\begin{enumerate}
+\item
+  Предположим, что для каждого шага
+  \(E_{j-1} \rightarrow{\,L_j\,} E_j\) вывода \(D\)
+  с \(L_j \in \mathcal L_{d}(t)\)
+  существует \(t'\in E_{j-1}\) такое, что
+  \(t \sqsubseteq t'\) и
+  \(t'\in E_0\) \;или\;
+  \(\exists\,i<j: L_i\in \mathcal L_{d}(t')\).
+  Тогда из \(L\in D\cap \mathcal L_{d}(t)\)
+  (для некоторого \(\mathcal L,t\)) следует
+  \(t\in \mathcal S(E_0)\).
+
+\item
+  Предположим, что для каждого \(i<n\) и \(t\) с
+  \(L_i\in \mathcal L_{c}(t)\)
+  найдётся \(j>i\) такое, что
+  \(L_j\) является \(t'\)-правилом
+  и \(t\in \mathcal S\bigl(\{t'\}\cup E_0\bigr)\).
+  Тогда из \(L\in D\cap \mathcal L_{c}(t)\)
+  (для некоторого \(L,t\)) следует
+  \(t\in \mathcal S(E_0,g)\).
+\end{enumerate}
+
+При выполнении обеих предпосылок (а) и (б)
+вывод \(D\) является корректным 
+выводом с целью \(g\).
+
+\begin{proof}
+а. Доказывается непосредственной индукцией по
+$j\in\{1,\dots,n\}$.
+б. Пусть выполнены предположения пункта 2.  
+Докажем индукцией по $\,n-i\,$, что для любого
+$i\in\{1,\dots,n\}$ из $L_{i}\in\mathcal L_{c}(t)$ следует
+$t\in S(E_{0},g)$.
+$n-i=0$.  
+Тогда $t=g$, а значит $t\in S(E_{0},g)$.
+Предположения пункта а дают
+$j>i$ такие, что $L_{j}$ — $t'$-правило и
+$t\in S(E_{0},t')$.
+Если $L_{j}\in\mathcal L_{d}(t')$, то
+$t'\in S(E_{0})$ (см. выше).
+Если же $L_{j}\in\mathcal L_{c}(t')$, то по
+индукционному предположению $t'\in S(E_{0},g)$,
+а значит и $t\in S(E_{0},g)$.
+Из предположений пунктов а и б немедленно
+следует, что $D$ является корректной
+дедукцией с целью~$g$.
+\end{proof}
+
+\textsc{Лемма 4.6.}
+Пусть $z_{1},\dots ,z_{n}\in\mathbb Z\setminus\{0\}$,
+а $s,s_{1},\dots ,s_{n}$ — нормализованные стандартные термины,
+удовлетворяющие условиям
+$s_{i}\neq s_{j}$ при $i\neq j$, 
+$s_{i}\neq1$ и $s_{i}\neq u$ для всех $i$,
+$s\neq u$,
+\(
+  u=\ulcorner Exp\bigl(s,\,
+       s_{1}^{\,z_{1}}\!\cdots s_{n}^{\,z_{n}}\bigr)\urcorner,
+  u=Exp(\,\cdot,\cdot\,).
+\)
+Пусть $\delta$ — замена $[\,u\!\rightarrow\!2\,]$.
+Тогда
+\(
+  u
+  =
+  \ulcorner Exp\bigl(\ulcorner s\delta\urcorner,\,
+        \ulcorner s_{1}\delta\urcorner^{z_{1}}\!\cdots
+        \ulcorner s_{n}\delta\urcorner^{z_{n}}\bigr)\urcorner.
+\)
+
+\begin{proof}
+Сначала предположим, что $s\neq Exp(\,\cdot\,,\cdot\,)$.  
+Тогда $u=Exp(s,\,s_{1}^{z_{1}}\!\cdots s_{n}^{z_{n}})$.  
+Отсюда следует, что $u\notin S(s,s_{1},\dots,s_{n})$,  
+а значит $s=s^{\delta}$ и $s_{i}=s_{i}^{\delta}$ для всех $i$.  
+Следовательно,
+\(
+  u \;=\; \ulcorner Exp\!\bigl(\ulcorner s\delta\urcorner,
+                      \ulcorner s_{1}\delta\urcorner^{z_{1}}\!\cdots \ulcorner s_{n}\delta\urcorner^{z_{n}}\bigr).
+\)
+
+Теперь предположим, что $s=Exp(v,M)$.  
+Так как $s$ нормализован, имеем $v\neq Exp(\,\cdot\,,\cdot\,)$.  
+Используя, что $u$ имеет вид $Exp(\,\cdot\,,\cdot\,)$, получаем
+\(
+  u=Exp\!\bigl(v,\ulcorner\,M\!\cdot s_{1}^{z_{1}}\!\cdots s_{n}^{z_{n}}\urcorner\bigr),
+  \ulcorner M\!\cdot s_{1}^{z_{1}}\!\cdots s_{n}^{z_{n}}\urcorner\neq1,
+  u\notin S(v).
+\)
+Положим $E=\mathcal F(M)\cup\{s_{1},\dots,s_{n}\}$.
+Тогда найдутся подмножество
+$E'=\{\,s'_{1},\dots,s'_{n}\}\subseteq E$
+и целые ненулевые $z'_{1},\dots,z'_{n}$ такие, что
+\(
+  u=Exp\!\bigl(v,\,s'_{1}{}^{z'_{1}}\!\cdots s'_{n}{}^{z'_{n}}\bigr),
+  u\notin S\bigl(v,E'\bigr).
+\)
+
+\medskip\noindent
+\textit{Утверждение.}\;
+Выполняется равенство
+\[
+  M^{\delta}\!\cdot s_{1}^{\delta\,z_{1}}\!\cdots s_{n}^{\delta\,z_{n}}
+  \;=\;
+  s'_{1}{}^{\,z'_{1}}\!\cdots s'_{n}{}^{\,z'_{n}}.
+\]
+
+\medskip\noindent
+\textit{Доказательство утверждения.}
+Пусть 
+\(
+  M = s_{n+1}^{\,z_{n+1}}\!\cdots s_{n''}^{\,z_{n''}}
+\).
+Определим множества индексов
+\[
+  C_{i} \;=\; \bigl\{\,j\in\{1,\dots,n''\}\mid s_{j}=s'_{i}\bigr\}
+  \quad (i=1,\dots,n).
+\]
+Тогда
+\(
+  z'_{i} \;=\; \sum_{j\in C_{i}} z_{j},
+  \qquad
+  C \;=\; \bigcup_{i=1}^{n'} C_{i}.
+\)
+
+\(
+  s_{1}^{z_{1}}\!\cdots s_{n}^{z_{n}}\,
+  M
+  \;=\;
+  \ulcorner\prod_{i=1}^{n'}\prod_{j\in C_{i}} s_{j}^{z_{j}}\urcorner
+  \;=\;
+  \ulcorner\prod_{i=1}^{n'} {s'_{i}}^{\,z'_{i}}\urcorner,
+  \ulcorner\prod_{j\notin C} s_{j}^{z_{j}}\urcorner = 1.
+\)
+Так как все $s_{j}$ нормализованы, получаем
+\(
+  \ulcorner\displaystyle \prod_{j\notin C} s_{j}^{\delta\,z_{j}}\urcorner
+  =\prod_{j\notin C} \ulcorner s_{j}^{\delta z_{j}\urcorner}
+  =1,
+\)
+а потому, учитывая ${s'}_{i}^{\delta}={s'}_{i}$, равенство утверждения
+доказано:
+\[
+  M^{\delta}\,
+  s_{1}^{\delta z_{1}}\!\cdots s_{n}^{\delta z_{n}}
+  \;=\;
+  {s'_{1}}^{\,z'_{1}}\!\cdots{s'_{n}}^{\,z'_{n}} .
+\]
+
+Используя теперь $s\delta=Exp(v\delta,M\delta)$ и факты
+$u\neq M$, $u\notin S(v)$, $u\neq s$, получаем
+\[
+  \ulcorner Exp\!\bigl(
+      \ulcorner s\delta\urcorner,
+      \ulcorner s_{1}\delta\urcorner^{z_{1}}\!\cdots \ulcorner s_{n}\delta\urcorner^{z_{n}}
+  \bigr)\urcorner
+  =\ulcorner Exp\!\bigl(
+      \ulcorner v\delta\urcorner,
+      \ulcorner M\delta\urcorner\,
+      \ulcorner s_{1}\delta\urcorner^{z_{1}}\!\cdots \ulcorner s_{n}\delta\urcorner^{z_{n}}
+  \bigr)
+  =u.\qedhere
+\]
+\end{proof}
+
+\appendixsection{Правила DH допускают атаки с полиномиально ограниченными показателями произведений}
+
+\textsc{Лемма 5.11.}
+Для любого открытого сообщения или продукта $t$,
+такого что $\beta(t)=\ulcorner\beta(t)\urcorner$, выполнено $t^{\beta}=t$.
+
+\begin{proof}
+Доказательство проводится по структурной индукции по~$t$.
+Если $t$ является атомом, парой либо шифрованием,
+утверждение очевидно.
+
+Пусть $t=t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}$.
+Из свойств отображения оценки имеем:
+$\beta(t_{i})=\ulcorner\beta(t_{i})\urcorner\neq1$ для всех $i$,
+$\beta(t_{i})\neq\beta(t_{j})$ при $i\neq j$,
+и $\beta(e_{i})\neq0$ для всех $i$.
+Отсюда непосредственно следует, что $t^{\beta}=t$.
+
+Наконец, пусть $t= Exp(u,M)$.  
+Сначала заметим, что $\ulcorner\beta(u)\urcorner\neq Exp(u',M')$
+для любых нормализованных $u'$ и $M'$.
+Действительно, иначе
+\(
+  \ulcorner \beta(t)\urcorner= Exp\!\bigl(\beta(u),\beta(M)\bigr)
+          = Exp(u',M'')=\beta(t),
+\)
+и, следовательно, $\beta(u)=u'$.
+Тогда
+\(
+   Exp(u',M')=\ulcorner\beta(u)\urcorner=\ulcorner u'\urcorner = u',
+\)
+что противоречит нормализованности $u'$.
+
+Кроме того, $\ulcorner\beta(M)\urcorner\neq1$, поскольку иначе
+\(
+   Exp\!\bigl(\beta(u),\beta(M)\bigr)
+     =\ulcorner\beta(t)\urcorner=\ulcorner\beta(u)\urcorner,
+\)
+а мы уже знаем, что $\ulcorner\beta(u)\urcorner\neq Exp(\,\cdot\,,\cdot\,)$.
+Тем самым
+\(
+   Exp\!\bigl(\beta(u),\beta(M)\bigr)=\ulcorner\beta(t)\urcorner
+                                     = Exp\!\bigl(\ulcorner\beta(u)\urcorner,\ulcorner\beta(M)\urcorner\bigr),
+\)
+и значит $\beta(u)=\ulcorner\beta(u)\urcorner$ и $\beta(M)=\ulcorner\beta(M)\urcorner$.
+По индукционному предположению отсюда следует
+$u^{\beta}=u$ и $M^{\beta}=M$.
+По определению $t^{\beta}$ получаем
+\(
+  t^{\beta}= Exp(u^{\beta},M^{\beta})
+          = Exp(u,M)=t.
+\)
+\end{proof}
+
+\textsc{Лемма 5.13.}
+Пусть $E$ — конечное множество открытых сообщений или продуктов,
+такое что $S_{\text{ext}}(E)=E$, а $t$ — максимальный
+(относительно упорядочения «строгий подтермин»)
+элемент множества $E$.
+Тогда
+\[
+  \bigl\lvert\,
+        \bigcup_{s\in E} S_{\text{ext}}\!\bigl(s^{\beta}\bigr)
+        \Bigr{\rvert}_{\text{exp}}
+  \;\le\;
+  \bigl\lvert\,
+        \bigcup_{s\in E\setminus\{t\}}
+            S_{\text{ext}}\!\bigl(s^{\beta}\bigr)
+            \Bigr{\rvert}_{\text{exp}}
+  +\lVert t\rVert_{\text{ext}}^{\,2}.
+\]
+
+Чтобы доказать эту лемму, нам сначала нужно ограничить размер $\lvert\cdots\rvert_{exp}$
+произведения. Это про следующее утверждение:
+
+\textsc{Утверждение 1}. Для любого открытого сообщения или продукта $t$, такого что
+$t^{\beta}= Exp(u,M)$, выполняется
+\[
+   \lvert M\rvert_{\exp}
+   \;\le\;
+   \lvert t\rvert\;\cdot\;\lVert t\rVert_{\exp}
+   \;\le\;
+   \lVert t\rVert_{\text{ext}}^{\,2}.
+\]
+
+\begin{proof}
+Докажем индукцией по структуре $t$, что
+$\lvert M\rvert_{\exp}\le\lvert t\rvert\cdot\lVert t\rVert_{\exp}$.
+Так как $\lvert t\rvert\le\lVert t\rVert_{\text{ext}}$ и
+$\lVert t\rVert_{\exp}\le\lVert t\rVert_{\text{ext}}$,
+утверждение леммы будет следовать сразу.
+
+\smallskip
+Сперва положим, что $t= Exp(u',M')$ и $\beta(u')\neq Exp(\,\cdot\,,\cdot\,)$.
+Тогда
+\(
+   \lvert M\rvert_{\exp}
+   \;\le\;
+   \lvert M'\rvert_{\exp}
+   \;\le\;
+   \lVert t\rVert_{\exp}.
+\)
+
+\smallskip
+Сейчас положим $t= Exp(u',M')$ и $\beta(u')= Exp(\,\cdot\,,\cdot\,)$.
+Пусть $u'^{\beta}= Exp(u'',M'')$.
+Тогда $M=(M''\!\cdot M')^{\beta}$ и, по индукционному предположению,
+\(
+   \lvert M\rvert_{\exp}
+      \;\le\;
+      \lvert M''\rvert_{\exp}+\lvert M'\rvert_{\exp}
+      \;\le\;
+      \lvert u'\rvert\,\lVert u'\rVert_{\exp}
+        +\lVert t\rVert_{\exp}
+      \;\le\;
+      \lvert t\rvert\,\lVert t\rVert_{\exp},
+\)
+поскольку $\lVert u'\rVert_{\exp}\le\lVert t\rVert_{\exp}$
+и $\lvert u'\rvert<\lvert t\rvert$.
+
+\smallskip
+В остальных случаях, если $t^{\beta}= Exp(u,M)$ получается для другого вида $t$,
+то существует подтерм $v\sqsubset t$ такой, что $v^{\beta}=t^{\beta}$.
+Неравенство тогда следует из индукционного предположения для~$v$.
+\end{proof}
+
+Теперь можно приступить к доказательству Леммы 5.13:
+
+\begin{proof}
+Доказательство проводим, как и прежде, структурной индукцией по~$t$.
+Пусть $E=S_{\text{ext}}(t)$ и обозначим
+\(
+  \mathcal S(E)=\bigl\lvert\,
+        \bigcup_{s\in E} S_{\text{ext}}\!\bigl(s^{\beta}\bigr)
+      \bigr\rvert_{\exp}.
+\)
+
+Если \(t=\langle t_{1},t_{2}\rangle\), то \(t^{\beta}=t_{1}^{\beta},t_{2}^{\beta}\) и 
+\(
+  S_{\text{ext}}(t^{\beta})
+  \subseteq
+  \{t^{\beta}\}\cup
+  S_{\text{ext}}(t_{1}^{\beta})\cup
+  S_{\text{ext}}(t_{2}^{\beta}).
+\)
+Поскольку \(S_{\text{ext}}(E)=E\), имеем \(t_{1},t_{2}\in E\setminus\{t\}\).
+Так как \(|t^{\beta}|_{\exp}=0\),
+\(
+  \Bigl\lvert\!\!\bigcup_{s\in E}
+     S_{\text{ext}}(s^{\beta})\Bigr\rvert_{\exp}
+  =
+  \Bigl\lvert\!\!\bigcup_{s\in E\setminus\{t\}}
+     S_{\text{ext}}(s^{\beta})\Bigr\rvert_{\exp}.
+\)
+Для случая шифрования рассуждение аналогично.
+
+Если \(t=t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}\),
+то
+\(
+  S_{\text{ext}}(t^{\beta})
+  \subseteq
+  \{t^{\beta}\}\cup\bigcup_{i} S_{\text{ext}}(t_{i}^{\beta}),
+\)
+причём \(t_{1},\dots,t_{n}\subseteq E\setminus\{t\}\).
+Следовательно,
+\(
+  S_{\text{ext}}(t^{\beta})
+  \subseteq
+  \Bigl(\bigcup_{s\in E\setminus\{t\}}
+          S_{\text{ext}}(s^{\beta})\Bigr)
+  \cup\{t^{\beta}\}.
+\)
+Так как \(|t^{\beta}|_{\exp}\le |t|_{\exp}\le\|t\|_{\text{ext}}^{2}\),
+утверждение верно.
+
+Пусть теперь \(t=Exp(u,M)\) и
+\(
+  t^{\beta}=u^{\beta}\quad\text{или}\quad
+  t^{\beta}=u''\quad\text{или}\quad
+  t^{\beta}=Exp(u^{\beta},M^{\beta})
+\)
+(см. лемму 5.10).
+Тогда
+\(
+  S_{\text{ext}}(t^{\beta})
+  \subseteq
+  \bigl\{t^{\beta}\bigr\}
+  \cup S_{\text{ext}}(u^{\beta})
+  \cup S_{\text{ext}}(M^{\beta}),
+\)
+и опять
+\(
+  \Bigl\lvert\!\!\bigcup_{s\in E}
+     S_{\text{ext}}(s^{\beta})\Bigr\rvert_{\exp}
+  =
+  \Bigl\lvert\!\!\bigcup_{s\in E\setminus\{t\}}
+     S_{\text{ext}}(s^{\beta})\Bigr\rvert_{\exp},
+  \qquad |t^{\beta}|_{\exp}=0.
+\)
+
+Наконец, пусть
+\(
+  t= Exp(u,M),\quad
+  \beta(u)= Exp(u',M'),\quad
+  u^{\beta}= Exp(u'',M'').
+\)
+Тогда
+\(
+  t^{\beta}= Exp\!\bigl(u'',(M''\!\cdot M)^{\beta}\bigr),
+\)
+и
+\[
+\begin{aligned}
+  S_{\text{ext}}(t^{\beta})
+  &\subseteq
+    \{t^{\beta}\}
+    \cup S_{\text{ext}}(u^{\beta})
+    \cup S_{\text{ext}}\!\bigl((M''\!\cdot M)^{\beta}\bigr) \\[2pt]
+  &\subseteq
+    \{t^{\beta}\}
+    \cup\{(M''\!\cdot M)^{\beta}\}
+    \cup\bigcup_{s\in E\setminus\{t\}} S_{\text{ext}}(s^{\beta}),
+\end{aligned}
+\]
+где, по лемме 5.11,
+\(S_{\text{ext}}(M''^{\beta})=S_{\text{ext}}(M'')\subseteq S_{\text{ext}}(u^{\beta})\).
+Поскольку \(|t^{\beta}|_{\exp}=0\) и
+\(|(M''\!\cdot M)^{\beta}|_{\exp}\le\|t\|_{\text{ext}}^{2}\),
+получаем требуемую оценку.
+\end{proof}
+
+\textsc{Лемма 5.17.}
+Пусть 
+\(M = t_{1}^{e_{1}}\!\cdots t_{n}^{e_{n}}\)
+и
+\(M' = t_{1}'^{\,e_{1}'}\!\cdots t_{n'}'^{\,e_{n'}'}\) —
+два открытых продукта такие, что 
+\(\beta(t_{i}) = \ulcorner\beta(t_{i}')\urcorner\)
+для всех соответствующих множителей.
+Пусть для каждого \(i\) задан $\beta$-кортеж 
+\((t_{i}^{\beta},\mathcal E_{i})\) терма \(t_{i}\).
+Тогда пара
+\(
+\Bigl((M'\!\cdot M)^{\beta},\;
+      \mathcal E_{(M'\!\cdot M)}^{\prime\,\beta}
+      \,\cup\!
+      \bigcup_{i}\mathcal E_{i}\Bigr)
+\)
+является $\beta$-кортежем для продукта \(M'\!\cdot M\).
+
+\begin{proof}
+Пусть $t=M'\cdot M$. Очевидно, 
+\(
+  \beta\models\mathcal E'^{\,\beta}_{t}\;\cup\!\bigcup_i\mathcal E_i,
+  \quad
+  \beta(t^\beta)=\ulcorner\beta(t)\urcorner.
+\)
+Пусть $\beta'\models\mathcal E'^{\,\beta}_{t}\;\cup\!\bigcup_i\mathcal E_i$.  
+Нужно показать, что $\ulcorner\beta'(t^\beta)\urcorner=\ulcorner\beta'(t)\urcorner$.
+
+\medskip
+\noindent\textit{Утверждение I.}
+Для любых $i,j$ справедливо
+\(
+  \ulcorner\beta'(t_i)\urcorner=\ulcorner\beta'(t_i^\beta)\urcorner,
+  \ulcorner\beta'(t'_j)\urcorner=\ulcorner\beta'(t'_j{}^\beta)\urcorner.
+\)
+
+\emph{Доказательство утверждения 1.}
+Из $\beta'\models\mathcal E_i$ сразу следует
+$\ulcorner\beta'(t_i)\urcorner=\ulcorner\beta'(t_i^\beta)\urcorner$.  
+По лемме 5.11 $t'_j{}^\beta=t'_j$, следовательно
+$\ulcorner\beta'(t'_j)\urcorner=\ulcorner\beta'(t'_j{}^\beta)\urcorner$.
+
+Пусть классы $C_1,\dots,C_\ell$ заданы так же, как в доказательстве леммы 5.10.
+
+\medskip
+\noindent\textit{Утверждение II.}
+Для любого $k$ и любых $s,s'\in C_k$ выполнено
+\(
+  \ulcorner\beta'(s)\urcorner=\ulcorner\beta'(s')\urcorner.
+\)
+
+\emph{Доказательство утверждения 2.}
+Во-первых, если $s=t'_i$ и $s'=t'_j$, то по лемме 5.11
+$s^\beta=s$, $s'^\beta=s'$, и из определения
+$\mathcal E'^{\,\beta}_{t}$ следует $\beta'(s)=\beta'(s')$.  
+Пусть $s=t_i$, $s'=t'_j$. Тогда $s'^\beta=s'$, и по определению
+$\mathcal E'^{\,\beta}_{t}$ имеем
+$\ulcorner\beta'(s')\urcorner=\ulcorner\beta'(s^\beta)\urcorner$. А из $\beta'\models\mathcal E_i$ следует
+$\ulcorner\beta'(s)\urcorner=\ulcorner\beta'(s^\beta)\urcorner$, откуда $\ulcorner\beta'(s')\urcorner=\ulcorner\beta'(s)\urcorner$.  
+Аналогично рассматривается случай $s=t_i$, $s'=t_j$.
+
+\medskip
+По определению $\mathcal E'^{\,\beta}_{t}$ для каждого $j\in J$ имеет место
+$\beta'(e_{C_j})=0$.  
+Используя Утверждения I и II, легко заключить, что
+\(\ulcorner\beta'(t^\beta)\urcorner=\ulcorner\beta'(t)\urcorner\).
+\end{proof}
+
+\textsc{Лемма 5.20.}
+Пусть $t_{1},\dots,t_{n}$ — открытые сообщения,
+$s$ — нормализованное сообщение,
+$\beta$ — отображение оценки,
+а $L\in\mathcal L$ — правило нарушителя такое, что
+$\beta(t_{i})=\ulcorner\beta(t_{i})\urcorner$ для всех~$i$
+и
+$\ulcorner\beta(t_{1})\urcorner,\dots,
+ \ulcorner\beta(t_{n})\urcorner \;\rightarrow\; s\in L$.
+Тогда существует открытое сообщение $t$,
+система линейных уравнений~$\mathcal E$
+и расширение $\beta$ отображения $\beta$ такие, что
+\begin{enumerate}\itemsep0pt
+  \item[\textup{(1)}] $\beta(t)=s$;
+  \item[\textup{(2)}] $\beta \models \mathcal E$;
+  \item[\textup{(3)}] $\ulcorner\beta'(t_{1})\urcorner,\dots,
+        \ulcorner\beta'(t_{n})\urcorner
+        \;\rightarrow\;
+        \ulcorner\beta'(t)\urcorner$
+        для всякого $\beta'\models\mathcal E$;
+  \item[\textup{(4)}] $\displaystyle
+        \max\bigl\{|e|\;\bigm|\;e\in \mathcal L_{\text{exp}}(t)\bigr\}
+        \;\le\;
+        \max\bigl\{|e|\;\bigm|\;e\in \mathcal L_{\text{exp}}(t_{1},\dots,t_{n})\bigr\}
+        + n$;
+  \item[\textup{(5)}] размер $\mathcal E$ полиномиально ограничен
+        величиной $\lVert t_{1},\dots,t_{n}\rVert_{\text{ext}}$.
+\end{enumerate}
+Чтобы доказать лемму, сначала докажем следующее утверждение:
+
+\textit{Утвердждение.} Пусть $t_{0},\dots,t_{n}$ — открытые сообщения и $\beta$ — отображение оценки, такое что 
+\(
+  \beta(t_{i})=\ulcorner\beta(t_{i})\urcorner
+  \quad\text{для всех }i.
+\)
+Пусть $z_{1},\dots,z_{n}$ — целочисленные переменные, не встречающиеся в термах $t_{i}$.  
+Обозначим 
+\(
+  M \;=\; t_{1}^{z_{1}}\cdots t_{n}^{z_{n}},
+  \qquad
+  t \;=\; Exp\bigl(t_{0},M\bigr)^{\beta}.
+\)
+Тогда каждый коэффициент в линейных уравнениях, появляющихся в $t$, не превосходит
+\(
+  \max\!\bigl\{|e|\;\bigm|\;e\in \mathcal L_{\exp}(t_{0},t_{1},\dots,t_{n})\bigr\}\;+\;n.
+\)
+
+\begin{proof}
+По лемме 5.11 все $t_{i}^{\beta}=t_{i}$.  
+Рассмотрим два случая.
+
+\medskip\noindent
+Пусть 
+\(\beta(t_{0})=\ulcorner\beta(t_{0})\urcorner\neq Exp(\,\cdot\,,\cdot\,).\)  
+Тогда $t= Exp(t_{0},M)^{\beta}$ не вносит новых показателей, и утверждение очевидно.
+
+Пусть 
+\(\beta(t_{0})= \ulcorner\beta{t_0} = Exp(u',M')\), 
+т.\,е. $t_{0}= Exp(u'',M'')$ для некоторых $u'',M''$ с 
+\(\beta(u'')=u'\) и \(\beta(M'')=M'\).  
+Если $t=u''$, то новые показатели отсутствуют и предельная оценка выполняется тривиально.  
+Иначе
+\(
+  t
+  =  Exp\!\bigl(u'',\,(M''\cdot M)^{\beta}\bigr),
+  \quad
+  (M''\cdot M)^{\beta}\neq1.
+\)
+Пусть 
+\(\displaystyle M''=t''_{1}{}^{e_{1}^{''}}\cdots t''_{n}{}^{e_{n}^{''}}\).  
+По условию $\beta(t''_{i})=\ulcorner\beta(t''_{i})\urcorner$ при всех $i$,
+и все $\beta(t''_{i})$ попарно различны.  
+Разобьём индексы на классы эквивалентности $C_{1},\dots,C_{\ell}$, как
+в доказательстве леммы 5.10. Тогда
+\(
+ t = \prod_{j\notin J\cup\{1\}}
+     \bigl(s_{C_{j}}^{\beta}\bigr)^{e_{C_{j}}},
+\)
+где в каждом классе $C_{j}$ есть ровно один представитель вида $t''_{i}$ или $t_{i}$.  
+Поэтому для каждого $j$ 
+\(\lvert e_{C_{j}}\rvert\)
+не превосходит
+\(\max\{\lvert e\rvert\mid e\in L_{\exp}(t_{0},t_{1},\dots,t_{n})\}+n\).  
+Остальные подтермы $t$ лежат внутри некоторых $t_{i}$, и для них оценка
+задана индукционным предположением.  
+Это завершает доказательство утверждения.
+\end{proof}
+
+Теперь докажем Лемму 5.20:
+
+\begin{proof}
+Рассмотрим случаи в зависимости от правила нарушителя \(L\).
+
+\medskip
+Пусть \(L = L_{p1}\).  
+Тогда \(n=1\), 
+\(\ulcorner\beta(t_{1})\urcorner=\langle a,b\rangle\), \(s=a\), 
+\(t_{1}=\langle a',b'\rangle,\)
+где \(a,b\) — нормализованные сообщения, 
+\(a',b'\) — открытые сообщения, 
+\(\beta(a')=a\), \(\beta(b')=b\).  
+Положим
+\(
+  t=a',\quad
+  \mathcal E=\varnothing,
+\)
+расширения \(\beta\) не требуются.  
+Ясно, что условия (1)–(5) выполнены.  
+Аналогичные рассуждения работают для \(L_{p2}, L_{ad}\) и \(L_{c}\).
+
+\medskip
+Теперь положим, что\(L=L_{sd}\).  
+Тогда \(n=2\),
+\(\ulcorner\beta(t_{1})\urcorner=\{a\}_{s}^{b}\), \(\ulcorner\beta(t_{2})\urcorner=b\) для нормализованных
+\(a,b\).  Значит,
+\(
+  t_{1}=\{a'\}_{s}^{b},
+  t_{2}=b'',
+\)
+где \(a',b',b''\) — открытые сообщения с
+\(\beta(a')=a\), \(\beta(b')=\beta(b'')=b\).  
+Положим
+\(
+  t=a',
+  \mathcal E=\mathcal E^\beta_{b,b},
+\)
+расширения \(\beta\) не вносятся.  
+По лемме 5.5 проверяется, что условия (1)–(5) выполняются.
+
+\medskip
+Наконец, положим, что \(L=L_{o}\).  
+Тогда
+\(
+  s = \ulcorner Exp\!\bigl(\beta(t_{1}),\,
+         \beta(t_{2})^{a_{2}}\cdots\beta(t_{n})^{a_{n}}\bigr)\urcorner,
+  a_{i}\in\mathbb Z.
+\)
+Определим новые переменные \(z_{2},\dots,z_{n}\) и терм
+\(
+  t \;=\;
+   Exp\!\bigl(t_{1},\,t_{2}^{z_{2}}\cdots t_{n}^{z_{n}}\bigr)^{\beta},
+  \mathcal E = \mathcal E_{t}^{\beta},
+\)
+расширив \(\beta\) так, что \(\beta(z_{i})=a_{i}\) для всех \(i\).  
+По лемме 5.10 имеем
+\(
+  s
+    = \ulcorner\beta\bigl( Exp(t_{1},t_{2}^{z_{2}}\cdots t_{n}^{z_{n}})\bigr)\urcorner
+    = \beta(t),
+  \beta\models\mathcal E,
+\)
+а для любого \(\beta'\models\mathcal E\)
+\(
+  \ulcorner\beta'(t)\urcorner
+    = \ulcorner\beta'\Bigl( Exp(t_{1},t_{2}^{z_{2}}\cdots t_{n}^{z_{n}})\Bigr)\urcorner
+    = \ulcorner Exp\!\bigl(\beta'(t_{1}),\,\beta'(t_{2})^{\beta(z_{2})}\cdots\beta'(t_{n})^{\beta(z_{n})}\bigr)\urcorner.
+\)
+Утверждение о полиномиальном ограничении показателей даёт условие (4),
+а из леммы 5.18 вытекает условие (5).
+\end{proof}

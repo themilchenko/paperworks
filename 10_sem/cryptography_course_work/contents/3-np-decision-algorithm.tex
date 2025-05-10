@@ -1,0 +1,804 @@
+\section{NP-алоритм принятия решения}
+
+Теперь сформулируем одну из основных теорем этой работы, утверждающую, что задача \textsc{INSECURE} разрешима в классе \textsf{NP} для любого множества оракульных правил, удовлетворяющего двум условиям. Данная общая теорема будет применена в разделе 4 и разделе 7, чтобы показать, что \textsc{INSECURE} остаётся в \textsf{NP} в присутствии злоумышленника, способного выполнять экспоненциацию Диффи–Хеллмана и использовать коммутативное шифрование с открытым ключом, соответственно.
+
+В теореме предъявляются два требования к множеству оракульных правил. Первое: проблема проверки применимости оракульного правила должна решаться эффективно. Второе: множество правил должно допускать полиномиальные атаки на показатели произведений.
+
+\medskip
+\textsc{Определение 3.1.} Задача \emph{oracle rule problem} задаётся как
+\[
+\mathsf{OracleRule}
+\;=\;
+\{(E,m)\mid E \;\to_{L_o}\; E,\,m\},
+\]
+где \(E\) — конечное нормализованное множество стандартных сообщений, а \(m\) — стандартное сообщение; оба подаются в виде DAG.
+
+Говорят, что множество оракульных правил \(\mathcal{L}_o\) \emph{допускает полиномиальные атаки на показатели произведений}, если для любого протокола \(P\) и любой минимальной атаки \((\pi,\sigma)\) на этот протокол существует подстановка \(\sigma'\) такая, что $\sigma'\approx\sigma$
+(напомним, это означает совпадение \(\sigma'\) и \(\sigma\) с точностью до показателей произведений), пара \((\pi,\ulcorner\sigma'\urcorner)\) является атакой на \(P\), и  $\|\sigma'\|_{\mathrm{exp}}$
+полиномиально ограничена по \(\|P\|\). Заметим, что по лемме 2.4 из этого также следует полиномиальная ограниченность \(\|\ulcorner\sigma'\urcorner\|\) по \(\|P\|\).
+
+\medskip
+\textsc{Теорема 3.1.} Пусть \(L_o\) — множество оракульных правил. Если
+\begin{itemize}
+  \item $\mathsf{OracleRule}\in\mathsf{P}\textsf{TIME}$ и
+  \item $L_o\text{ допускает полиномиальные атаки на показатели произведений},$
+\end{itemize}
+то задача \textsc{INSECURE} лежит в классе \(\mathsf{NP}\).
+
+Теорема доказывается следующим образом. Сначала показывается, что недетерминированный алгоритм из рисунка 1 является недетерминированным полиномиальным алгоритмом и корректно решает задачу \textsc{INSECURE}. Полином \(p\), ограничивающий размер показателей произведений, существует в силу того, что \(L_o\) допускает полиномиальные атаки на показатели произведений. Структура алгоритма такова: на шагах 1 и 2 недетерминированно выбирается «маленькая» атака \((\pi,\sigma)\) на протокол \(P\), а на шагах 3 и 4 проверяется, действительно ли \((\pi,\sigma)\) является атакой на \(P\).
+
+Очевидно, что алгоритм из рисунка 1 корректен. Основная же сложность состоит в том, чтобы доказать полиномиальность его работы. Это делается с помощью результатов из разделов 3.1, 3.2 и 3.3. В дальнейшем мы сначала изложим эти результаты, а затем на их основе докажем полноту алгоритма и оценим его временную сложность.
+
+В разделе 3.1 (см. теорему 3.2) показывается, что следующая задача, далее называемая \emph{задачей вывода (derivation problem)}, решается за полиномиальное время от \(\lVert E,t\rVert\), при условии, что \(\mathsf{OracleRule}\) разрешима в детерминированном полиномиальном времени:
+\[
+\mathsf{Derive} \;:=\; \bigl\{(E,t)\mid t\in\mathrm{forge}(E)\bigr\},
+\]
+где \(E\) — конечное множество стандартных сообщений, а \(t\) — стандартное сообщение, заданные в виде DAG.
+
+В разделе 3.2 (см. утверждение 3.14) доказывается, что подстановки минимальных атак строятся из подтермов термов, встречающихся в описании протокола.
+
+На основе предложения 3.14 в разделе 3.3 оценивается число подтермов в подстановках минимальных атак и выводится неравенство \(\lvert\sigma\rvert \le \lvert P\rvert\) (следствие 3.16).
+
+Учитывая эти результаты, можем записать доказательство теоремы 3.1.
+
+\medskip
+\noindent\textbf{Доказательство теоремы 3.1.}  
+Покажем, что алгоритм из рисунка 1 работает в недетерминированное полиномиальное время и является корректным и полным. Корректность уже была отмечена.
+
+Для доказательства полноты нужно убедиться, что если существует атака \((\pi,\sigma)\) на протокол \(P\), то найдётся атака с подстановкой \(\sigma'\), размер которой ограничен так, как это требуется в шаге 2 алгоритма из рисунка 1. Это немедленно следует из следствия 3.16 и предположения, что \(L_o\) допускает полиномиальные атаки на показатели произведений.
+
+Остаётся показать, что наш алгоритм выполняется в недетерминированное полиномиальное время по величине \(\lVert P\rVert\). Для шагов 1 и 2 это очевидно. Чтобы убедиться в полиномиальности шагов 3 и 4, воспользуемся теоремой 3.2. Пусть $E \;=\;\{\ulcorner S_j\sigma\urcorner \mid j<i\}\;\cup\;\{\ulcorner S_0\urcorner\}$
+для некоторого \(i\in\{1,\dots,k\}\), а \(t\) обозначает либо \(\ulcorner S_0\urcorner\), либо \(\mathit{secret}\). По теореме 3.2 проверка $t \;\in\;\mathit{forge}(E)$
+может быть выполнена за детерминированное полиномиальное время от \(\lVert E,t\rVert\). По следствию 3.16 имеем
+$|E,t| \;\le\;|P|$. Поскольку \(\|\sigma\|_{\mathrm{exp}}\) полиномиально ограничено по \(\lVert P\rVert\), то то же верно и для
+$\Bigl\|\{\ulcorner S_j\sigma\urcorner\mid j<i\}\cup\{\ulcorner S_0\urcorner\}\cup\{R_i\sigma\}\Bigr\|_{\mathrm{exp}}$.
+По лемме 2.4 из этого следует, что \(\lVert E,t\rVert_{\mathrm{exp}}\) полиномиально ограничено по \(\lVert P\rVert\). Следовательно, шаги 3 и 4 могут быть выполнены за детерминированное полиномиальное время по \(\lVert P\rVert\).  
+\(\Box\)
+
+\subsection{Решение задачи вывода}
+
+Покажем, что задачу вывода (derivation problem) можно решить за полиномиальное время, при условии, что задача \\textsf{OracleRule} разрешима в детерминированном полиномиальном времени.
+
+\medskip
+\noindent\textbf{Теорема 3.2.} Задача
+\[
+\mathsf{Derive} \;:=\; \{(E,t)\mid t\in\mathrm{forge}(E)\}
+\]
+разрешима в классе \textsf{P}\textsf{TIME}, при условии, что \(\mathsf{OracleRule}\in\textsf{P}\textsf{TIME}\).
+
+\begin{proof}
+Пусть $d_{t}(E)=\{\,t'\in S(E,t)\mid E\;\to_{L_o}\;E,t'\}$
+— множество сообщений $t'$, выводимых из $E$ за один шаг. Поскольку число таких $t'$ линейно по $\|E,t\|$, а проверка шага 
+$E\;\to_{L_o}\;E,t'$
+выполняется за детерминированное полиномиальное время от $\|E,t\|$, нетрудно убедиться, что $d_{t}(E)$ вычисляется за полиномиальное время от $\|E,t\|$. 
+Теперь предположим, что $t\in\mathrm{forge}(E)$. По определению 2.11 существует корректная деривация
+$D:\quad E \;\to_{L_{1}}\;E, t_{1} \;\to\;\dots\; \to_{L_{r}}\;E, t_1, \dots, t_r$,
+где $t_{r}=t$. В частности, $t_{i}\in S(E,t)$ при $i=1,\dots,r$, и все $t_{i}$ попарно различны, поэтому $r\le|E,t|$. Введём рекурсию
+$d_{t}^{0}(E):=E, \qquad d_{t}^{i+1}(E):=d_{t}\bigl(d_{t}^{i}(E)\bigr)$.
+Очевидно, что 
+$t\in d_{t}^{r}(E) \quad\Longleftrightarrow\quad t\in\mathrm{forge}(E)$.
+Поскольку каждый шаг вычисления $d_{t}^{i}(E)$ занимает полиномиальное время от $\|E,t\|$, вытекает, что проверка $t\in\mathrm{forge}(E)$ также выполняется за детерминированное полиномиальное время.  
+\end{proof}
+
+\subsection{Характеризация подтермов минимальных атак}
+
+Далее мы покажем, что подстановки минимальных атак могут быть сконструированы путём «связывания» подтермов, которые изначально встречаются в спецификации задачи (см. Утверждение 3.14). Для доказательства этого утверждения сначала установим некоторые свойства замен (Леммы 3.4–3.6), затем свойства подстановок в минимальных атаках (Леммы 3.7–3.9) и, наконец, свойства дериваций (Леммы 3.10–3.13).
+
+В дальнейшем мы всегда предполагаем, что \(L_{o}\) — множество оракульных правил. Если \(t\in\mathrm{forge}(E)\), то обозначим через \(D_{t}(E)\) некоторую корректную деривацию из \(E\) с целью \(t\) (выбранную произвольно). Такая деривация всегда существует в силу определения оракульных правил.
+
+Пусть $P=\bigl(\{\,R_i\Rightarrow S_i\mid i\in\mathcal{I}\},\;\prec_{\mathcal{I}},\;S_0\bigr)$ — протокол, а \((\pi,\sigma)\) — атака на \(P\). Пусть \(k=|\pi|\), а \(R_i\) и \(S_i\) определены согласно Определению 2.8. Напомним, что
+$S(P)=S_0\;\cup\;\bigcup_{i\in\mathcal{I}}(R_i\cup S_i), \qquad \mathcal{V}(P)=\mathcal{V}\bigl(S(P)\bigr)$.
+Также нам понадобится следующее ключевое понятие.
+
+\textsc{Определение 3.3.} Пусть \(t\) и \(t'\) — два терма, а \(\theta\) — наземная подстановка. Тогда говорят, что \(t\) является \(\theta\)\nobreakdash‑соответствием (или \(\theta\)\nobreakdash‑match) терма \(t'\), что обозначается
+\[
+t \;\sqsubseteq_{\theta}\; t',
+\]
+если \(t\) и \(t'\) — стандартные термы и
+\[
+\ulcorner t\,\theta \urcorner\;=\; t'.
+\]
+
+\subsubsection*{3.2.1 Свойства замен}
+
+Следующие леммы устанавливают дистрибутивные свойства функции нормализации, подстановок, оператора экспоненциации и операций замены.
+
+\textsc{Лемма 3.4.} Пусть \(u\) — нормализованный терм, а \(M, M'\) — два произведения, такие что все подтермы из \(\mathcal{F}(M)\cup \mathcal{F}(M')\) нормализованы. Пусть \(s\) — стандартный нормализованный терм, а \(\delta=[s\leftarrow 1]\) — замена. Тогда выполняются равенства:
+
+(1)\quad 
+\(\ulcorner (M\cdot M') \delta \urcorner
+   =\ulcorner\ulcorner M\cdot M'\urcorner\delta\urcorner\),
+в частности 
+\(\ulcorner M\delta\urcorner=\ulcorner\ulcorner M\urcorner{\delta}\urcorner\).
+
+(2)\quad 
+\(\ulcorner Exp(u,M)\delta\urcorner
+   =\ulcorner\ulcorner Exp(u,M)\urcorner\delta\urcorner\),
+если \(s\neq\ulcorner Exp(u,M)\urcorner\),
+и, в случае если \(s=Exp(\cdot,\cdot)\), также \(s\neq u\).
+
+\begin{proof}
+См.~Приложение~A\qedhere
+\end{proof}
+
+\medskip
+Отметим, что пункт 2 в предыдущей лемме не выполняется без ограничений на $s$.
+Следующий пример демонстрирует проблему при
+$s=\ulcorner Exp(u,M)\urcorner$:
+предположим, что $s=Exp(a,b)$, $u=a$, а
+$M=b\!\cdot\!c\!\cdot\!c^{-1}$.
+Тогда
+$s=\ulcorner Exp(u,M)\delta\urcorner
+\neq
+\ulcorner\ulcorner Exp(u,M)\urcorner\delta\urcorner=1$.  
+Следующий пример иллюстрирует, почему необходимо требование $s\neq u$:
+положим $s=u=Exp(a,b)$ и $M=c$.
+Тогда
+$1=\ulcorner Exp(u,M)\delta\urcorner
+\neq
+\ulcorner\ulcorner Exp(u,M')\urcorner\delta\urcorner
+=Exp(a,b\!\cdot\!c)$.
+
+\textsc{Лемма 3.5.} 
+Пусть $\sigma$ — нормализованная замкнутая подстановка,
+$E$ — множество нормализованных терминов,
+$s$ — нормализованный стандартный неатомарный термин,
+а $\delta$ — замена $[s \leftarrow 1]$.
+Обозначим $\sigma'=\ulcorner\sigma\delta\urcorner$.
+Если не существует стандартного подтермина $t\in E$ такого, что  
+$t\sqsubseteq_{\sigma}s$, то $\ulcorner E\sigma'\urcorner = \ulcorner\ulcorner E\sigma\urcorner\delta\urcorner$.
+
+\begin{proof}
+  См.\ Приложение~A.
+\end{proof}
+
+\medskip
+
+\textsc{Лемма 3.6.} 
+Пусть $t',\,t_1,\dots,t_n,\,t,\,u$ — нормализованные стандартные термины,
+$z_1,\dots,z_n\in\mathbb Z$, а $\delta$ — замена $[u\leftarrow1]$ такая, что
+$u\neq t$ и $t=\ulcorner Exp\bigl(t',\,t_1^{\,z_1}\!\cdots t_n^{\,z_n}\bigr)\urcorner$.
+Если $t'=Exp(\,\cdot,\cdot\,)$, то дополнительно предполагаем
+$u\neq t'$. Тогда
+\[
+  \ulcorner t\delta\urcorner
+  =\ulcorner Exp\bigl(\ulcorner t'\delta\urcorner,
+        \ulcorner t'\delta\urcorner^{z_1}\!\cdots \ulcorner t_n\delta\urcorner^{z_n}\bigr)\urcorner.
+\]
+
+\begin{proof}
+  См.\ Приложение А.
+\end{proof}
+
+\subsubsection*{3.2.2 \,Свойства подстановок минимальных атак}
+Следующая лемма позволяет доказать то, что мы далее будем
+называть \emph{свойством единственного сопоставления}.
+
+\textsc{Лемма 3.7.}
+Пусть $s$ — стандартный термин, $t$ — нормализованный термин,
+а $\sigma$ — нормализованная подстановка такая, что
+$s\in S(\ulcorner t\sigma\urcorner)$ и
+$s\notin S(x\sigma)$ для каждого $x\in\mathcal V(t)$.
+Тогда существует стандартный подтермин $t'$ термина $t$,
+удовлетворяющий $t'\sqsubseteq_{\sigma}s$.
+
+\textit{Доказательство.}
+По лемме 2.4 имеем
+\[
+  S(\ulcorner t\sigma\urcorner)\;\subseteq\;
+  \ulcorner S(t\sigma)\urcorner
+  \;\subseteq\;
+  \ulcorner S(t)\sigma\;\cup\;\mathcal V(t)\sigma\urcorner.
+\]
+Так как $\sigma$ находится в нормальной форме, это означает
+\[
+  S(\ulcorner t\sigma\urcorner)\;\subseteq\;
+  \ulcorner S(t)\sigma\urcorner\;\cup\;\mathcal V(t)\sigma.
+\]
+По предположению $s\in \mathcal S(\ulcorner t\sigma\urcorner)$ и
+$s\notin \mathcal S(\mathcal V(t)\sigma)$.
+Следовательно, $s\in\ulcorner \mathcal S(t)\sigma\urcorner$,
+то есть существует $t'\in \mathcal S(t)$ такое, что
+$\ulcorner t'\sigma\urcorner = s$.
+\hfill$\square$
+
+Теперь мы докажем \emph{свойство единственного сопоставления}:
+если злоумышленник посылает сообщения $m_1,\dots,m_i$,
+то существует не более одного способа сопоставить эти сообщения
+с $R_1,\dots,R_i$ при каждом $R_j,\;j\in\{1,\dots,i\}$,
+определённых выше.
+
+\textsc{Лемма 3.8.} \textit{Пусть дана произвольная последовательность
+нормализованных сообщений $m_1,\dots,m_i$.
+Существует не более одной нормализованной подстановки $\sigma$ такой, что
+\(
+  \ulcorner R_j\sigma\urcorner = m_j
+\)
+для всех $j\in\{1,\dots,i\}$.}
+
+\textit{Доказательство.}
+Предположим противное и выберем минимальный
+$i\in\{1,\dots,n\}$, для которого существуют две разные
+нормализованные подстановки $\sigma$ и $\sigma'$, удовлетворяющие
+\(
+  \ulcorner R_j\sigma\urcorner=\ulcorner R_j\sigma'\urcorner
+\)
+для всех $j\in\{1,\dots,i\}$.
+Из минимальности $i$ следует, что $\sigma$ и $\sigma'$
+совпадают на
+\(V_{i-1}=\mathcal V(R_1,\dots,R_{i-1})\)
+и различаются на некоторой переменной из
+\(\mathcal V(R_i)\setminus V_{i-1}\).
+Обозначим через $\sigma_0$ подстановку, равную
+$\sigma$ на $V_{i-1}$ и тождественную
+на \(\mathcal V(R_i)\setminus V_{i-1}\);
+положим \(r=\ulcorner R_i\sigma_0\urcorner\).
+
+По Лемме 2.4, 5 и поскольку
+\(R_i\sigma=(R_i\sigma_0)\sigma\) и
+\(R_i\sigma'=(R_i\sigma_0)\sigma'\),
+получаем
+\(
+  \ulcorner R_i\sigma\urcorner
+  =\ulcorner r\sigma\urcorner
+  =\ulcorner r\sigma'\urcorner.
+\)
+По предположению найдётся переменная
+\(x\in\mathcal V(r)\) такая, что \(x\sigma\ne x\sigma'\).
+Выберем \(t_x\in \mathcal S(r)\) минимальный
+(относительно отношения «подтермин»),
+для которого \(x\in\mathcal V(t_x)\) и
+\(
+  \ulcorner t_x\sigma\urcorner
+  =\ulcorner t_x\sigma'\urcorner.
+\)
+Так как $r$ является возможным кандидатом,
+такой термин $t_x$ корректно определён.
+
+Очевидно, $t_x$ не может быть ни переменной, ни константой.
+На самом деле легко видеть, что
+\(t_x\) обязан иметь вид
+\(
+  Exp(t_1,t_2^{z_2}\!\cdots t_k^{z_k}).
+\)
+По Определению 2.6, 3 и так как \(x\in\mathcal V(t_x)\),
+для всех \(j\in\{1,\dots,k\}\setminus\{j_0\}\)
+термины \(t_j\) являются замкнутыми.
+Пусть \(j_0\) — индекс незамкнутого подтермина, т.\,е.\ \(x\in\mathcal V\!\bigl(t_{j_0}\bigr)\).
+По минимальности \(t_x\) имеем \(t_{j_0}\sigma\neq t_{j_0}\sigma'\).
+Учитывая, что \(t_x\sigma=t_x\sigma'\), рассмотрим возможные случаи:
+
+— $j_0 = 1$: Сначала предположим, что
+\(
+  \ulcorner t_{j_0}\sigma \urcorner = Exp(b,M)
+\)
+и
+\(
+  \ulcorner t_{j_0}\sigma' \urcorner = \operatorname{Exp}(b',M').
+\)
+Так как \(\ulcorner t_x\sigma \urcorner = \ulcorner t_x\sigma' \urcorner\), имеем
+\(b=b'\) и
+\(
+  \ulcorner M\!\cdot\!\prod_{i=2}^{k} t_i^{z_i} \urcorner
+  =
+  \ulcorner M'\!\cdot\!\prod_{i=2}^{k} t_i^{z_i} \urcorner.
+\)
+Отсюда \(M=M'\) и, следовательно,
+\(\ulcorner t_{j_0}\sigma \urcorner = \ulcorner t_{j_0}\sigma'\urcorner\),
+что противоречит предположению. Если оба термина \(\ulcorner t_{j_0}\sigma \urcorner\) и \(\ulcorner t_{j_0}\sigma' \urcorner\)
+не имеют вида \(\operatorname{Exp}(\,\cdot,\cdot\,)\),
+то из равенства \(\ulcorner t_x\sigma \urcorner = \ulcorner t_x\sigma' \urcorner\)
+также немедленно следует
+\(\ulcorner t_{j_0}\sigma \urcorner = \ulcorner t_{j_0}\sigma' \urcorner \).
+Если же
+\(\ulcorner t_{j_0}\sigma \urcorner = \operatorname{Exp}(b,M)\),
+а \(\ulcorner t_{j_0}\sigma' \urcorner\) не имеет вида
+\(\operatorname{Exp}(\,\cdot,\cdot\,)\),
+то равенство \(\ulcorner t_x\sigma \urcorner = \ulcorner t_x\sigma' \urcorner \)
+влечёт
+\(
+  \ulcorner M\!\cdot\!\prod_{i=2}^{k} t_i^{z_i} \urcorner
+  =
+  \ulcorner \prod_{i=2}^{k} t_i^{z_i}\urcorner,
+\)
+а значит \(M=1\), что противоречит тому, что
+\(t_{j_0}\sigma\) нормализован.
+Следовательно, случай \(j_0 = 1\) невозможен.
+
+— $j_0>1$:  
+Сначала предположим, что \(t_1 = Exp(b,M)\).
+Из равенства \(\ulcorner t_x\sigma\urcorner = \ulcorner t_x\sigma'\urcorner\) получаем
+\[
+  \ulcorner M \!\cdot\!
+  \ulcorner t_{j_0}^{z_{j_0}}\sigma \urcorner\!
+  \cdot
+  \prod_{j\in\{2,\dots,k\}\setminus\{j_0\}}
+     \bigl(t_j\bigr)^{z_j}\urcorner
+  \;=\;
+  \ulcorner M\;\cdot\;
+  \ulcorner t_{j_0}^{\,z_{j_0}}\sigma'\urcorner\;
+  \cdot\!
+  \prod_{j\in\{2,\dots,k\}\setminus\{j_0\}} t_j^{\,z_j}\urcorner
+\]
+Следует
+\(
+  \bigl(t_{j_0}\sigma\bigr)^{z_{j_0}}
+  =
+  \bigl(t_{j_0}\sigma'\bigr)^{z_{j_0}},
+\)
+что противоречит выбору \(t_{j_0}\).
+Случай, когда \(t_x\sigma\) не имеет вида
+\(\operatorname{Exp}(\,\cdot,\cdot\,)\),
+разбирается ещё проще. \qed
+
+Используя предыдущую лемму, покажем, что любой подтермин подстановки,
+соответствующей минимальной атаке,
+либо принадлежит спецификации протокола,
+либо является подтермином нормализованного сообщения,
+передаваемого в ходе атаки.
+
+\textsc{Лемма 3.9.}
+Пусть \((\pi,\sigma)\) — атака на \(P\) с нормализованной подстановкой
+\(\sigma\),
+\(x\in\mathcal V(R_i)\) для некоторого
+\(i\in\{1,\dots,k\}\),
+а \(s\in \mathcal S\!\bigl(\sigma(x)\bigr)\) — стандартный термин.
+Тогда существует \(j\le i\) такое, что
+\(
+  s\in \mathcal S\!\bigl(\ulcorner R_j\sigma\urcorner\bigr)
+\)
+или существует \(t\in S(P)\) со свойством \(t\sqsubseteq_{\sigma}s\).
+
+\textit{Доказательство.}
+Предположим, что не существует \(t\in S(P)\) такого, что
+\(t\sqsubseteq_{\sigma}s\),
+и при этом
+\(s\notin S\!\bigl(\ulcorner R_j\sigma\urcorner\bigr)\)
+для всех \(j\le i\).
+Отсюда \(s\) не является атомом.
+Положим
+\(V_j=\mathcal V(R_j)\cup\mathcal V(S_j)\)
+и выберем минимальный \(j\), для которого
+\(s\in S\!\bigl(V_j\sigma\bigr)\).
+По Определению 2.6, 2 имеем
+\(s\in S\!\bigl(\mathcal V(R_j)\sigma\bigr)\).
+Обозначим
+\(
+  \sigma'=\ulcorner \sigma[s\!\leftarrow\!1]\urcorner.
+\)
+
+По минимальности \(j\) для всех \(l<j\) выполняется
+\(R_l\sigma'=R_l\sigma\),
+а значит
+\(
+  \ulcorner R_l\sigma'\urcorner
+  =
+  \ulcorner R_l\sigma\urcorner.
+\)
+Поскольку
+\(s\notin S\!\bigl(\ulcorner R_j\sigma\urcorner\bigr)\),
+получаем
+\(
+  \ulcorner R_j\sigma'\urcorner[s\!\leftarrow\!1]
+  =
+  \ulcorner R_j\sigma\urcorner.
+\)
+По Лемме 3.5 отсюда следует
+\(
+  \ulcorner R_j\sigma\urcorner
+  =
+  \ulcorner R_j\sigma'\urcorner.
+\)
+Заметим, что \(\sigma\) и \(\sigma'\) различаются
+хотя бы по одной переменной из
+\(\mathcal V(R_1,\dots,R_j)\),
+что противоречит Лемме 3.8.\hfill$\square$
+
+\subsubsection*{3.2.3 \,Свойства выводов}
+Ниже приводятся несколько полезных свойств выводов, 
+позволяющих без труда заменять термины внутри вывода.
+Начнём с простого наблюдения, непосредственно вытекающего
+из определения правил декомпозиции и композиции.
+
+\textsc{Лемма 3.10.}
+Пусть $E$ — нормализованное конечное множество сообщений,
+$t$ — сообщение,
+а $L$ — $t$-правило, для которого выполнен один шаг вывода
+\(
+  E \rightarrow_{L} E,\,t,
+\)
+и при этом $\mathcal S(E,t)\ne \mathcal S(E)$.
+Тогда
+\(
+  \mathcal S(E,t)=\mathcal S(E)\cup\{t\},
+\qquad
+  \text{и }L\text{ является правилом композиции.}
+\)
+
+Следующая лемма утверждает, что если
+$t'$ — подтермин термина $t$,
+термин $t$ выводится из множества $E$,
+но при этом $t'$ не является подтермином ни одного элемента $E$,
+то $t'$ также выводится из $E$, причём
+последним шагом такого вывода служит правило композиции.
+
+\textsc{Лемма 3.11.}
+Предположим, что
+$t'\in \mathcal S(t)\setminus \mathcal S(E)$
+и
+$t\in forge(E)$.
+Тогда
+\(
+  t'\in forge(E),
+\)
+и существует вывод из $E$ с целью $t'$,
+завершающийся правилом композиции.
+
+\begin{proof}
+Пусть
+\(D=E_0 \rightarrow_{\,L_1\,} E_1 \;\cdots\; \rightarrow_{\,L_n\,} E_n\)
+— вывод термина \(t\), причём \(E_0 = E\).
+Так как \(t'\) является подтермином элементов \(E_n\),
+существует минимальный \(i>0\) такой, что
+\(t' \in \mathcal S(E_i)\).
+По минимальности \(i\) имеем
+\(t'\in \mathcal S(E_i)\setminus \mathcal S(E_{i-1})\).
+Применяя Лемму 3.10, заключаем, что
+\(D=E_0 \rightarrow_{\,L_1\,} E_1 \;\cdots\; \rightarrow_{\,L_i\,} E_i\)
+— это вывод с целью \(t'\).
+\end{proof}
+
+\noindent лемма будет использована в доказательстве Леммы 3.13.
+Она позволяет строить специальные выводы, в которых заданный термин
+никогда не декомпозируется. Это окажется критически важным,
+когда потребуется заменить составные термины атомами в ряде выводов.
+
+\textsc{Лемма 3.12.}
+Пусть $t\in forge(E)$ и $\gamma\in forge(E)$.
+Предположим, что имеется вывод $D_{\gamma}$ из $E$,
+последним шагом которого является применение правила из $\mathcal L_{c}$.
+Тогда существует вывод $D'$ из $E$ с целью $t$, удовлетворяющий
+\(
+  L_{d}(\gamma)\notin D'.
+\)
+
+\begin{proof} См.\ Приложение А.\end{proof}
+
+\medskip
+
+Теперь мы можем сформулировать лемму, позволяющую
+заменять определённые подтермины, возникающие в подстановке атаки,
+на более короткие.
+Из предположений текущей леммы следует, что
+$s$ выводим из $E$ так, что последним правилом является правило композиции.
+Это даёт возможность заменить $s$ на более короткий термин,
+поскольку при выводе $t$ декомпозиция $s$ уже не потребуется.
+
+\textsc{Лемма 3.13.}
+Пусть $E$ и $F$ — два множества нормализованных сообщений, причём
+$1\in E\cup F$.
+Пусть
+$t\in forge(E,F)$ и
+$s\in forge(E)$ — неатомарный термин, причём $s\notin \mathcal S(E)$.
+Обозначим через $\delta$ подстановку $[\,s\!\leftarrow\!1\,]$.
+Тогда
+\(
+  \ulcorner t\delta\urcorner\;\in\;
+   forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr).
+\)
+
+\begin{proof}
+По лемме 3.11 существует корректный вывод
+$D_s$ из $E$ с целью $s$, в котором последний шаг — правило композиции.
+По лемме 3.12 имеется вывод
+$D_t$ из $E,F$ с целью $t$, такой, что $L_d(s)\notin D_t$.
+Запишем
+\(
+  D_t:\quad
+  E,F \rightarrow_{L_1} E,F,t_1
+       \rightarrow_{L_2} E,F,t_2
+       \;\cdots\;
+       \rightarrow_{L_n} E,F,t_1,\dots,t_n .
+\)
+
+Покажем по индукции по $i\;(0\le i\le n)$, что
+\[
+  \ulcorner t_i\delta\urcorner\;\in\;
+   forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr).
+\]
+
+\noindent\emph{База.}
+Если $t_0\in E\cup F$, то
+\(
+  \ulcorner t_0\delta\urcorner\in
+  \ulcorner E\delta\cup F\delta\urcorner
+  \subseteq
+  forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr).
+\)
+
+\emph{Индукционный шаг.}
+Пусть утверждение доказано для всех $j<i$; рассмотрим правило $L_i$.
+
+\begin{itemize}
+  \item[--$L_i=L_c(\langle a,b\rangle)$:]
+        либо $t_i=s$ и тогда
+        $t_i\delta=1\in forge(E\delta,F\delta)$,
+        либо
+        $t_i\delta=\langle a\delta,b\delta\rangle$.
+        По предположению индукции
+        $\{a\delta,b\delta\}\subseteq
+          forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr)$,
+        откуда
+        $t_i\delta\in
+         forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr)$.
+        Аналогично разбираются случаи $\{a\}_b^{\,s}$ и $\{a\}_K^{\,p}$.
+
+  \item[--$L_i=L_{p1}(\langle t_i,a\rangle)$:]
+        здесь $s\neq\langle t_i,a\rangle$,
+        так как $L_i\notin L_d(s)$.
+        Получаем
+        $\langle t_i,a\rangle\delta=\langle t_i\delta,a\delta\rangle$.
+        По индукционной гипотезе
+        $\langle t_i,a\rangle\delta\in
+         forge(E\delta,F\delta)$,
+        следовательно
+        $t_i\delta\in forge(E\delta,F\delta)$.
+        Точно так же обрабатываются правила
+        $L_{p2},L_{sd}$ и $L_{ad}$.
+
+  \item[--$L_i\in L_o$:]
+        воспользуемся Определением 2.11, 3.
+        Пусть $E'$ — множество сообщений, полученное в $D_s$
+        непосредственно перед применением последнего шага.
+        Тогда
+        $E'\setminus\{s\}\rightarrow_{\mathcal L_c(s)}E',s$,
+        а также
+        \[
+          E,F,t_1,\dots,t_{i-1}\rightarrow_{L_i}
+          E,F,t_1,\dots,t_i .
+        \]
+        В частности,
+        $E',E,F,t_1,\dots,t_{i-1}\rightarrow_{L_i}E',E,F,t_1,\dots,t_{i-1},t_{i}$,
+        откуда по Определению 2.11, 3
+        \[
+          \ulcorner t_i\delta\urcorner\in
+          forge\!\bigl(
+            \ulcorner E'\delta,\,
+            E\delta,\,F\delta,\,
+            t_1\delta,\dots,t_{i-1}\delta\urcorner
+          \bigr).
+        \]
+        Заметим, что $E'\delta=E'$, $E\delta=E$,
+        а все сообщения из $E'$ выводимы из $E$.
+        Индукционное предположение даёт
+        $\ulcorner t_1\delta \urcorner,\dots,\ulcorner t_{i-1}\delta \urcorner\in
+         forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr)$,
+        поэтому
+        \(
+          forge\!\bigl(
+            \ulcorner E'\delta,\,
+            E\delta,\,F\delta,\,
+            t_1\delta,\dots,t_{i-1}\delta\urcorner
+          \bigr)
+          \subseteq
+          forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr),
+        \)
+        и поэтому
+        \(
+          t_i\delta\in
+           forge\!\bigl(\,\ulcorner E\delta,\,F\delta\urcorner\bigr).
+        \)
+\end{itemize}
+
+Для $i=n$ получаем
+\(
+  t\delta\in forge(E\delta,F\delta),
+\)
+что и требовалось.
+\end{proof}
+
+\subsubsection*{3.2.4 \,Свойства минимальных атак}
+
+Теперь мы готовы перейти к доказательству Предложения 3.14, которое утверждает, что
+подстановки минимальных атак всегда можно построить,
+связывая подтермины, изначально присутствующие в протоколе~$P$.
+Это ключевой шаг, позволяющий ограничить число подтерминов
+в минимальных атаках (см.\ Теорему 3.15).
+
+\textsc{Предложение 3.14.}
+Пусть $(\pi,\sigma)$ — минимальная атака на протокол $P$.
+Тогда для любого
+\(s\in S(\mathcal V\sigma)\)
+существует
+\(t\in \mathcal S(P)\) такое, что \(t\sqsubseteq_{\sigma}s\).
+
+\begin{proof}
+Положим $(\pi,\sigma)$ и $s$ как выше.
+Предположим обратное\;(*)\,: \emph{для каждого $t$ из условия
+$t\sqsubseteq_{\sigma}s$ следует $t\notin \mathcal S(P)$}.
+Доведём это допущение до противоречия.
+
+Так как $\mathcal A\subseteq \mathcal S(P)$, получаем $s\notin \mathcal A$.
+По лемме 3.9 и (*)
+существует $j$ такое, что
+\(s\in \mathcal S\!\bigl(\ulcorner R_j\sigma\urcorner\bigr)\).
+Выберем минимальный среди возможных $j$ и
+рассмотрим $N=j$.
+Если
+\(s\in \mathcal S\!\bigl(\ulcorner S_i\sigma\urcorner\bigr)\)
+для некоторого $i$, то (*)
+и лемма 3.7 дают нам переменную
+\(x\in\mathcal V(S_i)\) с
+\(s\in S(x\sigma)\).
+По определению 2.6, (2)
+существуют $R_{i'},i'\le i$ такие, что
+\(x\in\mathcal V(R_{k})\).
+Следовательно, леммы 3.9 и (*) вновь
+дают индекс $j\le i$ с
+\(s\in S\!\bigl(\ulcorner R_j\sigma\urcorner\bigr)\).
+Заметим, что
+\(s\notin \mathcal S(S_0)\), иначе
+\(s\in \mathcal S(P)\), и (*)
+бы не выполнялось.
+Минимальность $N$ гарантирует $i\ge N$.
+Положим
+\(E_j=\ulcorner S_0\sigma,\dots,S_{j-1}\sigma \urcorner\).
+Итак, $s$ — неатомарный термин,
+не являющийся подтермином $E_N$,
+но являющийся подтермином
+\(\ulcorner R_N\sigma\urcorner\);
+по лемме 3.11 тогда
+\(s\in forge(E_N)\).
+
+Обозначим $\delta=[\,s\!\leftarrow\!1\,]$.
+Поскольку $(\pi,\sigma)$ — атака,
+для всех $1\le j\le k+1$
+(где $R_{k+1}=\textit{secret}$) выполняется
+\[
+  \ulcorner R_j\sigma\urcorner \;\in\;
+   forge(E_j).
+\]
+
+Рассмотрим два случая.
+
+\medskip
+\noindent— \textbf{$j<N$.}
+Минимальность $N$ означает, что $s$ не является подтермином
+ни \(\ulcorner R_j\sigma\urcorner\), ни $E_j$.
+Тогда из
+\(\ulcorner R_j\sigma\urcorner\in forge(E_j)\)
+получаем
+\(
+  \ulcorner\ulcorner R_j\sigma\urcorner\delta\urcorner
+  \in
+  forge\!\bigl(\ulcorner E_j\delta\urcorner\bigr)
+  =forge(E_j\delta).
+\)
+
+\medskip
+\noindent— \textbf{$j\ge N$.}
+Полагая
+\(t=\ulcorner R_j\sigma\urcorner,\;E=E_N,\;F=E_j\),
+применяем лемму 3.13 и
+получаем
+\(
+  \ulcorner\ulcorner R_j\sigma\urcorner\delta\urcorner
+  \in
+   forge\!\bigl(\ulcorner E_j\delta\urcorner\bigr).
+\)
+
+\noindent
+Таким образом,
+\(\ulcorner\ulcorner R_j\sigma\urcorner\delta\urcorner\in
+  forge(\ulcorner E_j\delta\urcorner)\)
+в обоих случаях.
+Теперь из (*) и леммы 3.5
+для всех $j$ выводим
+\[
+  \ulcorner R_j\sigma\urcorner
+  \in
+   forge
+  \bigl(
+    \ulcorner S_0\sigma',\dots,S_{j-1}\sigma'\urcorner
+  \bigr),
+  \qquad
+  \text{где }\sigma'=\ulcorner\sigma\delta\urcorner.
+\]
+Следовательно, $(\pi,\sigma')$ также является атакой.
+(Условия применения леммы 3.5 выполнены.)
+Но $\sigma'$ получена из $\sigma$ заменой $s$ на термин $1$,
+то есть
+\(|\sigma'|<|\sigma|\),
+что противоречит минимальности атаки $(\pi,\sigma)$.
+\end{proof}
+
+\subsection{Ограничение числа подтерминов минимальных атак}
+
+Опираясь на Предложение 3.14, получаем:
+
+\textsc{Теорема 3.15.}
+Для каждой минимальной атаки $(\pi,\sigma)$ на протокол $P$ выполнено
+\[
+  \mathcal S\!\bigl(\,\ulcorner \mathcal S(P)\sigma\urcorner\bigr)\;=\;
+  \ulcorner \mathcal S(P)\sigma\urcorner.
+\]
+
+\textit{Доказательство.}
+Включение
+\(
+  \ulcorner \mathcal S(P)\sigma\urcorner
+  \subseteq
+  S\!\bigl(\,\ulcorner \mathcal S(P)\sigma\urcorner\bigr)
+\)
+очевидно.
+Обратное включение является прямым следствием
+Предложения 3.14, из которого получаем
+\[
+  \mathcal S(\mathcal V\sigma)
+  \subseteq
+  \ulcorner \mathcal S(P)\sigma\urcorner.
+\]
+По лемме 2.4 имеем
+\(
+  S\!\bigl(\,\ulcorner \mathcal S(P)\sigma\urcorner\bigr)
+    \subseteq
+  \ulcorner \mathcal S\bigl(\mathcal S(P)\sigma\bigr)\urcorner,
+  \qquad
+  \mathcal S\bigl(\mathcal S(P)\sigma\bigr)
+    \subseteq
+  \mathcal S(P)\sigma\;\cup\; \mathcal S(\mathcal V\sigma).
+\)
+Следовательно,
+\(
+  \mathcal S\!\bigl(\,\ulcorner \mathcal S(P)\sigma\urcorner\bigr)
+    \subseteq
+  \ulcorner \mathcal S(P)\sigma\urcorner
+  \;\cup\;
+  \mathcal S(\mathcal V\sigma),
+\)
+и, учитывая предыдущее включение,
+получаем
+\(
+  S\!\bigl(\,\ulcorner S(P)\sigma\urcorner\bigr)
+    \subseteq
+  \ulcorner S(P)\sigma\urcorner.
+\)
+Тем самым равенство доказано.\hfill$\square$
+
+Из Теоремы 3.15 немедленно следует:
+
+\textsc{Следствие 3.16.}
+Для каждой минимальной атаки $(\pi,\sigma)$ на протокол $P$
+и любого множества $E\subseteq \mathcal S(P)$ выполняется
+\(
+  \bigl|\,\ulcorner E\sigma\urcorner\bigr|\;\le\;|P|.
+\)
+В частности,
+\(
+  |\,\mathcal V(P)\sigma|\;\le\;|P|.
+\)
+
+\begin{proof}
+Во-первых, мощность множества
+\(\mathcal S\!\bigl(\,\ulcorner \mathcal S(P)\sigma\urcorner\bigr)\)
+не превышает $|P|$.
+Во-вторых,
+\(
+  \ulcorner E\sigma\urcorner
+  \subseteq
+  \mathcal S\!\bigl(\,\ulcorner \mathcal S(P)\sigma\urcorner\bigr),
+\)
+откуда сразу следует требуемое
+\(
+  \bigl|\,\ulcorner E\sigma\urcorner\bigr|\le|P|.
+\)
+Подставляя $E=\mathcal V(P)$, получаем
+\(
+  |\,\mathcal V(P)\sigma|\le|P|.
+\)
+Заметим, что $\sigma$ нормализована, поэтому
+\(
+  \sigma(x)=\ulcorner\sigma(x)\urcorner
+\)
+для любой переменной $x$.
+\end{proof}

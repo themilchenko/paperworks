@@ -1,0 +1,35 @@
+\documentclass[ordinary]{BMSTU-IU8}
+
+\usepackage{amsfonts}
+\usepackage{stmaryrd}
+\usepackage{amssymb}
+
+\addbibresource{main.bib}
+
+\group{ИУ8-104}
+\theme{Выводы об оценке сложности протоколов безопасности
+       на основе возведения в степень по схеме Диффи–Хеллмана
+       и коммутируемого шифрования с открытым ключом}
+\discipline{Криптографические методы защиты информации}
+\student{Мильченко И. Д.}
+\supervisor{Жуков А. Е.}
+
+\begin{document}
+  \maketitle
+
+  \tableofcontents
+
+  \include{contents/1-introduction}
+  \include{contents/2-protocol-and-intruder-model}
+  \include{contents/3-np-decision-algorithm}
+  \include{contents/4-dolev-yao}
+  \include{contents/5-dh-rules}
+  \include{contents/6-a-ghd-2}
+  \include{contents/7-public-key}
+  \include{contents/8-conclusion}
+
+  \printbibliography
+
+  \appendix
+  \include{contents/9-appendix}
+\end{document}
