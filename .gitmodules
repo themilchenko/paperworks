@@ -1,0 +1,3 @@
+[submodule "10_sem/scientific_research_work/kv"]
+	path = 10_sem/scientific_research_work/kv
+	url = git@github.com:themilchenko/kv.git

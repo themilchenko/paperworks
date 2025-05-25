@@ -2,11 +2,27 @@
 
 \usepackage{amsfonts}
 
+\addbibresource{main.bib}
+
 \begin{document}
+  \setcounter{page}{4}
+
+  \include{contents/0-abstract}
+
   \tableofcontents
 
   \include{contents/1-introduction}
   \include{contents/2-00-lib-selection}
   \include{contents/2-01-raft-introduction}
   \include{contents/2-02-service-design}
+  \include{contents/2-03-impl}
+  \include{contents/2-04-failover}
+
+  \include{contents/3-conclusion}
+
+  \printbibliography
+
+  \appendix
+  \include{contents/4-appendix-a.tex}
+  \include{contents/4-appendix-b.tex}
 \end{document}
