@@ -1,0 +1,25 @@
+\documentclass[ordinary]{BMSTU-IU8}
+
+\usepackage{amsfonts}
+\usepackage{pdfpages}
+\usepackage{seqsplit}
+\newcommand{\metric}[1]{\nolinkurl{#1}}
+
+\addbibresource{main.bib}
+
+\begin{document}
+  \includepdf[pages=-]{assets/titul.pdf}
+  \setcounter{page}{3}
+
+  \tableofcontents
+
+  \include{contents/0-introduction}
+  \include{contents/1-team-introduce}
+  \include{contents/2-metrics}
+  \include{contents/3-dashboard}
+  \include{contents/4-conclusion}
+
+  \printbibliography
+
+  \appendix
+\end{document}
