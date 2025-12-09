@@ -1,10 +1,12 @@
 \documentclass[research]{BMSTU-IU8}
 
 \usepackage{amsfonts}
+\usepackage{pdfpages}
 
 \addbibresource{main.bib}
 
 \begin{document}
+  \includepdf[pages=-]{assets/titul.pdf}
   \setcounter{page}{4}
 
   \include{contents/0-abstract}
@@ -23,6 +25,6 @@
   \printbibliography
 
   \appendix
-  \include{contents/4-appendix-a.tex}
-  \include{contents/4-appendix-b.tex}
+  % \include{contents/4-appendix-a}
+  % \include{contents/4-appendix-b}
 \end{document}
