@@ -1,0 +1,945 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{DolevYao1983}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=b016c82a0a22f2d80a941de1f539d076}{%
+           family={Dolev},
+           familyi={D\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=10d528329e817300da528b498ea7378a}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \strng{fullhash}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \strng{fullhashraw}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \strng{bibnamehash}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \strng{authorbibnamehash}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \strng{authornamehash}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \strng{authorfullhash}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \strng{authorfullhashraw}{b3dfbe4bafc19b5ec9c9daf8d8986688}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{internalsortvolume}{29}
+      \field{journaltitle}{IEEE Transactions on Information Theory}
+      \field{title}{On the Security of Public-Key Protocols}
+      \field{year}{1983}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{198\bibrangedash 208}
+      \range{pages}{11}
+      \field{volume}{29}
+      \range{volume}{1}
+    \endentry
+    \entry{Meadows2000}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=9947cb0afd5795dfa4e3878373df7bf2}{%
+           family={Meadows},
+           familyi={M\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society Press}%
+      }
+      \strng{namehash}{9947cb0afd5795dfa4e3878373df7bf2}
+      \strng{fullhash}{9947cb0afd5795dfa4e3878373df7bf2}
+      \strng{fullhashraw}{9947cb0afd5795dfa4e3878373df7bf2}
+      \strng{bibnamehash}{9947cb0afd5795dfa4e3878373df7bf2}
+      \strng{authorbibnamehash}{9947cb0afd5795dfa4e3878373df7bf2}
+      \strng{authornamehash}{9947cb0afd5795dfa4e3878373df7bf2}
+      \strng{authorfullhash}{9947cb0afd5795dfa4e3878373df7bf2}
+      \strng{authorfullhashraw}{9947cb0afd5795dfa4e3878373df7bf2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of DISCEX 2000}
+      \field{title}{Open issues in formal methods for cryptographic protocol analysis}
+      \field{year}{2000}
+      \field{pages}{237\bibrangedash 250}
+      \range{pages}{14}
+    \endentry
+    \entry{Amadio2002}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=8c60787078c8c8b2c06de9e8330e9cfc}{%
+           family={Amadio},
+           familyi={A\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=469fbc9f34f5517bf583d36adcd57120}{%
+           family={Lugiez},
+           familyi={L\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=f8007d4cb2407e9aab6a236993019f84}{%
+           family={Vanackere},
+           familyi={V\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{434395a0eee8f8294f4f11c332890fa9}
+      \strng{fullhash}{434395a0eee8f8294f4f11c332890fa9}
+      \strng{fullhashraw}{434395a0eee8f8294f4f11c332890fa9}
+      \strng{bibnamehash}{434395a0eee8f8294f4f11c332890fa9}
+      \strng{authorbibnamehash}{434395a0eee8f8294f4f11c332890fa9}
+      \strng{authornamehash}{434395a0eee8f8294f4f11c332890fa9}
+      \strng{authorfullhash}{434395a0eee8f8294f4f11c332890fa9}
+      \strng{authorfullhashraw}{434395a0eee8f8294f4f11c332890fa9}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{internalsortvolume}{290}
+      \field{journaltitle}{Theoretical Computer Science}
+      \field{title}{On the symbolic reduction of processes with cryptographic functions}
+      \field{year}{2002}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{695\bibrangedash 740}
+      \range{pages}{46}
+      \field{volume}{290}
+      \range{volume}{1}
+    \endentry
+    \entry{MillenShmatikov2001}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=7d9a7164a8a1a134ca992341027a4d91}{%
+           family={Millen},
+           familyi={M\bibinitperiod},
+           given={J.\bibnamedelimi K.},
+           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=d92e4a86dba23235070e45ef57ee28b5}{%
+           family={Shmatikov},
+           familyi={S\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM Press}%
+      }
+      \strng{namehash}{48fb59f8e074016ba6e8facf38bc7a39}
+      \strng{fullhash}{48fb59f8e074016ba6e8facf38bc7a39}
+      \strng{fullhashraw}{48fb59f8e074016ba6e8facf38bc7a39}
+      \strng{bibnamehash}{48fb59f8e074016ba6e8facf38bc7a39}
+      \strng{authorbibnamehash}{48fb59f8e074016ba6e8facf38bc7a39}
+      \strng{authornamehash}{48fb59f8e074016ba6e8facf38bc7a39}
+      \strng{authorfullhash}{48fb59f8e074016ba6e8facf38bc7a39}
+      \strng{authorfullhashraw}{48fb59f8e074016ba6e8facf38bc7a39}
+      \field{extraname}{1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 8th ACM Conference on Computer and Communications Security}
+      \field{title}{Constraint solving for bounded-process cryptographic protocol analysis}
+      \field{year}{2001}
+      \field{pages}{166\bibrangedash 175}
+      \range{pages}{10}
+    \endentry
+    \entry{ClarkJacob1997}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=5abc8a5f199ff13afd3806380eb67c1d}{%
+           family={Clark},
+           familyi={C\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=a489150e45339f32585c8dfeb50f7ab5}{%
+           family={Jacob},
+           familyi={J\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c7223dbb2855895f728356162a7de3c}
+      \strng{fullhash}{9c7223dbb2855895f728356162a7de3c}
+      \strng{fullhashraw}{9c7223dbb2855895f728356162a7de3c}
+      \strng{bibnamehash}{9c7223dbb2855895f728356162a7de3c}
+      \strng{authorbibnamehash}{9c7223dbb2855895f728356162a7de3c}
+      \strng{authornamehash}{9c7223dbb2855895f728356162a7de3c}
+      \strng{authorfullhash}{9c7223dbb2855895f728356162a7de3c}
+      \strng{authorfullhashraw}{9c7223dbb2855895f728356162a7de3c}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Web Draft Version 1.0, \url{http://citeseer.nj.nec.com/}}
+      \field{title}{A Survey of Authentication Protocol Literature}
+      \field{year}{1997}
+    \endentry
+    \entry{BoydMathuria2003}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=dd9a02272a2e54daaf02b9eb177d3660}{%
+           family={Boyd},
+           familyi={B\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=9d6591e1791bf953f1030d83d848a176}{%
+           family={Mathuria},
+           familyi={M\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{f17e42385b1e2b4774e93555882da528}
+      \strng{fullhash}{f17e42385b1e2b4774e93555882da528}
+      \strng{fullhashraw}{f17e42385b1e2b4774e93555882da528}
+      \strng{bibnamehash}{f17e42385b1e2b4774e93555882da528}
+      \strng{authorbibnamehash}{f17e42385b1e2b4774e93555882da528}
+      \strng{authornamehash}{f17e42385b1e2b4774e93555882da528}
+      \strng{authorfullhash}{f17e42385b1e2b4774e93555882da528}
+      \strng{authorfullhashraw}{f17e42385b1e2b4774e93555882da528}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Protocols for Authentication and Key Establishment}
+      \field{year}{2003}
+    \endentry
+    \entry{BullOtway1997}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=406ba8dec9fd66dc0e675f8a7ea218e8}{%
+           family={Bull},
+           familyi={B\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=41e82748c444789b3cedc1b7e04f8948}{%
+           family={Otway},
+           familyi={O\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Defence Research Agency}%
+      }
+      \list{location}{1}{%
+        {Malvern, UK}%
+      }
+      \strng{namehash}{3c4358384295f0943c378e9a1e6bc500}
+      \strng{fullhash}{3c4358384295f0943c378e9a1e6bc500}
+      \strng{fullhashraw}{3c4358384295f0943c378e9a1e6bc500}
+      \strng{bibnamehash}{3c4358384295f0943c378e9a1e6bc500}
+      \strng{authorbibnamehash}{3c4358384295f0943c378e9a1e6bc500}
+      \strng{authornamehash}{3c4358384295f0943c378e9a1e6bc500}
+      \strng{authorfullhash}{3c4358384295f0943c378e9a1e6bc500}
+      \strng{authorfullhashraw}{3c4358384295f0943c378e9a1e6bc500}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The authentication protocol}
+      \field{type}{techreport}
+      \field{year}{1997}
+      \field{number}{DRA/CIS3/PROJ/CORBA/SC/1/CSM/436\bibrangedash 04/03}
+      \range{number}{-1}
+    \endentry
+    \entry{Paulson1997}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=dd3b2c293eac0195ed2e915a2296886a}{%
+           family={Paulson},
+           familyi={P\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society Press}%
+      }
+      \strng{namehash}{dd3b2c293eac0195ed2e915a2296886a}
+      \strng{fullhash}{dd3b2c293eac0195ed2e915a2296886a}
+      \strng{fullhashraw}{dd3b2c293eac0195ed2e915a2296886a}
+      \strng{bibnamehash}{dd3b2c293eac0195ed2e915a2296886a}
+      \strng{authorbibnamehash}{dd3b2c293eac0195ed2e915a2296886a}
+      \strng{authornamehash}{dd3b2c293eac0195ed2e915a2296886a}
+      \strng{authorfullhash}{dd3b2c293eac0195ed2e915a2296886a}
+      \strng{authorfullhashraw}{dd3b2c293eac0195ed2e915a2296886a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{10th IEEE Computer Security Foundations Workshop (CSFW-10)}
+      \field{title}{Mechanized Proofs for a Recursive Authentication Protocol}
+      \field{year}{1997}
+      \field{pages}{84\bibrangedash 95}
+      \range{pages}{12}
+    \endentry
+    \entry{RyanSchneider1998}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=498a10a43b3e3e013b8cf599873ab8d2}{%
+           family={Ryan},
+           familyi={R\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=fddd7591877feba869ef6f11283a4d0e}{%
+           family={Schneider},
+           familyi={S\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{3305acaa847ede99b7da7413cc16b4c2}
+      \strng{fullhash}{3305acaa847ede99b7da7413cc16b4c2}
+      \strng{fullhashraw}{3305acaa847ede99b7da7413cc16b4c2}
+      \strng{bibnamehash}{3305acaa847ede99b7da7413cc16b4c2}
+      \strng{authorbibnamehash}{3305acaa847ede99b7da7413cc16b4c2}
+      \strng{authornamehash}{3305acaa847ede99b7da7413cc16b4c2}
+      \strng{authorfullhash}{3305acaa847ede99b7da7413cc16b4c2}
+      \strng{authorfullhashraw}{3305acaa847ede99b7da7413cc16b4c2}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{internalsortvolume}{65}
+      \field{journaltitle}{Information Processing Letters}
+      \field{title}{An Attack on a Recursive Authentication Protocol}
+      \field{year}{1998}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{7\bibrangedash 10}
+      \range{pages}{4}
+      \field{volume}{65}
+      \range{volume}{1}
+    \endentry
+    \entry{PereiraQuisquater2001}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=cb7caee1b8d803b59b1dc5bdeff42fc8}{%
+           family={Pereira},
+           familyi={P\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=a6ba47f422f9dc1d16697023f6e132dd}{%
+           family={Quisquater},
+           familyi={Q\bibinitperiod},
+           given={J.-J.},
+           giveni={J\bibinithyphendelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{fullhash}{799d98781e650982357616bf9ef9c19e}
+      \strng{fullhashraw}{799d98781e650982357616bf9ef9c19e}
+      \strng{bibnamehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authorbibnamehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authornamehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authorfullhash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authorfullhashraw}{799d98781e650982357616bf9ef9c19e}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{14th IEEE Computer Security Foundations Workshop (CSFW-14)}
+      \field{title}{A Security Analysis of the Cliques Protocols Suites}
+      \field{year}{2001}
+      \field{pages}{73\bibrangedash 81}
+      \range{pages}{9}
+    \endentry
+    \entry{ChevalierXOR2003}{inproceedings}{useauthor=false}{}
+      \name{author}{4}{}{%
+        {{hash=0525d88c54ac768f48da04a3d9458109}{%
+           family={Chevalier},
+           familyi={C\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=62832f90d2b02bc05c0d2bc0fcd4b555}{%
+           family={Küsters},
+           familyi={K\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4a021b3a9cc964c53ef3cd18a816e3b6}{%
+           family={Rusinowitch},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=5a0a627ab2b33894a39d38c64f866b93}{%
+           family={Turuani},
+           familyi={T\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{authorbibnamehash}{12d39681de3586eaff17e2be368cb6e1}
+      \strng{authornamehash}{12d39681de3586eaff17e2be368cb6e1}
+      \strng{authorfullhash}{b54ab03fd07c4c3d92d9b2e4f8c3b3c2}
+      \strng{authorfullhashraw}{b54ab03fd07c4c3d92d9b2e4f8c3b3c2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the Eighteenth Annual IEEE Symposium on Logic in Computer Science (LICS 2003)}
+      \field{title}{An NP Decision Procedure for Protocol Insecurity with XOR}
+      \field{year}{2003}
+      \field{pages}{261\bibrangedash 270}
+      \range{pages}{10}
+    \endentry
+    \entry{ComonLundhShmatikov2003}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=6ef4bc0e8f1bfeb3238c1f31d1b5de4c}{%
+           family={Comon-Lundh},
+           familyi={C\bibinithyphendelim L\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=d92e4a86dba23235070e45ef57ee28b5}{%
+           family={Shmatikov},
+           familyi={S\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{a0aa2ec6426bd5f44039e28162570189}
+      \strng{fullhash}{a0aa2ec6426bd5f44039e28162570189}
+      \strng{fullhashraw}{a0aa2ec6426bd5f44039e28162570189}
+      \strng{bibnamehash}{a0aa2ec6426bd5f44039e28162570189}
+      \strng{authorbibnamehash}{a0aa2ec6426bd5f44039e28162570189}
+      \strng{authornamehash}{a0aa2ec6426bd5f44039e28162570189}
+      \strng{authorfullhash}{a0aa2ec6426bd5f44039e28162570189}
+      \strng{authorfullhashraw}{a0aa2ec6426bd5f44039e28162570189}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the Eighteenth Annual IEEE Symposium on Logic in Computer Science (LICS 2003)}
+      \field{title}{Intruder deductions, constraint solving and insecurity decision in presence of exclusive or}
+      \field{year}{2003}
+      \field{pages}{271\bibrangedash 280}
+      \range{pages}{10}
+    \endentry
+    \entry{MeadowsNarendran2002}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=9947cb0afd5795dfa4e3878373df7bf2}{%
+           family={Meadows},
+           familyi={M\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=c4fab79e0800619649725aaae6bcc20c}{%
+           family={Narendran},
+           familyi={N\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{82c5a9112819735311c901e8d2bba3f9}
+      \strng{fullhash}{82c5a9112819735311c901e8d2bba3f9}
+      \strng{fullhashraw}{82c5a9112819735311c901e8d2bba3f9}
+      \strng{bibnamehash}{82c5a9112819735311c901e8d2bba3f9}
+      \strng{authorbibnamehash}{82c5a9112819735311c901e8d2bba3f9}
+      \strng{authornamehash}{82c5a9112819735311c901e8d2bba3f9}
+      \strng{authorfullhash}{82c5a9112819735311c901e8d2bba3f9}
+      \strng{authorfullhashraw}{82c5a9112819735311c901e8d2bba3f9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Workshop on Issues in the Theory of Security (WITS 2002)}
+      \field{title}{A Unification Algorithm for the Group Diﬃe–Hellman Protocol}
+      \field{year}{2002}
+    \endentry
+    \entry{KapurNarendranWang2003}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=0c8a2f3facea72c0cb5e454879cb629e}{%
+           family={Kapur},
+           familyi={K\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=c4fab79e0800619649725aaae6bcc20c}{%
+           family={Narendran},
+           familyi={N\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=9a75ee293f2555f40976345739087998}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=cda9f821bffb12a2fdca623af54d535b}{%
+           family={Nieuwenhuis},
+           familyi={N\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{fullhash}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{fullhashraw}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{bibnamehash}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{authorbibnamehash}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{authornamehash}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{authorfullhash}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{authorfullhashraw}{9a439d7cbffe20f33bb38110c3af5eef}
+      \strng{editorbibnamehash}{cda9f821bffb12a2fdca623af54d535b}
+      \strng{editornamehash}{cda9f821bffb12a2fdca623af54d535b}
+      \strng{editorfullhash}{cda9f821bffb12a2fdca623af54d535b}
+      \strng{editorfullhashraw}{cda9f821bffb12a2fdca623af54d535b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 14th International Conference on Rewriting Techniques and Applications (RTA 2003)}
+      \field{internalsortvolume}{2706}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{Analyzing protocols that use modular exponentiation: Semantic unification techniques}
+      \field{year}{2003}
+      \field{pages}{165\bibrangedash 179}
+      \range{pages}{15}
+      \field{volume}{2706}
+      \range{volume}{1}
+    \endentry
+    \entry{PereiraQuisquater2004}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=cb7caee1b8d803b59b1dc5bdeff42fc8}{%
+           family={Pereira},
+           familyi={P\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=a6ba47f422f9dc1d16697023f6e132dd}{%
+           family={Quisquater},
+           familyi={Q\bibinitperiod},
+           given={J.-J.},
+           giveni={J\bibinithyphendelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society Press}%
+      }
+      \strng{namehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{fullhash}{799d98781e650982357616bf9ef9c19e}
+      \strng{fullhashraw}{799d98781e650982357616bf9ef9c19e}
+      \strng{bibnamehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authorbibnamehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authornamehash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authorfullhash}{799d98781e650982357616bf9ef9c19e}
+      \strng{authorfullhashraw}{799d98781e650982357616bf9ef9c19e}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{17th IEEE Computer Security Foundations Workshop (CSFW-17)}
+      \field{title}{Generic Insecurity of Cliques-Type Authenticated Group Key Agreement Protocols}
+      \field{year}{2004}
+      \field{pages}{16\bibrangedash 29}
+      \range{pages}{14}
+    \endentry
+    \entry{GoubaultLarrecq2005}{unpublished}{}{}
+      \name{author}{3}{}{%
+        {{hash=c5149e75a4938ae8328e7b5c48e16c92}{%
+           family={Goubault-Larrecq},
+           familyi={G\bibinithyphendelim L\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=c41ea35976a942e6d68db7950ff3eacd}{%
+           family={Roger},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=0b3950ed6f8c06d8780b28381f5763ff}{%
+           family={Verma},
+           familyi={V\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{b7374719cd539383aec45b18b6f976dc}
+      \strng{fullhash}{b7374719cd539383aec45b18b6f976dc}
+      \strng{fullhashraw}{b7374719cd539383aec45b18b6f976dc}
+      \strng{bibnamehash}{b7374719cd539383aec45b18b6f976dc}
+      \strng{authorbibnamehash}{b7374719cd539383aec45b18b6f976dc}
+      \strng{authornamehash}{b7374719cd539383aec45b18b6f976dc}
+      \strng{authorfullhash}{b7374719cd539383aec45b18b6f976dc}
+      \strng{authorfullhashraw}{b7374719cd539383aec45b18b6f976dc}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Journal of Logic and Algebraic Programming, to appear}
+      \field{title}{Abstraction and resolution modulo AC: How to verify Diffie–Hellman-like protocols automatically}
+      \field{year}{2005}
+    \endentry
+    \entry{BorealeBuscemi2003}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=d4ac6200d28b664ca75778b1347455a7}{%
+           family={Boreale},
+           familyi={B\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=402a1133d236db3bd5c332ac6a0d4a8b}{%
+           family={Buscemi},
+           familyi={B\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{062c807df051a2d0f1113beb9d80c42c}
+      \strng{fullhash}{062c807df051a2d0f1113beb9d80c42c}
+      \strng{fullhashraw}{062c807df051a2d0f1113beb9d80c42c}
+      \strng{bibnamehash}{062c807df051a2d0f1113beb9d80c42c}
+      \strng{authorbibnamehash}{062c807df051a2d0f1113beb9d80c42c}
+      \strng{authornamehash}{062c807df051a2d0f1113beb9d80c42c}
+      \strng{authorfullhash}{062c807df051a2d0f1113beb9d80c42c}
+      \strng{authorfullhashraw}{062c807df051a2d0f1113beb9d80c42c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Workshop on Foundations of Computer Security (FCS 2003)}
+      \field{title}{On the Symbolic Analysis of Low-Level Cryptographic Primitives: Modular Exponentiation and the Diffie--Hellman Protocol}
+      \field{year}{2003}
+    \endentry
+    \entry{MillenShmatikov2003}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=7df55174c0bea4233656b8158329df02}{%
+           family={Millen},
+           familyi={M\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d92e4a86dba23235070e45ef57ee28b5}{%
+           family={Shmatikov},
+           familyi={S\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \strng{fullhash}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \strng{fullhashraw}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \strng{bibnamehash}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \strng{authorbibnamehash}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \strng{authornamehash}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \strng{authorfullhash}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \strng{authorfullhashraw}{aa8b2d5bee74ebd791b2054d1aba4dce}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{16th IEEE Computer Security Foundations Workshop (CSFW 16)}
+      \field{title}{Symbolic Protocol Analysis with Products and Diﬃe–Hellman Exponentiation}
+      \field{year}{2003}
+      \field{pages}{47\bibrangedash 61}
+      \range{pages}{15}
+    \endentry
+    \entry{Shmatikov2004}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=d92e4a86dba23235070e45ef57ee28b5}{%
+           family={Shmatikov},
+           familyi={S\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=411e382c4e4d0cc7525dd48466bdd833}{%
+           family={Schmidt},
+           familyi={S\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{fullhash}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{fullhashraw}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{bibnamehash}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{authorbibnamehash}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{authornamehash}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{authorfullhash}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{authorfullhashraw}{d92e4a86dba23235070e45ef57ee28b5}
+      \strng{editorbibnamehash}{411e382c4e4d0cc7525dd48466bdd833}
+      \strng{editornamehash}{411e382c4e4d0cc7525dd48466bdd833}
+      \strng{editorfullhash}{411e382c4e4d0cc7525dd48466bdd833}
+      \strng{editorfullhashraw}{411e382c4e4d0cc7525dd48466bdd833}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{13th European Symposium on Programming (ESOP 2004)}
+      \field{internalsortvolume}{2986}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{Decidable Analysis of Cryptographic Protocols with Products and Modular Exponentiation}
+      \field{year}{2004}
+      \field{pages}{355\bibrangedash 369}
+      \range{pages}{15}
+      \field{volume}{2986}
+      \range{volume}{1}
+    \endentry
+    \entry{ChevalierDH2003}{inproceedings}{useauthor=false}{}
+      \name{author}{4}{}{%
+        {{hash=0525d88c54ac768f48da04a3d9458109}{%
+           family={Chevalier},
+           familyi={C\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=62832f90d2b02bc05c0d2bc0fcd4b555}{%
+           family={Küsters},
+           familyi={K\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4a021b3a9cc964c53ef3cd18a816e3b6}{%
+           family={Rusinowitch},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=5a0a627ab2b33894a39d38c64f866b93}{%
+           family={Turuani},
+           familyi={T\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=8a68a461bf3a489bef13da016b2b39a6}{%
+           family={Pandya},
+           familyi={P\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=823622577e429a140dcf4e61e3feede6}{%
+           family={Radhakrishnan},
+           familyi={R\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{authorbibnamehash}{12d39681de3586eaff17e2be368cb6e1}
+      \strng{authornamehash}{12d39681de3586eaff17e2be368cb6e1}
+      \strng{authorfullhash}{b54ab03fd07c4c3d92d9b2e4f8c3b3c2}
+      \strng{authorfullhashraw}{b54ab03fd07c4c3d92d9b2e4f8c3b3c2}
+      \strng{editorbibnamehash}{8c91d909f72699f85e98ead5cbb7ed82}
+      \strng{editornamehash}{8c91d909f72699f85e98ead5cbb7ed82}
+      \strng{editorfullhash}{8c91d909f72699f85e98ead5cbb7ed82}
+      \strng{editorfullhashraw}{8c91d909f72699f85e98ead5cbb7ed82}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Foundations of Software Technology and Theoretical Computer Science (FSTTCS 2003)}
+      \field{internalsortvolume}{2914}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{Deciding the Security of Protocols with Diﬃe–Hellman Exponentiation and Products in Exponents}
+      \field{year}{2003}
+      \field{pages}{124\bibrangedash 135}
+      \range{pages}{12}
+      \field{volume}{2914}
+      \range{volume}{1}
+    \endentry
+    \entry{RusinowitchTuruani2001}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=4a021b3a9cc964c53ef3cd18a816e3b6}{%
+           family={Rusinowitch},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=5a0a627ab2b33894a39d38c64f866b93}{%
+           family={Turuani},
+           familyi={T\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \strng{fullhash}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \strng{fullhashraw}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \strng{bibnamehash}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \strng{authorbibnamehash}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \strng{authornamehash}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \strng{authorfullhash}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \strng{authorfullhashraw}{1f7e55d3c7a3fa2de849b96319f35c9f}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{14th IEEE Computer Security Foundations Workshop (CSFW-14)}
+      \field{title}{Protocol Insecurity with Finite Number of Sessions is NP-complete}
+      \field{year}{2001}
+      \field{pages}{174\bibrangedash 190}
+      \range{pages}{17}
+    \endentry
+    \entry{SteinerTsudikWaidner1998}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=98fec050518556ccaee13a38e8f75564}{%
+           family={Steiner},
+           familyi={S\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8914428e3e9744e946a970fbf5bdb02f}{%
+           family={Tsudik},
+           familyi={T\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=1970e980096d8eb34fd06ef0ed4afa1f}{%
+           family={Waidner},
+           familyi={W\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society Press}%
+      }
+      \strng{namehash}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \strng{fullhash}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \strng{fullhashraw}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \strng{bibnamehash}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \strng{authorbibnamehash}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \strng{authornamehash}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \strng{authorfullhash}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \strng{authorfullhashraw}{2ad8415aaa169d4dd9c5e36e127486c5}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{IEEE International Conference on Distributed Computing Systems}
+      \field{title}{CLIQUES: A new approach to key agreement}
+      \field{year}{1998}
+      \field{pages}{380\bibrangedash 387}
+      \range{pages}{8}
+    \endentry
+    \entry{Bockmayr2001}{incollection}{}{}
+      \name{author}{2}{}{%
+        {{hash=7dceb1c5fa657fd6f827efa8944b7b8d}{%
+           family={Bockmayr},
+           familyi={B\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=a7d2ea8d431d3f3ace11d487a674ca2a}{%
+           family={Weispfenning},
+           familyi={W\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=f3c4e73e95138fc8121e1979ba3d7ba7}{%
+           family={Robinson},
+           familyi={R\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=3ba59266bdb23158fb7549c64ab82827}{%
+           family={Voronkov},
+           familyi={V\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier Science}%
+      }
+      \strng{namehash}{57b27005c93c31411a001a9978069476}
+      \strng{fullhash}{57b27005c93c31411a001a9978069476}
+      \strng{fullhashraw}{57b27005c93c31411a001a9978069476}
+      \strng{bibnamehash}{57b27005c93c31411a001a9978069476}
+      \strng{authorbibnamehash}{57b27005c93c31411a001a9978069476}
+      \strng{authornamehash}{57b27005c93c31411a001a9978069476}
+      \strng{authorfullhash}{57b27005c93c31411a001a9978069476}
+      \strng{authorfullhashraw}{57b27005c93c31411a001a9978069476}
+      \strng{editorbibnamehash}{5afa1dff2ee5434ccca2e5618066f276}
+      \strng{editornamehash}{5afa1dff2ee5434ccca2e5618066f276}
+      \strng{editorfullhash}{5afa1dff2ee5434ccca2e5618066f276}
+      \strng{editorfullhashraw}{5afa1dff2ee5434ccca2e5618066f276}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Handbook of Automated Reasoning}
+      \field{chapter}{12}
+      \field{internalsortvolume}{I}
+      \field{title}{Solving numerical constraints}
+      \field{year}{2001}
+      \field{pages}{751\bibrangedash 842}
+      \range{pages}{92}
+      \field{volume}{I}
+      \range{volume}{1}
+    \endentry
+    \entry{Schneier1996}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=1e90d0b70122fb88d816b453b2032664}{%
+           family={Schneier},
+           familyi={S\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons}%
+      }
+      \strng{namehash}{1e90d0b70122fb88d816b453b2032664}
+      \strng{fullhash}{1e90d0b70122fb88d816b453b2032664}
+      \strng{fullhashraw}{1e90d0b70122fb88d816b453b2032664}
+      \strng{bibnamehash}{1e90d0b70122fb88d816b453b2032664}
+      \strng{authorbibnamehash}{1e90d0b70122fb88d816b453b2032664}
+      \strng{authornamehash}{1e90d0b70122fb88d816b453b2032664}
+      \strng{authorfullhash}{1e90d0b70122fb88d816b453b2032664}
+      \strng{authorfullhashraw}{1e90d0b70122fb88d816b453b2032664}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Applied Cryptography}
+      \field{year}{1996}
+    \endentry
+    \entry{BorshTreybig1976}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=1a7ba7147b700ca8dafcff4ab22bb36f}{%
+           family={Borsh},
+           familyi={B\bibinitperiod},
+           given={I.},
+           giveni={I\bibinitperiod}}}%
+        {{hash=64b66c06ec3886540c6e1b900076f94d}{%
+           family={Treybig},
+           familyi={T\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{69c0ba6d4e738297dcfd29dfee063a38}
+      \strng{fullhash}{69c0ba6d4e738297dcfd29dfee063a38}
+      \strng{fullhashraw}{69c0ba6d4e738297dcfd29dfee063a38}
+      \strng{bibnamehash}{69c0ba6d4e738297dcfd29dfee063a38}
+      \strng{authorbibnamehash}{69c0ba6d4e738297dcfd29dfee063a38}
+      \strng{authornamehash}{69c0ba6d4e738297dcfd29dfee063a38}
+      \strng{authorfullhash}{69c0ba6d4e738297dcfd29dfee063a38}
+      \strng{authorfullhashraw}{69c0ba6d4e738297dcfd29dfee063a38}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{internalsortvolume}{55}
+      \field{journaltitle}{Proceedings of the American Mathematical Society}
+      \field{title}{Bounds on positive integral solutions of linear diophantine equations}
+      \field{year}{1976}
+      \field{pages}{299\bibrangedash 304}
+      \range{pages}{6}
+      \field{volume}{55}
+      \range{volume}{1}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
