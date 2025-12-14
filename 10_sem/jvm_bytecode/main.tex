@@ -1,0 +1,287 @@
+\documentclass[ordinary]{BMSTU-IU8}
+
+\usepackage{booktabs}
+
+\student{Мильченко И. Д.}
+\group{ИУ8-104}
+\theme{Реферат на тему\\
+       "Байт код в Java Virtual Machine"}
+\discipline{Управление программными продуктами}
+\version{12}
+\noscorefield 
+
+\supervisor{Карондеев Андрей Михайлович}
+
+\begin{document}
+    \maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Введение}
+Виртуальная машина Java (JVM) — это программная реализация абстрактного процессора, гарантирующая независимость исполняемого кода от аппаратной платформы и операционной системы. Центральной идеей является преобразование исходной программы в промежуточный байт‑код — компактный поток инструкций, описывающий алгоритм на уровне стека операндов. Такое представление проверяется на безопасность, а затем либо интерпретируется, либо динамически компилируется в нативные инструкции.
+
+Знание внутренних процессов JVM полезно не только создателям языков и инструментов, но и прикладным разработчикам: понимание работы сборщика мусора помогает диагностировать утечки, знание модели памяти упрощает написание конкурентных программ, а умение читать байт‑код облегчает аудит сторонних библиотек.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Архитектура JVM}
+Общая архитектура изображена на \autoref{fig:jvm}. Она условно разбивается на три крупных подсистемы.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{fig/jvm_architecture.png}
+    \caption{Основные компоненты JVM}
+    \label{fig:jvm}
+\end{figure}
+
+\subsection{Загрузчик классов (Class Loader)}
+Процесс загрузки состоит из трёх фаз:
+\begin{enumerate}[label=\arabic*)]
+  \item \textbf{Loading} — поиск и считывание байт‑кода из JAR‑архивов, модулей или сети.
+  \item \textbf{Linking} включает:
+    \begin{itemize}
+      \item \textbf{Verification} — четырёхэтапная проверка корректности и безопасности, см. \autoref{subsec:verification};
+      \item \textbf{Preparation} — выделение памяти под статические поля и их инициализация значениями по умолчанию;
+      \item \textbf{Resolution} — замена символических ссылок на прямые указатели.
+    \end{itemize}
+  \item \textbf{Initialization} — исполнение статических инициализаторов и блоков \texttt{<clinit>}.
+\end{enumerate}
+
+Алгоритм делегирования \textit{parent‑first} предотвращает подмену ключевых классов (например, \texttt{java.lang.String}) и обеспечивает согласованность пространства имён.
+
+\subsection{Области данных времени выполнения}
+\label{subsec:rda}
+Каждый поток имеет собственные стековые структуры, а данные, разделяемые потоками, находятся в куче (\textit{Heap}). Подробнее:
+\begin{description}[leftmargin=*]
+  \item[Heap] — основное хранилище объектов. В HotSpot обычно разделяется на \textit{Young Generation} (Eden~+ Survivor S0/S1) и \textit{Old Generation}. Современные коллекторы (G1, ZGC, Shenandoah) используют более дробную разметку.
+  \item[Method Area] содержит метаданные классов, пул констант, JIT‑компилированный код и профилировочную информацию (до Java 8 называлась Permanent Generation).
+  \item[JVM Stack] — набор кадров (frames). Каждый кадр хранит локальные переменные, стек операндов и ссылку на константный пул.
+  \item[PC‑register] — указатель на текущую инструкцию в потоке.
+  \item[Native Method Stack] — стеки для вызовов JNI.
+\end{description}
+
+\subsection{Исполнительный движок (Execution Engine)}
+Движок включает:
+\begin{itemize}
+  \item Интерпретатор (Template Interpreter) — быстрый запуск, низкая оптимизация.
+  \item C1‑компилятор (Client) — выдаёт компактный, умеренно оптимизированный код.
+  \item C2‑компилятор (Server) — затратен при компиляции, но генерирует высокопроизводительный код.
+\end{itemize}
+
+HotSpot использует \textbf{tiered compilation}: метод начинает работу в интерпретаторе, затем переходит на C1, а при достаточной "горячести" — на C2. График переходов показан на \autoref{fig:tiers}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/jit_tiers.png}
+    \caption{Уровни JIT‑компиляции в HotSpot}
+    \label{fig:tiers}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Верификация байт‑кода}
+\label{subsec:verification}
+Перед исполнением класс проходит четыре уровня проверок:
+\begin{enumerate}[label=\Alph*.]
+  \item \textbf{Проверка файла} — корректность заголовка, версии и контроль целостности потока.
+  \item \textbf{Проверка метаданных} — допустимы ли модификаторы, существуют ли супер‑классы.
+  \item \textbf{Проверка байт‑кода} — построение модели типизации стека и локалов, контроль баланса стека и исключений. Реализуется с помощью алгоритма DFA (data‑flow analysis).
+  \item \textbf{Проверка загрузчика} — гарантирует, что разные классы одного имени загружены одним загрузчиком.
+\end{enumerate}
+
+Проваливая любой этап, JVM выбрасывает \texttt{VerifyError}, предотвращая загрузку небезопасного кода.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Формат файла \texttt{.class}}
+\subsection{Обзор структуры}
+Ниже приведена таблица с главными разделами:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\hline
+\textbf{Раздел} & \textbf{Назначение} \\
+\hline
+Magic, Minor/Major & Идентификатор и версия формата \\
+Constant pool & Таблица литералов и ссылок \\
+Access flags & Модификаторы (public, final, enum …) \\
+This/Super & FQCN текущего и базового класса \\
+Interfaces & Список реализованных интерфейсов \\
+Fields & Описания полей \\
+Methods & Сигнатуры и байт‑код методов \\
+Attributes & Расширения (аннотации, StackMapTable) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Константный пул: типы записей}
+Всего определено 15 тэгов (\texttt{CONSTANT\_Utf8}, \texttt{CONSTANT\_Methodref} …). Начиная с Java 11 появился \texttt{CONSTANT\_Dynamic}, позволяющий лениво вычислять константы под управлением bootstrap‑метода.
+
+\subsection{Пример дизассемблирования}
+Ниже показан полный цикл: исходный Java‑код, скомпилированный байт‑код, а затем подробный разбор инструкций.
+
+\begin{lstlisting}[language=Java,caption={Класс Sum.java},label={lst:triangle-src}]
+public class Sum {
+    public int sum(int n) {
+        int acc = 0;
+        for (int i = 0; i < n; i++) {
+            acc += i;
+        }
+        return acc;
+    }
+}
+\end{lstlisting}
+
+Скомпилируйте файл командой\: \texttt{javac Sum.java}. Получится класс \texttt{Sum.class}.
+
+Команда: \texttt{javap -c -v Sum.class}. Результат для метода \texttt{sum} — листинг~\ref{lst:triangle-bc}.
+\begin{lstlisting}[caption={Байт‑код метода sum},label={lst:triangle-bc}]
+0: iconst_0           // push int 0
+1: istore_2           // local[2] = 0 (accumulator)
+2: iconst_0
+3: istore_3           // local[3] = 0 (index)
+4: iload_3
+5: iload_1
+6: if_icmpge    22   // loop exit
+9: iload_2
+10: iload_3
+11: iadd
+12: istore_2          // acc += index
+13: iinc      3, 1    // index++
+16: goto      4
+22: iload_2
+23: ireturn
+\end{lstlisting}
+
+\noindent\textbf{Подробный разбор инструкций}\par
+\begin{description}[leftmargin=*]
+  \item[0: \texttt{iconst\_0}] Кладёт константу \texttt{0} на стек.
+  \item[1: \texttt{istore\_2}] Снимает значение со стека и сохраняет в локальную переменную~2 (аккумулятор \texttt{acc}).
+  \item[2: \texttt{iconst\_0}] Помещает \texttt{0} на стек для инициализации счётчика.
+  \item[3: \texttt{istore\_3}] Записывает значение в локальную переменную~3 (счётчик \texttt{i}).
+  \item[4: \texttt{iload\_3}] Загружает \texttt{i} на стек.
+  \item[5: \texttt{iload\_1}] Загружает аргумент \texttt{n} на стек.
+  \item[6: \texttt{if\_icmpge 22}] Сравнивает \texttt{i} и \texttt{n}; если \texttt{i >= n} — переход к метке 22 (выход из цикла).
+  \item[9: \texttt{iload\_2}] Загружает текущую сумму \texttt{acc}.
+  \item[10: \texttt{iload\_3}] Загружает текущий индекс \texttt{i}.
+  \item[11: \texttt{iadd}] Складывает верхние два элемента стека (\texttt{acc + i}).
+  \item[12: \texttt{istore\_2}] Сохраняет результат обратно в \texttt{acc}.
+  \item[13: \texttt{iinc 3, 1}] Увеличивает локальную переменную~3 (\texttt{i}) на 1 без использования стека.
+  \item[16: \texttt{goto 4}] Переход к повторной проверке условия цикла.
+  \item[22: \texttt{iload\_2}] Загружает итоговую сумму \texttt{acc} на стек.
+  \item[23: \texttt{ireturn}] Возвращает значение вершины стека вызывающему коду.
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Набор инструкций и модель стека}
+Каждый байт‑код читает или пишет стек операндов. Например, \texttt{iadd} снимает два int, складывает и кладёт результат. Благодаря такой модели JVM легко переносится на регистровые архитектуры: JIT может свободно распределять значения по физическим регистрам.
+
+\subsection{Классификация инструкций}
+\begin{enumerate}[label=\arabic*)]
+  \item \textbf{Константы и загрузка} (\texttt{ldc}, \texttt{bipush}).
+  \item \textbf{Арифметика и логика} (\texttt{ixor}, \texttt{lrem}).
+  \item \textbf{Контроль потока} (\texttt{lookupswitch}, \texttt{jsr}).
+  \item \textbf{Объектные операции} (\texttt{checkcast}, \texttt{putfield}).
+  \item \textbf{Синхронизация} (\texttt{synchronized}, реализовано парами \texttt{monitorenter/exit}).
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Исполнение байт‑кода}
+\subsection{Интерпретация и JIT}
+При запуске новый метод помечается профилировочным счётчиком \texttt{InvocationCounter} = 0. С каждым вызовом он растёт. Достигнув порога \texttt{-XX:CompileThreshold} (по умолчанию 2000), метод попадает в очередь JIT. После компиляции JVM заменяет в call‑site адрес интерпретируемой версии на адрес нативного кода.
+
+\subsection{Профилирование}
+HotSpot собирает:
+\begin{itemize}
+  \item число вызовов, обратных переходов, исключений;
+  \item вероятности ветвлений;
+  \item наблюдаемые классы для виртуальных вызовов.
+\end{itemize}
+Эти данные хранятся в структуре \texttt{MDO} (MethodDataOop) и используются при повторной компиляции.
+
+\subsection{Оптимизации C2}
+\begin{description}[leftmargin=*]
+  \item[Inlining] — раскрытие мелких методов, уменьшает вызовы и раскрывает контекст для последующих оптимизаций.
+  \item[Escape Analysis] — выявляет объекты, не «уходящие» из метода; такие объекты могут быть размещены на стеке или устранены.
+  \item[Loop Unrolling и Peeling] — уменьшает количество проверок и повышает ILP (instruction‑level parallelism).
+  \item[Range Check Elimination] — удаляет избыточные проверки массива.
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Управление памятью и сборка мусора}
+\subsection{Поколенческая теория}
+Большинство объектов «умирает молодыми», поэтому куча делится на поколения (\autoref{fig:heap}). Сборка молодого поколения выполняется чаще и быстрее.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/generational_heap.png}
+    \caption{Генерационный разрез кучи}
+    \label{fig:heap}
+\end{figure}
+
+На схеме показано стандартное логическое разбиение кучи HotSpot на поколения.
+
+\begin{itemize}[leftmargin=*]
+  \item \emph{Eden} (розовый) — область, куда помещаются все вновь создаваемые объекты. При заполнении Eden запускается \emph{минорная} (young) сборка.
+  \item \emph{Survivor S0/S1} (оранжевые) — две буферные области. Живые объекты из Eden копируются поочерёдно в один из них. После каждой минорной паузы роли S0 и S1 меняются.
+  \item \emph{Tenured (Old) Generation} (голубой) — здесь оказываются объекты, пережившие несколько минорных сборок. Для неё применяется \emph{мажорная} (full) сборка.
+  \item \emph{Permanent/Metaspace} (зелёный) — хранит метаданные классов, пул констант, JIT‑код и другие служебные структуры. Начиная с Java 8 эта область вынесена за пределы Java‑кучи и называется Metaspace.
+\end{itemize}
+
+Главная идея генерационной гипотезы: большинство объектов «умирает» ещё до первой минорной сборки. Поэтому частые короткие паузы обрабатывают только Eden и Survivor‑области, а редкие длительные — Old Generation. Такой подход значительно снижает среднюю латентность приложения без потери пропускной способности.
+
+\subsection{Обзор коллекторов}
+\begin{itemize}
+  \item \textbf{Serial GC} — однопоточный mark‑copy, подходит для систем с 1 ЦП.
+  \item \textbf{Parallel GC} — многопоточный, ориентирован на Throughput.
+  \item \textbf{CMS} — concurrent mark‑sweep, низкие паузы, но фрагментирует кучу.
+  \item \textbf{G1} — разбивает кучу на регионы, предсказуемые паузы.
+  \item \textbf{ZGC} — цветные указатели, паузы $<$ 10 мс при терабайтных кучах.
+  \item \textbf{Shenandoah} — алгоритм Region‑based, полностью конкаррентный (паузы $< 1$ мс).
+\end{itemize}
+
+Сравнение средних пауз:\vspace{-0.5em}
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+Коллектор & Java 21 default & Цель & Тип паузы \\
+\hline
+G1 & Да & balanced & 10–200 мс \\
+ZGC &  & low‑latency & $<$ 10 мс \\
+Shenandoah &  & ultra‑low & $<$ 1 мс \\
+\hline
+\end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Динамические вызовы: \texttt{invokedynamic}}
+\subsection{История и мотивация}
+До Java 7 JVM поддерживала четыре оп‑кода вызова: \texttt{invokestatic}, \texttt{invokevirtual}, \texttt{invokespecial}, \texttt{invokeinterface}. Они обеспечивали статическое связывание. Для реализации динамических языков (JRuby, Jython) требовались хаки. В JSR‑292 появился \texttt{invokedynamic}.
+
+\subsection{Bootstrap‑метод}
+При первой встрече с инструкцией JVM вызывает bootstrap‑метод, который возвращает \textit{CallSite}. Далее вызовы осуществляются через кэшированную ссылку без дополнительных затрат.
+
+\subsection{Пример лямбды}
+Компилятор Java 8 преобразует лямбда‑выражение в вызов \texttt{invokedynamic} с дескриптором, указывающим на метод \texttt{LambdaMetafactory}. Это позволило реализовать функциональный стиль без генерации анонимного класса.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Инструменты анализа и генерации байт‑кода}
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{javap} — дизассемблер из JDK.
+  \item \textbf{JClassLib} — GUI‑просмотрщик структуры \texttt{.class}.
+  \item \textbf{ASM} — низкоуровневое API для чтения/записи байт‑кода.
+  \item \textbf{ByteBuddy} — DSL над ASM, декларативная генерация.
+  \item \textbf{BCEL} — библиотека Apache для статического анализа.
+  \item \textbf{JMH} — harness для микробенчмарков, измеряет влияние JIT.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Современные тенденции и будущие изменения}
+\begin{description}[leftmargin=*]
+  \item[Project Loom] — вводит лёгкие потоки (Fibers) и оп‑коды \texttt{YIELD}, влияющие на планировщик.
+  \item[Project Valhalla] — inline‑классы (value types) с дескриптором \texttt{QFoo;}. Это позволит хранить объекты без указателей и GC‑заголовка.
+  \item[Project Panama] — FFI к нативному коду и SIMD‑акселерация через Vector API.
+  \item[GraalVM] — JIT на Java, AOT‑компиляция в образ Native Image, поддержка Truffle‑языков.
+\end{description}
+
+\section*{Заключение}
+Развитие JVM сопровождается эволюцией формата байт‑кода и JIT‑технологий, сохраняя при этом обратную совместимость. Освоив внутренние механизмы загрузки, верификации и исполнения, разработчик получает рычаги для глубокого профилирования, оптимизации и даже создания собственных языков поверх JVM.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
