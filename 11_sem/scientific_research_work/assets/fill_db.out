@@ -1,0 +1,37 @@
+$ for i in $(seq 1 10); do
+  curl -X POST localhost:8080/key -d "{\"key$i\":\"value$i\"}"
+done
+
+$ curl 'localhost:8081/keys?limit=10' | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   164  100   164    0     0  87560      0 --:--:-- --:--:-- --:--:--  160k
+{
+  "key1": "value1",
+  "key10": "value10",
+  "key2": "value2",
+  "key3": "value3",
+  "key4": "value4",
+  "key5": "value5",
+  "key6": "value6",
+  "key7": "value7",
+  "key8": "value8",
+  "key9": "value9"
+}
+
+$ curl 'localhost:18084/keys?limit=10' | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   164  100   164    0     0   177k      0 --:--:-- --:--:-- --:--:--  160k
+{
+  "key1": "value1",
+  "key10": "value10",
+  "key2": "value2",
+  "key3": "value3",
+  "key4": "value4",
+  "key5": "value5",
+  "key6": "value6",
+  "key7": "value7",
+  "key8": "value8",
+  "key9": "value9"
+}

@@ -1,0 +1,17 @@
+$ ./bin/clusterctl -c config/cluster1.yml status
+
+Leader:   node1 (127.0.0.1:9000)
+Followers:
+  - node2 (127.0.0.1:9001)
+  - node5 (127.0.0.1:9004)
+  - node3 (127.0.0.1:9002)
+  - node4 (127.0.0.1:9003)
+
+$ ./bin/clusterctl -c config/cluster2.yml status
+
+Leader:   node1 (127.0.0.1:19000)
+Followers:
+  - node2 (127.0.0.1:19001)
+  - node4 (127.0.0.1:19003)
+  - node3 (127.0.0.1:19002)
+  - node5 (127.0.0.1:19004)

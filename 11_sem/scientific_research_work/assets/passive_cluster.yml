@@ -1,0 +1,32 @@
+data_dir: var
+bin_path: bin
+cluster:
+  - alias: node1
+    http_address: "127.0.0.1:18080"
+    rpc_address: "127.0.0.1:19000"
+    grpc_address: "127.0.0.1:19090"
+  - alias: node2
+    http_address: "127.0.0.1:18081"
+    rpc_address: "127.0.0.1:19001"
+    grpc_address: "127.0.0.1:19091"
+  - alias: node3
+    http_address: "127.0.0.1:18082"
+    rpc_address: "127.0.0.1:19002"
+    grpc_address: "127.0.0.1:19092"
+  - alias: node4
+    http_address: "127.0.0.1:18083"
+    rpc_address: "127.0.0.1:19003"
+    grpc_address: "127.0.0.1:19093"
+  - alias: node5
+    http_address: "127.0.0.1:18084"
+    rpc_address: "127.0.0.1:19004"
+    grpc_address: "127.0.0.1:19094"
+leader: node1
+cluster_status: passive
+cluster_name: "cluster2"
+follow_list: 
+  - "127.0.0.1:9090"
+  - "127.0.0.1:9091"
+  - "127.0.0.1:9092"
+  - "127.0.0.1:9093"
+  - "127.0.0.1:9094"

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package replica;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/themilchenko/kv";
+
+service Replica {
+  rpc GetSnapshots (google.protobuf.Empty) returns (stream Event) {}
+  rpc GetEvents (State) returns (stream Event) {}
+}
+
+message Event {
+  uint64 lsn   = 1;
+  string id    = 2;
+  bytes  data  = 3;
+}
+
+message State {
+  uint64 lastAppliedIndex = 1;
+}

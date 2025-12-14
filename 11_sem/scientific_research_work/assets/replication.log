@@ -1,0 +1,19 @@
+2025-11-19 22:47:30.098628 I | [replica-pool] trying 127.0.0.1:9091
+2025-11-19 22:47:30.100131 I | [replica-pool] 127.0.0.1:9091 not master, switching...
+2025-11-19 22:47:30.100163 I | [replica-pool] trying 127.0.0.1:9092
+2025-11-19 22:47:30.102160 I | [replica-pool] 127.0.0.1:9092 not master, switching...
+2025-11-19 22:47:30.102191 I | [replica-pool] trying 127.0.0.1:9093
+2025-11-19 22:47:30.104218 I | [replica-pool] 127.0.0.1:9093 not master, switching...
+2025-11-19 22:47:30.104240 I | [replica-pool] trying 127.0.0.1:9094
+2025-11-19 22:47:30.106313 I | [replica-pool] 127.0.0.1:9094 not master, switching...
+2025-11-19 22:47:30.106338 I | [replica-pool] trying 127.0.0.1:9090
+2025-11-19 22:53:52.911278 I | [replica] event 7 (42 bytes)
+2025-11-19 22:53:53.411039 I | [replica] event 8 (42 bytes)
+2025-11-19 22:53:53.420613 I | [replica] event 9 (42 bytes)
+2025-11-19 22:53:53.439543 I | [replica] event 10 (42 bytes)
+2025-11-19 22:53:53.455685 I | [replica] event 11 (42 bytes)
+2025-11-19 22:53:53.480662 I | [replica] event 12 (42 bytes)
+2025-11-19 22:53:53.497175 I | [replica] event 13 (42 bytes)
+2025-11-19 22:53:53.513441 I | [replica] event 14 (42 bytes)
+2025-11-19 22:53:53.533515 I | [replica] event 15 (42 bytes)
+2025-11-19 22:53:53.552106 I | [replica] event 16 (44 bytes)
