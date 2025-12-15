@@ -1,0 +1,242 @@
+\section{Экспериментальная проверка механизма отказоустойчивости}
+
+Целью экспериментальной части является практическая проверка корректности
+работы механизма отказоустойчивости, описанного в предыдущих разделах. В рамках
+экспериментов исследуется поведение системы при различных типах отказов активного
+кластера и подтверждается отсутствие сценариев \emph{split-brain}.
+
+В качестве базовой конфигурации используются два Raft-кластера, развёрнутые в
+различных зонах доступности, с включённым механизмом отказоустойчивости и
+внешним координатором состояния etcd. Параметры конфигурации выбираются
+одинаковыми для обоих кластеров, за исключением начального предпочтения роли.
+
+\subsection{Полный отказ активного кластера}
+
+В начальный момент времени оба кластера находятся в штатном состоянии.
+Для активного и пассивного кластеров проверяется состав Raft и наличие лидера.
+На листинге~\ref{lst:status} показано, что кластер \texttt{cluster1} находится в активном состоянии
+и имеет одного лидера и двух последователей, аналогично для \texttt{cluster2}.
+
+\begin{lstlisting}[caption={Проверка состояния Raft-кластеров},label={lst:status}]
+$ ./bin/clusterctl -c config/cluster1.yml status
+Leader:   node1 (127.0.0.1:19000)
+Followers:
+  - node3 (127.0.0.1:19002)
+  - node2 (127.0.0.1:19001)
+
+$ ./bin/clusterctl -c config/cluster2.yml status
+Leader:   node1 (127.0.0.1:29000)
+Followers:
+  - node3 (127.0.0.1:29002)
+  - node2 (127.0.0.1:29001)
+\end{lstlisting}
+
+Далее проверяется состояние внешнего координатора. На листинге~\ref{lst:etcd-before} видно, что ключ
+\texttt{active\_lock} указывает на \texttt{cluster1}, а статусы кластеров
+соответствуют ролям active и passive. Таким образом, в системе корректно
+зафиксировано глобальное состояние отказоустойчивости.
+
+\begin{lstlisting}[caption={Состояние координатора etcd до отказа},label={lst:etcd-before}]
+$ etcdctl get --prefix /xdrc
+/xdrc/active_lock
+cluster1
+/xdrc/clusters/cluster1/status
+{"cluster_name":"cluster1","role":"active","leader_id":"node1","last_applied_lsn":0,"epoch":1765748550953572409,"updated_at":"2025-12-14T21:46:12.954705333Z"}
+/xdrc/clusters/cluster2/status
+{"cluster_name":"cluster2","role":"passive","leader_id":"node1","last_applied_lsn":5,"epoch":0,"updated_at":"2025-12-14T21:46:22.323099179Z"}
+/xdrc/epoch
+1765748550953572409
+\end{lstlisting}
+
+После этого выполняется тестовая операция записи в активный кластер. Запрос
+на запись успешно обрабатывается лидером активного кластера, а последующий
+запрос на чтение подтверждает сохранение данных. Репликация обеспечивает доставку
+изменений в пассивный кластер, что подтверждается результатами чтения на обоих
+кластерах (листинг~\ref{lst:write-before}).
+
+\begin{lstlisting}[caption={Запись и проверка репликации данных},label={lst:write-before}]
+$ curl -X POST localhost:18080/key -d '{"1":"1"}'
+$ curl localhost:18080/keys
+{"1":"1"}
+$ curl localhost:28080/keys
+{"1":"1"}
+\end{lstlisting}
+
+Далее, на листинге~\ref{lst:stop-active} инициируется полный отказ активного кластера путём остановки всех его узлов.
+В результате Raft-лидер перестаёт функционировать и, как следствие, агент
+отказоустойчивости более не продлевает аренду ключа \texttt{active\_lock} в
+координаторе.
+
+\begin{lstlisting}[caption={Полный отказ активного кластера},label={lst:stop-active}]
+$ ./bin/clusterctl -c config/cluster1.yml stop
+\end{lstlisting}
+
+После истечения времени жизни аренды координатор автоматически удаляет ключ
+\texttt{active\_lock}. Пассивный кластер обнаруживает его отсутствие и инициирует
+процедуру повышения роли. На листинге~\ref{lst:etcd-after} видно, что \texttt{cluster2} захватывает
+активное состояние, значение epoch увеличивается, и кластер начинает принимать
+операции записи.
+
+\begin{lstlisting}[caption={Состояние координатора после failover},label={lst:etcd-after}]
+$ etcdctl get --prefix /xdrc
+/xdrc/active_lock
+cluster2
+/xdrc/clusters/cluster2/status
+{"cluster_name":"cluster2","role":"active","leader_id":"node1","last_applied_lsn":5,"epoch":1765748785324795018,"updated_at":"2025-12-14T21:46:25.32630548Z"}
+/xdrc/epoch
+1765748785324795018
+\end{lstlisting}
+
+После переключения ролей ранее активный кластер запускается повторно. Несмотря на
+восстановление его узлов, он корректно стартует в пассивном режиме и не пытается
+самопроизвольно принять роль активного, поскольку ключ \texttt{active\_lock}
+принадлежит другому кластеру с более актуальной эпохой. Перезапуск демонстрируется
+на листинге~\ref{lst:restart}.
+
+\begin{lstlisting}[caption={Перезапуск ранее активного кластера},label={lst:restart}]
+$ ./bin/clusterctl -c config/cluster1.yml start
+\end{lstlisting}
+
+Запись данных в новый активный кластер выполняется успешно, что подтверждается
+результатом чтения. При этом данные автоматически реплицируются в пассивный
+кластер, включая ранее отказавший и восстановленный \texttt{cluster1}
+(листинг~\ref{lst:write-after}).
+
+\begin{lstlisting}[caption={Запись после failover и проверка репликации},label={lst:write-after}]
+$ curl -X POST localhost:28080/key -d '{"2":"2"}'
+$ curl localhost:28080/keys
+{"1":"1","2":"2"}
+$ curl localhost:18080/keys
+{"1":"1","2":"2"}
+\end{lstlisting}
+
+Попытка выполнить операцию записи в пассивный кластер завершается отказом,
+что подтверждает корректное соблюдение модели active/passive и отсутствие
+сценария \emph{split-brain} даже после восстановления ранее активного кластера
+(листинг~\ref{lst:write-passive}).
+
+\begin{lstlisting}[caption={Отказ записи в пассивный кластер},label={lst:write-passive}]
+$ curl -X POST localhost:18080/key -d '{"3":"1"}'
+cluster not active (not leader)
+\end{lstlisting}
+
+\subsection{Деградация активного кластера при нарушении порога доступности}
+
+В начальный момент времени оба кластера функционируют штатно. Кластер
+\texttt{cluster1} является активным и состоит из трёх узлов, один из которых
+является лидером Raft. Пассивный кластер \texttt{cluster2} также полностью
+доступен. Это подтверждается выводом команд на листинге~\ref{lst:status-degradation}.
+
+\begin{lstlisting}[caption={Начальное состояние кластеров},label={lst:status-degradation}]
+$ ./bin/clusterctl -c config/cluster1.yml status
+Leader:   node1 (127.0.0.1:19000)
+Followers:
+  - node2 (127.0.0.1:19001)
+  - node3 (127.0.0.1:19002)
+
+$ ./bin/clusterctl -c config/cluster2.yml status
+Leader:   node1 (127.0.0.1:29000)
+Followers:
+  - node3 (127.0.0.1:29002)
+  - node2 (127.0.0.1:29001)
+\end{lstlisting}
+
+Состояние внешнего координатора подтверждает, что активным кластером является
+\texttt{cluster1}, а ключ \texttt{active\_lock} корректно привязан к нему.
+Значение epoch соответствует текущему активному состоянию системы
+(листинг~\ref{lst:etcd-degradation-before}).
+
+\begin{lstlisting}[caption={Состояние координатора перед деградацией},label={lst:etcd-degradation-before}]
+$ etcdctl get --prefix /xdrc
+/xdrc/active_lock
+cluster1
+/xdrc/clusters/cluster1/status
+{"cluster_name":"cluster1","role":"passive","leader_id":"node2","last_applied_lsn":0,"epoch":0,"updated_at":"2025-12-14T22:09:50.467697079Z"}
+/xdrc/clusters/cluster2/status
+{"cluster_name":"cluster2","role":"passive","leader_id":"node1","last_applied_lsn":0,"epoch":0,"updated_at":"2025-12-14T22:09:48.406810727Z"}
+/xdrc/epoch
+1765750126953280043
+\end{lstlisting}
+
+Выполняется тестовая операция записи в активный кластер. Запрос успешно
+обрабатывается, а данные реплицируются в пассивный кластер, что подтверждается
+результатами чтения (листинг~\ref{lst:write-degradation-before}).
+
+\begin{lstlisting}[caption={Проверка записи и репликации перед деградацией},label={lst:write-degradation-before}]
+$ curl -X POST localhost:18080/key -d '{"1":"1"}'
+$ curl localhost:18080/keys
+{"1":"1"}
+$ curl localhost:28080/keys
+{"1":"1"}
+\end{lstlisting}
+
+Далее инициируется частичный отказ активного кластера путём принудительного
+завершения процесса Raft-лидера. Важно отметить, что кластер не теряет
+полностью работоспособность: оставшиеся узлы продолжают функционировать,
+и происходит переизбрание нового лидера. Тем не менее, число доступных узлов
+снижается ниже заданного порога \texttt{min\_healthy\_nodes = 3}, что иллюстрируется
+командами на листинге~\ref{lst:kill-leader}.
+
+\begin{lstlisting}[caption={Завершение процесса лидера активного кластера},label={lst:kill-leader}]
+$ ps -aux | grep node1
+milchen+ 451070 1.3 0.1 1740140 31584 pts/2 Sl 00:57 0:01 bin/node -id node1 -haddr 127.0.0.1:18080 -raddr 127.0.0.1:19000 -gaddr 127.0.0.1:19091 -follow-nodes 127.0.0.1:29091,127.0.0.1:29092,127.0.0.1:29093 -cluster-name cluster1 -active -failover-enabled -etcd 127.0.0.1:2379 -lease-ttl-seconds 10 -renew-interval-seconds 3 -min-healthy-nodes 3 -max-replication-lag 1000 -promote-when-coordinator-only var/cluster1/node1
+$ kill 451070
+\end{lstlisting}
+
+После завершения процесса лидера кластер \texttt{cluster1} продолжает
+функционировать в составе двух узлов и успешно переизбирает нового лидера,
+что подтверждается выводом команды состояния (листинг~\ref{lst:status-after-kill}).
+Таким образом, отказ носит частичный характер и не приводит к полной
+недоступности кластера.
+
+\begin{lstlisting}[caption={Состояние активного кластера после потери узла},label={lst:status-after-kill}]
+$ ./bin/clusterctl -c config/cluster1.yml status
+Leader:   node2 (127.0.0.1:19001)
+Followers:
+  - node3 (127.0.0.1:19002)
+\end{lstlisting}
+
+Несмотря на сохранение Raft-лидерства, агент отказоустойчивости,
+работающий на лидере, фиксирует нарушение политики доступности:
+число «здоровых» узлов оказывается ниже заданного порога.
+В результате агент намеренно прекращает продление аренды ключа
+\texttt{active\_lock} в координаторе. После истечения TTL ключ
+освобождается, и пассивный кластер инициирует процедуру повышения роли.
+
+Состояние координатора после завершения переключения ролей показано
+на листинге~\ref{lst:etcd-degradation-after}. Активным становится кластер
+\texttt{cluster2}, значение epoch увеличивается, а ранее активный \texttt{cluster1}
+переходит в пассивное состояние, несмотря на свою частичную работоспособность.
+
+\begin{lstlisting}[caption={Состояние координатора после деградации},label={lst:etcd-degradation-after}]
+$ etcdctl get --prefix /xdrc
+/xdrc/active_lock
+cluster2
+/xdrc/clusters/cluster1/status
+{"cluster_name":"cluster1","role":"passive","leader_id":"node2","last_applied_lsn":0,"epoch":0,"updated_at":"2025-12-14T22:09:53.467290881Z"}
+/xdrc/clusters/cluster2/status
+{"cluster_name":"cluster2","role":"active","leader_id":"node1","last_applied_lsn":0,"epoch":1765750191408043198,"updated_at":"2025-12-14T22:09:51.410753678Z"}
+/xdrc/epoch
+1765750191408043198
+\end{lstlisting}
+
+После переключения ролей операции записи успешно принимаются новым
+активным кластером. Данные реплицируются в пассивный кластер, включая
+ранее деградировавший \texttt{cluster1}. Результаты чтения подтверждают
+согласованность данных в обоих кластерах (листинг~\ref{lst:write-degradation-after}).
+
+\begin{lstlisting}[caption={Запись после деградации активного кластера},label={lst:write-degradation-after}]
+$ curl -X POST localhost:28080/key -d '{"2":"2"}'
+$ curl localhost:28080/keys
+{"1":"1","2":"2"}
+$ curl localhost:18080/keys
+{"1":"1","2":"2"}
+\end{lstlisting}
+
+Данный сценарий демонстрирует важное свойство предложенного механизма:
+кластер может добровольно отказаться от роли активного не только при
+полном отказе, но и при частичной деградации, когда формально остаётся
+работоспособным. Такое поведение позволяет предотвратить работу
+активного кластера в условиях недостаточного кворума и снижает риск
+нарушения согласованности данных, обеспечивая более предсказуемое и
+безопасное переключение ролей.
