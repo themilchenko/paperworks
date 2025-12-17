@@ -1,33 +1,38 @@
 \documentclass[research]{BMSTU-IU8}
 
-\usepackage{amsfonts} \usepackage{pdfpages}
+\usepackage{pdfpages}
 
 \group{ИУ8-114}
 \theme{Разработка геораспределённого механизма межкластерной\\
 репликации данных и обеспечения отказоустойчивости}
 \student{Мильченко И. Д.}
 
+\include{contents/glossary}
+\include{contents/terms}
+
 \addbibresource{main.bib}
 
 \begin{document}
-  % \includepdf[pages=-]{assets/titul.pdf} \setcounter{page}{4}
+  \includepdf[pages=-]{assets/titul.pdf}
+  \setcounter{page}{4}
 
   % Shold be deleted when titul page will be generated.
-\maketitle
+  % \maketitle
+  \include{contents/0-abstract}
 
-\include{contents/0-abstract}
+  \tableofcontents
+  \termsanddefenitions
+  \listofabbreviations
 
-\tableofcontents
+  \include{contents/1-introduction}
+  \include{contents/2-1-theory}
+  \include{contents/2-2-architecture}
+  \include{contents/2-3-implementation}
+  \include{contents/3-1-failover}
+  \include{contents/3-2-configuration}
+  \include{contents/3-3-test-autofailover}
 
-\include{contents/1-introduction}
-\include{contents/2-1-theory}
-\include{contents/2-2-architecture}
-\include{contents/2-3-implementation}
-\include{contents/3-1-failover}
-\include{contents/3-2-configuration}
-\include{contents/3-3-test-autofailover}
-
-\include{contents/3-conclusion}
+  \include{contents/3-conclusion}
 
   \printbibliography
 
