@@ -65,3 +65,53 @@ NTRU также самый тяжёлый, а следующим идёт Saber,
 таблице 2. Та же картина наблюдается и в энергопотреблении, поскольку более
 длительное выполнение алгоритма означает и более длительное потребление
 мощности.
+
+\begin{table}
+\centering
+\caption{Сравнение производительности постквантовых алгоритмов на разных платформах}
+\begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
+\hline
+\textbf{Алгоритм} &
+\textbf{Уровень безопасности} &
+\textbf{Задержка капсулирования} &
+\textbf{Задержка декапсулирования} &
+\textbf{Задержка капсулирования} &
+\textbf{Задержка декапсулирования} \\
+&
+&
+\textbf{в тактах (FPGA) \cite{Basu2019HardwareEval}} &
+\textbf{в тактах (FPGA) \cite{Basu2019HardwareEval}} &
+\textbf{в тактах (микроконтроллер) \cite{HessionPQCmcu}} &
+\textbf{в тактах (микроконтроллер) \cite{HessionPQCmcu}} \\
+\hline
+
+\multirow{3}{*}{\shortstack{CRYSTALS\\Kyber}}
+  & 1 & $5.6\times10^{4}$ & $5.3\times10^{4}$ & $8.0\times10^{6}$ & $2.0\times10^{6}$ \\\cline{2-6}
+  & 3 & -- & -- & $9.0\times10^{6}$ & $3.0\times10^{6}$ \\\cline{2-6}
+  & 5 & -- & -- & $1.1\times10^{7}$ & $5.0\times10^{6}$ \\\hline
+
+CRYSTALS DILITHIUM 
+  & 1 & $6.0\times10^{5}$ & $5.3\times10^{3}$ & -- & -- \\\hline
+
+\multirow{2}{*}{NTRU-HPS}
+  & 1 & -- & -- & $9.0\times10^{6}$ & $1.5\times10^{6}$ \\\cline{2-6}
+  & 3 & -- & -- & $1.0\times10^{7}$ & $2.0\times10^{6}$ \\\hline
+
+NTRU-HRSS
+  & 1 & $1.4\times10^{6}$ & $1{,}003{,}222$ & $9.5\times10^{6}$ & $2.5\times10^{6}$ \\\hline
+
+\multirow{2}{*}{Saber}
+  & 1 & -- & -- & $8.0\times10^{6}$ & $2.5\times10^{6}$ \\\cline{2-6}
+  & 3 & $4.9\times10^{5}$ & $89{,}392$ & $9.0\times10^{6}$ & $3.0\times10^{6}$ \\\hline
+
+Classic McEliece
+  & 5 & $5.1\times10^{6}$ & $146{,}126{,}996$ & -- & -- \\\hline
+
+SIKE
+  & 2 & -- & -- & $>3.3\times10^{10}$ & $>3.3\times10^{10}$ \\\hline
+
+SPHINCS+
+  & 1 & $6.2\times10^{8}$ & $937{,}935$ & -- & -- \\\hline
+
+\end{tabularx}
+\end{table}
