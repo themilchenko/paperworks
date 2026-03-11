@@ -1,0 +1,31 @@
+\documentclass[ordinary]{BMSTU-IU8}
+
+\usepackage{
+    listingsutf8,
+    pdfpages,
+    tikz,
+    pgf-umlcd,
+    mathtools,
+    braket,
+    amsfonts,
+    amssymb
+}
+
+\addbibresource{main.bib}
+
+\begin{document}
+    \includepdf[pages=-]{assets/titul.pdf}
+    \setcounter{page}{3}
+
+    \include{contents/00-abstract}
+
+    \tableofcontents
+
+    \include{contents/0-introduction}
+    \include{contents/1-organization}
+    \include{contents/2-math-problem}
+    \include{contents/3-math-solution}
+    \include{contents/4-conclusion}
+
+    \printbibliography
+\end{document}
